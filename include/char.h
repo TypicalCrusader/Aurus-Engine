@@ -44,14 +44,6 @@ struct CharacterData
     u8 BaseStone;
 };
 
-struct SkillStruct 
-{
-    u8 SkillID;
-    u32 SkillName;
-    u32 SkillDesc;
-    u32 SkillEffect;
-};
-
 enum gender {
     GENDER_MALE,
     GENDER_FEMALE,

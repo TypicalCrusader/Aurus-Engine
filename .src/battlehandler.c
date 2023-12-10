@@ -1,8 +1,8 @@
 #include "../include/battle.h"
 #include "../include/inventory.h"
 #include "../include/misc.h"
+#include "../include/skills.h"
 #include <stdint.h>
-#include <stdlib.h>
 
 int IncreaseStat(s8 stat, s8 statgrowth){
     s8 maxstat = stat * 100; 
@@ -100,8 +100,10 @@ int GenerateBattleStruct (struct SelectedUnit unit, struct BattleUnit bunit) {
     return 0;
 };
 
-void MoveBattleState()
+void MoveBattleState(struct BattleUnit Unit)
 {
+    struct InventoryData CharInventory[UINT16_MAX];
+
     if(Battle.BattleStatus != BATTLE_STATUS_STARTED ){
         Battle.BattleStatus += 1;
         if(Battle.BattleStatus == BATTLE_STATUS_END) {
@@ -109,19 +111,17 @@ void MoveBattleState()
         }
     }
     else {
-        struct InventoryData CharInventory[UINT16_MAX];
-
-        if ( CharInventory[Actor.EquippedWeapon].ItemType != ITEM_TYPE_WEAPON) 
-        {
-
-        }
-
-
-
-        Battle.BattleAttackType = Actor.EquippedWeapon
-        Battle.BattleRange
-        Battle.BattleStatus 
+        Battle.BattleStatus = BATTLE_STATUS_STARTED;
+        Battle.BattleRange = CharInventory[Unit.EquippedWeapon].AttackRange;
     }
+
+    if ( (Battle.BattleStatus = BATTLE_STATUS_STARTED) & (CharInventory[Unit.EquippedWeapon].ItemType != ITEM_TYPE_WEAPON)) //this should never happen, you cant attack without a weapon
+    {
+        assert(CharInventory[Unit.EquippedWeapon].ItemType != ITEM_TYPE_WEAPON);
+        return;
+    }
+
+    Battle.BattleAttackType = CharInventory[Unit.EquippedWeapon].AttackType;
 
     return;
 };
@@ -129,12 +129,53 @@ void MoveBattleState()
 void Initiate_Battle() {
     GenerateBattleStruct(SelectedUnit, Actor);
     GenerateBattleStruct(EnemyUnit, Recipient);
-    Battle.BattleStatus = BATTLE_STATUS_STARTED;
+    MoveBattleState(Actor);
 
+    //TODO: Add here OpenGL shit here
+
+    return;
+};
+
+int Initiate_PreBattleSkills(struct BattleUnit Unit) {
+    u32 i;
+    struct SkillStruct Skills[UINT8_MAX];
+
+
+    for(i=0;i <= (sizeof(Unit.Unitinfo.Unit.CharSkills) / sizeof(Unit.Unitinfo.Unit.CharSkills[0]));i+=)
+    {
+        if (Skills[Unit.Unitinfo.Unit.CharSkills[i]].SkillActivation == SKILL_ACTIVATION_PRE_BATTLE)
+        {
+            u8 skill = Skills[Unit.Unitinfo.Unit.CharSkills[i]].SkillID;
+            return skill;
+        }
+    }
+
+    u8 skill = 0;
+    return skill;
+};
+
+void AttackFunc() {
+
+    //skills
+    //calc attack
+    //check and apply res
+    //check if overflows
+    //actually attack - branch if skill attack or crit
+    
 
     return;
 };
 
 int BattleLoop(){
     Initiate_Battle();
+    u8 PreBattleSkillActor = Initiate_PreBattleSkills(Actor);
+    u8 PreBattleSkillRecipient = Initiate_PreBattleSkills(Recipient);
+
+    while (Battle.BattleStatus != BATTLE_STATUS_END){
+        AttackFunc();
+        MoveBattleState(Recipient);
+    }
+
+    //post battle skills go here
+    return 0;
 };
