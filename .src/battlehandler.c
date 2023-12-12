@@ -230,9 +230,9 @@ void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
         {
             Unit.UnitDamage = 100;
         }
-        if (Unit.UnitDamage >= 100)
+        if (Unit.UnitDamage <= -100)
         {
-            Unit.UnitDamage = 100;
+            Unit.UnitDamage = -100;
         }        
     }
 
@@ -247,7 +247,7 @@ void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
             {
                 Unit.UnitDamage = 100;
             }
-            if (Unit.UnitDamage <= 100)
+            if (Unit.UnitDamage <= -100)
             {
                 Unit.UnitDamage = -100;
             }
