@@ -239,6 +239,8 @@ void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
     //hit
     if(DiceRollOnehundred() <= (CharInventory[Unit.EquippedWeapon].Accuracy + Unit.CurrentDex - CharInventory[Unit.EquippedWeapon].Weight))
     {
+        // BATTLE SKILLS GO HERE :)
+
         //check for crit
         if(DiceRollOnehundred() <= CharInventory[Unit.EquippedWeapon].CritRate)
         {
