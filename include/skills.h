@@ -9,6 +9,8 @@ struct SkillStruct
     u8 SkillActivation;
 };
 
+extern struct SkillStruct Skills[UINT8_MAX];
+
 enum SkillActivation
 {
     SKILL_ACTIVATION_PRE_BATTLE,

@@ -102,7 +102,6 @@ int GenerateBattleStruct (struct SelectedUnit unit, struct BattleUnit bunit) {
 
 void MoveBattleState(struct BattleUnit Unit)
 {
-    struct InventoryData CharInventory[UINT16_MAX];
 
     if(Battle.BattleStatus != BATTLE_STATUS_STARTED ){
         Battle.BattleStatus += 1;
@@ -133,15 +132,25 @@ void Initiate_Battle() {
 
     //TODO: Add here OpenGL shit here
 
+    /*
+    - initialise battle gui
+    - show battle gui
+    - show battle spites
+    - show battle bgs
+    
+    =========================================+
+    = Hp |||||||||||| Hit |||  =             =
+    = Atk ||| Def ||| Crt |||  =             =
+    =========================================+
+    */
+
     return;
 };
 
 int Initiate_PreBattleSkills(struct BattleUnit Unit) {
     u32 i;
-    struct SkillStruct Skills[UINT8_MAX];
 
-
-    for(i=0;i <= (sizeof(Unit.Unitinfo.Unit.CharSkills) / sizeof(Unit.Unitinfo.Unit.CharSkills[0]));i+=)
+    for(i=0;i <= (sizeof(Unit.Unitinfo.Unit.CharSkills) / sizeof(Unit.Unitinfo.Unit.CharSkills[0]));i++)
     {
         if (Skills[Unit.Unitinfo.Unit.CharSkills[i]].SkillActivation == SKILL_ACTIVATION_PRE_BATTLE)
         {
@@ -154,15 +163,134 @@ int Initiate_PreBattleSkills(struct BattleUnit Unit) {
     return skill;
 };
 
+void CalcAttack(struct BattleUnit Unit)
+{
+    Unit.UnitDamage += CharInventory[Unit.EquippedWeapon].Attack;
+
+    return;
+}
+
+void SMTLikeRes(struct BattleUnit Unit, struct BattleUnit AttackTarget)
+{
+    if (Race[Unit.Unitinfo.Unit.RaceID].RaceSMTShouldNullAtk != true) {
+        return;// it means that race doesnt have the smt res array so dont waste time going through loop here
+    }
+
+    u32 i;
+    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.SpecialWeaponNullDmg) / sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.SpecialWeaponNullDmg[0]));i++)    
+    {
+        if (Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.SpecialWeaponNullDmg[i] == (u16) CharInventory[Unit.EquippedWeapon].ItemID)
+        {
+            //ifs based here on item effect and type, most likely only omega and Tyfrang of Revolution will go here
+            return;
+        }
+    
+    }    
+    
+    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ResAlignmentDmg) / sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ResAlignmentDmg[0]));i++)    
+    {
+        if (Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ResAlignmentDmg[i] == (u16) CharInventory[Unit.EquippedWeapon].AffinityRes)
+        {
+            Unit.UnitDamage *= 0.25;
+            return;
+        }
+    
+    }
+
+    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.NulllignmentDmg) / sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.NulllignmentDmg[0]));i++)    
+    {
+        if (Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.NulllignmentDmg[i] == (u16) CharInventory[Unit.EquippedWeapon].AffinityNul)
+        {
+            Unit.UnitDamage *= 0;
+            return;
+        }
+    
+    }
+
+    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ReverseAlignmentDmg) / sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ReverseAlignmentDmg[0]));i++)    
+    {
+        if (Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ReverseAlignmentDmg[i] == (u16) CharInventory[Unit.EquippedWeapon].AffinityAbs)
+        {
+            Unit.UnitDamage *= -1;
+            return;
+        }
+    
+    }
+
+    return;
+}
+
+void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
+{
+    
+    //over / underflow checker
+    if ((Unit.UnitDamage >= 100) || ( Unit.UnitDamage <= -100))
+    {
+        if (Unit.UnitDamage >= 100)
+        {
+            Unit.UnitDamage = 100;
+        }
+        if (Unit.UnitDamage >= 100)
+        {
+            Unit.UnitDamage = 100;
+        }        
+    }
+
+    //hit
+    if(DiceRollOnehundred() <= (CharInventory[Unit.EquippedWeapon].Accuracy + Unit.CurrentDex - CharInventory[Unit.EquippedWeapon].Weight))
+    {
+        //check for crit
+        if(DiceRollOnehundred() <= CharInventory[Unit.EquippedWeapon].CritRate)
+        {
+            Unit.UnitDamage *= 2;
+            if (Unit.UnitDamage >= 100)
+            {
+                Unit.UnitDamage = 100;
+            }
+            if (Unit.UnitDamage <= 100)
+            {
+                Unit.UnitDamage = -100;
+            }
+
+            AttackTarget.CurrentHp -= Unit.UnitDamage;
+            //OpenGl here
+            return;
+        }
+
+        AttackTarget.CurrentHp -= Unit.UnitDamage;
+        //OpenGl here
+
+        return;
+    }
+    else { //miss
+        //openGL here
+        return;
+    }
+
+    return;
+};
+
 void AttackFunc() {
 
     //skills
-    //calc attack
-    //check and apply res
-    //check if overflows
-    //actually attack - branch if skill attack or crit
-    
+    //calc attack v
+    //check and apply res v
+    //check if overflows v
+    //actually attack - branch if skill attack or crit - mostly
 
+    if((Battle.BattleStatus == BATTLE_STATUS_STARTED) || (Battle.BattleStatus == BATTLE_STATUS_FOLLOWUP) || (Battle.BattleStatus == BATTLE_STATUS_THIRD_ATTACK) )
+    {
+        CalcAttack(Actor);
+        SMTLikeRes(Actor, Recipient);
+        CalcHit(Actor, Recipient);
+    }
+    else
+    {
+        CalcAttack(Recipient);
+        SMTLikeRes(Recipient, Actor);
+        CalcHit(Recipient, Actor);
+    }
+    
     return;
 };
 

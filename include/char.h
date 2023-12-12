@@ -1,4 +1,5 @@
 #include "types.h"
+#include <stdint.h>
 
 struct CharacterData
 {
@@ -91,8 +92,10 @@ struct RaceStruct
     u16 RaceDesc;
     struct RaceSMTLikeRes SMTRes;
     struct RaceBoostStruct Raceboost;
-    u8 RaceSMTShouldNullAtk;    
+    bool RaceSMTShouldNullAtk;    
 };
+
+extern struct RaceStruct Race[UINT8_MAX];
 
 struct ClassStruct
 {
