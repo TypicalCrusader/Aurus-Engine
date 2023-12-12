@@ -170,8 +170,21 @@ void CalcAttack(struct BattleUnit Unit)
     return;
 }
 
+void ApplyPreBattleSkills(u8 skill, struct BattleUnit Unit)
+{
+
+    /*
+         List of pre battle skills and their effect go here
+    
+    */
+
+    return;
+}
+
 void SMTLikeRes(struct BattleUnit Unit, struct BattleUnit AttackTarget)
 {
+
+    //.. its not necessarly the fastest way to do this mechanic but for sure its one of the easiest
     if (Race[Unit.Unitinfo.Unit.RaceID].RaceSMTShouldNullAtk != true) {
         return;// it means that race doesnt have the smt res array so dont waste time going through loop here
     }
@@ -236,10 +249,13 @@ void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
         }        
     }
 
+    /*
+        Skills replacing attacks will go here
+    */
+
     //hit
     if(DiceRollOnehundred() <= (CharInventory[Unit.EquippedWeapon].Accuracy + Unit.CurrentDex - CharInventory[Unit.EquippedWeapon].Weight))
     {
-        // BATTLE SKILLS GO HERE :)
 
         //check for crit
         if(DiceRollOnehundred() <= CharInventory[Unit.EquippedWeapon].CritRate)
@@ -274,7 +290,7 @@ void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
 
 void AttackFunc() {
 
-    //skills
+    //skills - needs additions of skills
     //calc attack v
     //check and apply res v
     //check if overflows v
@@ -282,6 +298,7 @@ void AttackFunc() {
 
     if((Battle.BattleStatus == BATTLE_STATUS_STARTED) || (Battle.BattleStatus == BATTLE_STATUS_FOLLOWUP) || (Battle.BattleStatus == BATTLE_STATUS_THIRD_ATTACK) )
     {
+
         CalcAttack(Actor);
         SMTLikeRes(Actor, Recipient);
         CalcHit(Actor, Recipient);
@@ -298,8 +315,8 @@ void AttackFunc() {
 
 int BattleLoop(){
     Initiate_Battle();
-    u8 PreBattleSkillActor = Initiate_PreBattleSkills(Actor);
-    u8 PreBattleSkillRecipient = Initiate_PreBattleSkills(Recipient);
+    ApplyPreBattleSkills(Initiate_PreBattleSkills(Actor), Actor);
+    ApplyPreBattleSkills(Initiate_PreBattleSkills(Recipient), Recipient);
 
     while (Battle.BattleStatus != BATTLE_STATUS_END){
         AttackFunc();
