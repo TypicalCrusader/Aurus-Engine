@@ -1,5 +1,6 @@
 #include "types.h"
 #include "char.h"
+#include <stdint.h>
 
 struct SelectedUnit
 {
@@ -34,3 +35,26 @@ struct SelectedUnit
     u8 CurrentStaves;
     u8 CurrentStone;    
 };
+
+struct MapData
+{
+    u16 MapID;
+    u8 MapX;
+    u8 MapY;
+    u8 UsedTileSet;
+    u8 UsedPallete;
+    int * MapChanges[UINT8_MAX]; // offset list for map changes
+};
+
+struct CurrentMapStruct
+{
+    u8 CurrentTurn; //256 max turns
+    u8 ChapterID; //Not Neccesarly needed but can be useful for script to distinguish which chapter events to run
+    struct MapData MapInfo;
+    bool UseFOW;
+    u8 EnemyUnits[UINT8_MAX]; //Unit IDs
+    u8 PlayerUnits[UINT8_MAX]; //unit ID
+    u8 AllyUnits[UINT8_MAX]; //Unit ID
+};
+
+extern struct CurrentMapStruct CurrentMap;

@@ -91,11 +91,9 @@ int GenerateBattleStruct (struct SelectedUnit unit, struct BattleUnit bunit) {
     if(unit.Class.ClassType != TYPE_MAGICAL)
     {
         bunit.UnitDamage = unit.CurrentAtk; //base
+        return 0;
     }  
-    else
-    {
-        bunit.UnitDamage = unit.CurrentMag; //base           
-    }
+    bunit.UnitDamage = unit.CurrentMag; //base           
 
     return 0;
 };
