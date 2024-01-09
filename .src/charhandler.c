@@ -1,2 +1,2 @@
-#include "../include/types.h"
-#include <stdlib.h>
+#include "../include/char.h"
+

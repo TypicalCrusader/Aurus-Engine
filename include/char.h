@@ -45,6 +45,41 @@ struct CharacterData
     u8 BaseStone;
 };
 
+struct CurrCharData
+{
+    u16 UnitID;
+    struct CharacterData CharData;
+    struct ClassStruct ClassData;
+    u8 InventoryData[0x5];
+    u8 CurrentSkills[UINT8_MAX];
+    s8 CurrHp;
+    s8 CurrAtk;
+    s8 CurrMag;
+    s8 CurrDef;
+    s8 CurrMagDef;
+    s8 CurrSpd;
+    s8 CurrLck;
+    s8 CurrDex;
+    u8 CurrSwrd;
+    u8 CurrDgr;
+    u8 CurrSpr;
+    u8 CurrAxe;
+    u8 CurrThrow;
+    u8 CurrBow;
+    u8 CurrLight;
+    u8 CurrDark;
+    u8 CurrWind;
+    u8 CurrFire;
+    u8 CurrWater;
+    u8 CurrIce;
+    u8 CurrThunder;
+    u8 CurrEarth;
+    u8 CurrStaves;
+    u8 CurrStone;
+};
+
+struct CurrCharData CurrChar;
+
 enum gender {
     GENDER_MALE,
     GENDER_FEMALE,

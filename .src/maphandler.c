@@ -6,6 +6,10 @@ void IncreaseTurnCounter()
     return;
 };
 
+int InitialiseMap()
+{
+
+};
 
 
 
