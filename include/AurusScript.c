@@ -58,21 +58,37 @@ void AddGoldToTeam(u16 GoldAmount)
 };
 
 void AddItemToCharacter(u16 CharID, u16 ItemID){
-    u8 i;
-    for(i=0,i<5,i++)
+    u16 i;
+    for(i=0;i<5;i++)
     {
         if(CurrChar[CharID].InventoryData[i] == 0)
         {
             CurrChar[CharID].InventoryData[i] = ItemID;
+            return
         }
     }
+    for(i=0;i<=UINT16_MAX;i++)
+    {
+        if(MainData.ConvoyData[i] == 0)
+        {
+            MainData.ConvoyData[i] = CurrChar[CharID].InventoryData[0x5]; //move last item in this to convoy in this case
+            CurrChar[CharID].InventoryData[0x5] = ItemID;
+        }
+    }; 
 
     return;
 };
 
 void AddItemToConvoy(u16 ItemID)
 {
-    
+    u16 i;
+    for(i=0;i<=UINT16_MAX;i++)
+    {
+        if(MainData.ConvoyData[i] == 0)
+        {
+            MainData.ConvoyData[i] = ItemID;
+        }
+    };
 
     return;
 };
