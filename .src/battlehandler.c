@@ -98,11 +98,32 @@ int GenerateBattleStruct (struct SelectedUnit unit, struct BattleUnit bunit) {
     return 0;
 };
 
-void MoveBattleState(struct BattleUnit Unit)
+void MoveBattleState(struct BattleUnit Unit, struct BattleUnit AttackTarget)
 {
 
-    if(Battle.BattleStatus != BATTLE_STATUS_STARTED ){
+    //15, 20, 25 spd +1 round
+
+    if(Battle.BattleStatus >= BATTLE_STATUS_STARTED ){
         Battle.BattleStatus += 1;
+
+        if(Battle.BattleStatus >= BATTLE_STATUS_RECIPIENT )
+        {
+            if(Unit.CurrentSpd <= 15)
+            {
+                Battle.BattleStatus = BATTLE_STATUS_END;
+            }
+            if((AttackTarget.CurrentSpd <= 20) & (Battle.BattleStatus == BATTLE_STATUS_RECIPIENT_FOLLOWUP)) //it means that no that no recipient followup attack should happen
+            {
+                Battle.BattleStatus = BATTLE_STATUS_END;                
+            }
+            if((Unit.CurrentSpd <= 25) & (Battle.BattleStatus >= BATTLE_STATUS_THIRD_ATTACK)) //it means that no that actor's third attack should happen
+            {
+                Battle.BattleStatus = BATTLE_STATUS_END;                
+            }            
+            return;
+        }
+
+
         if(Battle.BattleStatus == BATTLE_STATUS_END) {
             return;
         }
@@ -124,9 +145,9 @@ void MoveBattleState(struct BattleUnit Unit)
 };
 
 void Initiate_Battle() {
-    GenerateBattleStruct(SelectedUnit, Actor);
+    GenerateBattleStruct(SelectedUnit, Actor); //on player turn this is the player characters, on enemy its enemy characters
     GenerateBattleStruct(EnemyUnit, Recipient);
-    MoveBattleState(Actor);
+    MoveBattleState(Actor, Recipient);
 
     //TODO: Add here OpenGL shit here
 
@@ -184,7 +205,7 @@ void SMTLikeRes(struct BattleUnit Unit, struct BattleUnit AttackTarget)
 
     //.. its not necessarly the fastest way to do this mechanic but for sure its one of the easiest
     if (Race[Unit.Unitinfo.Unit.RaceID].RaceSMTShouldNullAtk != true) {
-        return;// it means that race doesnt have the smt res array so dont waste time going through loop here
+        return;// it means that race doesnt have the smt res array so dont waste time going through loops here
     }
 
     u32 i;
@@ -235,28 +256,25 @@ void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
 {
     
     //over / underflow checker
-    if ((Unit.UnitDamage >= 100) || ( Unit.UnitDamage <= -100))
+    if (Unit.UnitDamage >= 100)
     {
-        if (Unit.UnitDamage >= 100)
-        {
-            Unit.UnitDamage = 100;
-        }
-        if (Unit.UnitDamage <= -100)
-        {
-            Unit.UnitDamage = -100;
-        }        
+        Unit.UnitDamage = 100;
     }
+    if (Unit.UnitDamage <= -100)
+    {
+        Unit.UnitDamage = -100;
+    }        
 
     /*
         Skills replacing attacks will go here
     */
 
     //hit
-    if(DiceRollOnehundred() <= (CharInventory[Unit.EquippedWeapon].Accuracy + Unit.CurrentDex - CharInventory[Unit.EquippedWeapon].Weight))
+    if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 )) <= (CharInventory[Unit.EquippedWeapon].Accuracy + Unit.CurrentDex - CharInventory[Unit.EquippedWeapon].Weight))
     {
 
         //check for crit
-        if(DiceRollOnehundred() <= CharInventory[Unit.EquippedWeapon].CritRate)
+        if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 ) ) <= CharInventory[Unit.EquippedWeapon].CritRate)
         {
             Unit.UnitDamage *= 2;
             if (Unit.UnitDamage >= 100)
@@ -267,13 +285,15 @@ void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
             {
                 Unit.UnitDamage = -100;
             }
+        }
 
-            AttackTarget.CurrentHp -= Unit.UnitDamage;
-            //OpenGl here
+        if(CharInventory[Unit.EquippedWeapon].UseMAG != true)
+        {
+            AttackTarget.CurrentHp -= (Unit.UnitDamage - AttackTarget.CurrentDef);
             return;
         }
 
-        AttackTarget.CurrentHp -= Unit.UnitDamage;
+        AttackTarget.CurrentHp -= (Unit.UnitDamage - AttackTarget.CurrentMagDef);
         //OpenGl here
 
         return;
@@ -287,12 +307,6 @@ void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
 };
 
 void AttackFunc() {
-
-    //skills - needs additions of skills
-    //calc attack v
-    //check and apply res v
-    //check if overflows v
-    //actually attack - branch if skill attack or crit - mostly
 
     if((Battle.BattleStatus == BATTLE_STATUS_STARTED) || (Battle.BattleStatus == BATTLE_STATUS_FOLLOWUP) || (Battle.BattleStatus == BATTLE_STATUS_THIRD_ATTACK) )
     {
@@ -318,7 +332,7 @@ int BattleLoop(){
 
     while (Battle.BattleStatus != BATTLE_STATUS_END){
         AttackFunc();
-        MoveBattleState(Recipient);
+        MoveBattleState(Actor, Recipient);
     }
 
     //post battle skills go here

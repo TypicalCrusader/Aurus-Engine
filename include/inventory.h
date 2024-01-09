@@ -11,6 +11,7 @@ struct InventoryData
     u8 Weight;
     u8 Accuracy;
     u8 CritRate;
+    bool UseMAG;
     u8 AffinityRes;
     u8 AffinityNul;
     u8 AffinityAbs;
