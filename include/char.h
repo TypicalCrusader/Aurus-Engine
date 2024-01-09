@@ -130,7 +130,7 @@ struct RaceStruct
     bool RaceSMTShouldNullAtk;    
 };
 
-extern struct RaceStruct Race[UINT8_MAX];
+struct RaceStruct Race[UINT8_MAX];
 
 struct ClassStruct
 {

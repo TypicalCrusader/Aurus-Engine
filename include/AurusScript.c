@@ -5,34 +5,27 @@
 #include <stdlib.h>
 #include <assert.h>
 
-u8 PermaFlags[INT8_MAX];
+u8 PermaFlags[UINT8_MAX];
 
-int SetPermaFlagTo(s8 Flag, s8 SetUnset )
+void SetPermaFlagTo(u8 Flag, u8 SetUnset )
 {
     if((SetUnset != 0 ) || (SetUnset != 1) )
     {
         assert((SetUnset != 0 ) || ( SetUnset != 1) );
     };
-    if(Flag < 0)
-    {
-        assert(Flag < 0);
-    }
 
     PermaFlags[Flag] = SetUnset;
+    return;
 };
 
-int CheckPermaFlag(s8 Flag)
+int CheckPermaFlag(u8 Flag)
 {
-    if(Flag < 0)
-    {
-        assert(Flag < 0);
-    }
     return PermaFlags[Flag];
 };
 
 u8 TempFlags[UINT8_MAX];
 
-int SetTempFlagto(u8 Flag, u8 SetUnset)
+void SetTempFlagto(u8 Flag, u8 SetUnset)
 {
     if((SetUnset != 0 ) || (SetUnset != 1) )
     {
@@ -40,6 +33,7 @@ int SetTempFlagto(u8 Flag, u8 SetUnset)
     };
 
     TempFlags[Flag] = SetUnset;
+    return;
 };
 
 int CheckTempFlag(u8 Flag)
@@ -92,3 +86,4 @@ void AddItemToConvoy(u16 ItemID)
 
     return;
 };
+

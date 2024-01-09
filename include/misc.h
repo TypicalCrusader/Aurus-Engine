@@ -20,4 +20,6 @@ struct MainDataStruct
     u32 ConvoyData[UINT32_MAX]; //Inventory data in item indexes
     u16 TeamData[UINT16_MAX]; //CharIDs
     s8 PermaFlagData[INT8_MAX]; //max 127 perma flags here for sanity sake
-}MainData;
+};
+
+struct MainDataStruct MainData;
