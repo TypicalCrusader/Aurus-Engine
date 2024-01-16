@@ -22,4 +22,23 @@ struct MainDataStruct
     s8 PermaFlagData[INT8_MAX]; //max 127 perma flags here for sanity sake
 };
 
+struct ChapterData
+{
+    u8 ChapterID;
+    u16 ChapterName;
+    u16 ChapterDesc;
+    u8 ChapterType;
+};
+
+typedef enum ChapterType
+{
+    CHAPTER_TYPE_ROUT,
+    CHAPTER_TYPE_ESCAPE,
+    CHAPTER_TYPE_DEFEND,
+    CHAPTER_TYPE_PROTECT,
+    CHAPTER_TYPE_KILL_BOSS,
+    CHAPTER_TYPE_SPECIAL,
+};
+
+
 struct MainDataStruct MainData;
