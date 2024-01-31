@@ -3,6 +3,8 @@
 struct InventoryData
 {
     u16 ItemID;
+    char ItemName[50]; //this is just for yaml desc string
+    char ItemDesc[50];
     u8 ItemType;
     u8 AttackType;
     u8 AttackRange;
@@ -15,9 +17,7 @@ struct InventoryData
     u8 AffinityRes;
     u8 AffinityNul;
     u8 AffinityAbs;
-};
-
-extern struct InventoryData CharInventory[UINT16_MAX];
+}CharInventory[UINT16_MAX];
 
 enum ItemType
 {

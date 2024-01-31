@@ -1,11 +1,55 @@
 #include "types.h"
 #include <stdint.h>
 
+struct ClassStruct
+{
+    u8 ClassID;
+    char ClassName[50]; //this is just for yaml desc string
+    char ClassDesc[50];
+    u8 ClassType;
+    u8 ClassGenderLock;
+    u8 ClassSkill;
+    u8 ClassPromoBranch[0x2];
+    s8 BaseHp;
+    s8 BaseAtk;
+    s8 BaseMag;
+    s8 BaseDef;
+    s8 BaseMagDef;
+    s8 BaseSpd;
+    s8 BaseLck;
+    s8 BaseDex;
+    s8 HpCharGrowth;
+    s8 AtkCharGrowth;
+    s8 MagCharGrowth;
+    s8 DefCharGrowth;
+    s8 MagDefCharGrowth;
+    s8 SpdCharGrowth;
+    s8 LckCharGrowth;
+    s8 DexCharGrowth;
+    bool ClassUsesSwrd;
+    bool ClassUsesDgr;
+    bool ClassUsesSpr;
+    bool ClassUsesAxe;
+    bool ClassUsesThrow;
+    bool ClassUsesBow;
+    bool ClassUsesLight;
+    bool ClassUsesDark;
+    bool ClassUsesWind;
+    bool ClassUsesFire;
+    bool ClassUsesWater;
+    bool ClassUsesIce;
+    bool ClassUsesThunder;
+    bool ClassUsesEarth;
+    bool ClassUsesStaves;
+    bool ClassUsesStone;
+};
+
+
 struct CharacterData
 {
     u16 UnitID;
-    u32 UnitName;
-    u32 UnitDesc;
+    char CharName[50]; //this is just for yaml desc string
+    char CharDesc[50];
     u8 RaceID;
     u8 CharGender;
     u8 alignment;
@@ -45,13 +89,13 @@ struct CharacterData
     u8 BaseStone;
 };
 
-struct CurrCharData
+typedef struct
 {
     u16 UnitID;
     struct CharacterData CharData;
     struct ClassStruct ClassData;
-    u8 InventoryData[0x5];
-    u8 CurrentSkills[UINT8_MAX];
+    u16 InventoryData[0x5];
+    u16 CurrentSkills[UINT8_MAX];
     s8 CurrHp;
     s8 CurrAtk;
     s8 CurrMag;
@@ -76,9 +120,7 @@ struct CurrCharData
     u8 CurrEarth;
     u8 CurrStaves;
     u8 CurrStone;
-};
-
-struct CurrCharData CurrChar;
+}CurrChar[UINT16_MAX];
 
 enum gender {
     GENDER_MALE,
@@ -123,57 +165,14 @@ struct RaceStruct
 {
     u8 RaceID;
     u8 RaceSkill;
-    u16 RaceName;
-    u16 RaceDesc;
+    char RaceName[50]; //this is just for yaml desc string
+    char RaceDesc[50]; 
     struct RaceSMTLikeRes SMTRes;
     struct RaceBoostStruct Raceboost;
     bool RaceSMTShouldNullAtk;    
 };
 
-struct RaceStruct Race[UINT8_MAX];
-
-struct ClassStruct
-{
-    u8 ClassID;
-    u32 ClassName; 
-    u32 ClassDesc;
-    u8 ClassType;
-    u8 ClassGenderLock;
-    u8 ClassSkill;
-    u8 ClassPromoBranch[0x2];
-    s8 BaseHp;
-    s8 BaseAtk;
-    s8 BaseMag;
-    s8 BaseDef;
-    s8 BaseMagDef;
-    s8 BaseSpd;
-    s8 BaseLck;
-    s8 BaseDex;
-    s8 HpCharGrowth;
-    s8 AtkCharGrowth;
-    s8 MagCharGrowth;
-    s8 DefCharGrowth;
-    s8 MagDefCharGrowth;
-    s8 SpdCharGrowth;
-    s8 LckCharGrowth;
-    s8 DexCharGrowth;    
-    bool ClassUsesSwrd;
-    bool ClassUsesDgr;
-    bool ClassUsesSpr;
-    bool ClassUsesAxe;
-    bool ClassUsesThrow;
-    bool ClassUsesBow;
-    bool ClassUsesLight;
-    bool ClassUsesDark;
-    bool ClassUsesWind;
-    bool ClassUsesFire;
-    bool ClassUsesWater;
-    bool ClassUsesIce;
-    bool ClassUsesThunder;
-    bool ClassUsesEarth;
-    bool ClassUsesStaves;
-    bool ClassUsesStone;
-};
+struct RaceStruct Race;
 
 enum ClassType
 {

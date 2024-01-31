@@ -2,7 +2,10 @@
 #include "char.h"
 #include <stdint.h>
 
-struct SelectedUnit
+#define MAX_MAP_SIZE        125
+#define MAX_MAP_CHANGES      64
+
+typedef struct
 {
     u16 DeploymentIndex;
     struct CharacterData Unit;
@@ -34,27 +37,71 @@ struct SelectedUnit
     u8 CurrentEarth;
     u8 CurrentStaves;
     u8 CurrentStone;    
-};
+}SelectedUnit;
 
-struct MapData
+typedef struct {
+	u16 tile; //just a type of tile
+}MapTile;
+
+typedef struct {
+    u8 X;
+    u8 Y;
+    u8 sizeX;
+    u8 sizeY;
+}MapChange;
+
+typedef struct
 {
-    u16 MapID;
     u8 MapX;
     u8 MapY;
+    MapTile Tile[MAX_MAP_SIZE][MAX_MAP_SIZE]; //2d array why the fuck i havent realised this is good way to do it before i looked at fucking sdl2 tutorol....
     u8 UsedTileSet;
     u8 UsedPallete;
-    int * MapChanges[UINT8_MAX]; // offset list for map changes
-};
+    MapChange Mapchange[MAX_MAP_CHANGES]; // offset list for map changes
+}MapData;
 
-struct CurrentMapStruct
+typedef struct
 {
-    u8 CurrentTurn; //256 max turns
-    u8 ChapterID; //Not Neccesarly needed but can be useful for script to distinguish which chapter events to run
-    struct MapData MapInfo;
+    u8 CurrentTurn; //256 max turns, here for redundancy
+    u8 ChapterID; //Not Neccesarly needed but can be useful for script to distinguish which chapter events to run also additional redundancy
+    MapData Map;
     bool UseFOW;
-    u8 EnemyUnits[UINT8_MAX]; //Unit IDs
-    u8 PlayerUnits[UINT8_MAX]; //unit ID
-    u8 AllyUnits[UINT8_MAX]; //Unit ID
-};
+    u8 EnemyUnits[INT8_MAX]; //Unit IDs
+    u8 PlayerUnits[INT8_MAX]; //unit IDs
+    u8 AllyUnits[INT8_MAX]; //Unit IDs
+    struct {
+        u8 X;
+        u8 Y;
+    }SelectedTile;
+}CurrentMap;
 
-extern struct CurrentMapStruct CurrentMap;
+enum TileType
+{
+    UNPASSABLE_MOUNTAIN, //also default one
+    UNPASSABLE_DESERT_MOUNTAIN,
+    UNPASSABLE_DESERT,
+    UNPASSABLE_FOREST,
+    UNPASSABLE_PLAIN,
+    UNPASSABLE_RIVER,
+    UNPASSABLE_WALL,
+    UNPASSABLE_SEA,
+    UNPASSABLE_BOG,
+    UNPASSABLE_CITY,
+    UNPASSABLE_VILLAGE,
+    PASSABLE_PLAIN,
+    PASSABLE_HILLS,
+    PASSABLE_RIVER,
+    PASSABLE_DESERT,
+    PASSABLE_BOG,
+    PASSABLE_HOME,
+    BREAKABLE_WALL,
+    BREAKABLE_LOG,
+    BREAKABLE_HILL, //TO CAUSE ROCK TUMBLING
+    ENTERABLE_CITY,
+    ENTERABLE_VILLAGE,
+    ENTERABLE_HOME,
+    SPECIAL_TYPE_THRONE,
+    SPECIAL_TYPE_GUARD_POST,
+    SPECIAL_TYPE_FORT,
+    SPECIAL_TYPE_COLLUMN
+};

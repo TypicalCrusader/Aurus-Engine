@@ -7,9 +7,7 @@ struct SkillStruct
     u32 SkillDesc;
     u32 SkillEffect;
     u8 SkillActivation;
-};
-
-extern struct SkillStruct Skills[UINT8_MAX];
+}Skills[UINT8_MAX];
 
 enum SkillActivation
 {

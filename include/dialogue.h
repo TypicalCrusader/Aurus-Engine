@@ -2,10 +2,8 @@
 
 struct DialogueDataEntry
 {
-    u32 DialogueID;
-    int DialogueData[]; //tbh i think that reading one utf8 character at the time into memory might be the best option here... just to make sure it will always find special characters for ends and such
+    char DialogueData[50]; //Yaml Entry 
 };
-
 
 enum SpecialCharacters
 {

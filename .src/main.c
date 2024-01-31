@@ -1,77 +1,83 @@
 #include <windows.h>
-#include <gl/glut.h>
+#include "../include/graphics.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
 
-void Display()
+//Screen dimension constants
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
+
+int main(int argc, char* argv[])
 {
-    glClearColor( 1.0, 1.0, 1.0, 1.0 );
-   
-    glClear( GL_COLOR_BUFFER_BIT );
-   
-    glColor3f( 1.0, 0.0, 0.0 );
+	SDL_Init(SDL_INIT_VIDEO);
+	IMG_Init(IMG_INIT_PNG);
+	SDL_Event event;
+	SDL_Window* window = NULL;
+	SDL_Surface* windowSurface = NULL;
+	SDL_Surface* imageSurface = NULL;
+	SDL_Texture* texture = NULL;
+	SDL_Renderer* renderer = NULL;
+	bool quit = false;
 
-    glBegin( GL_POLYGON );
-   
-    glVertex3f( 0.0, 0.0, 0.0 );
-    glVertex3f( 0.0, 1.0, 0.0 );
-    glVertex3f( 1.0, 1.0, 0.0 );
-    glVertex3f( 1.0, 0.0, 0.0 );
-   
-    glEnd();
-   
-    glFlush();
-   
-    glutSwapBuffers();
-}
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) //no allocated memory means something brokey
+	{
+		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+		return -1;
+	}
 
+	window = SDL_CreateWindow("Aurus Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_GRABBED | SDL_WINDOW_INPUT_FOCUS);
+	
+	while (!quit)
+	{
+		SDL_WaitEvent(&event);
 
-void Reshape( int width, int height )
-{
-    Display();
-}
+		switch (event.type)
+		{
+		case SDL_QUIT:
+			quit = true;
+			break;
+		}
+		if (window == NULL)
+		{
+			printf("window could not initialize! SDL_Error: %s\n", SDL_GetError());
+			return -1;
+		}
+		renderer = SDL_CreateRenderer(window, -1, 0);
+		if (renderer == NULL)
+		{
+			printf("renderer could not initialize! SDL_Error: %s\n", SDL_GetError());
+			return -1;
+		}
+		//windowSurface = SDL_GetWindowSurface(window);
+		/*if (windowSurface == NULL)
+		{
+			printf("windowSurface could not initialize! SDL_Error: %s\n", SDL_GetError());
+			return -1;
+		}*/
+		imageSurface = IMG_Load("./data/gfx/test.png"); //pure fucking cancer
+		if (imageSurface == NULL)
+		{
+			printf("imageSurface could not initialize! SDL_Error: %s\n", SDL_GetError());
+			return -1;
+		}
+		texture = SDL_CreateTextureFromSurface(renderer, imageSurface);
+		if (texture == NULL)
+		{
+			printf("texture could not initialize! SDL_Error: %s\n", SDL_GetError());
+			return -1;
+		}
 
+		SDL_RenderCopy(renderer, texture, NULL, NULL);
+		SDL_RenderPresent(renderer);
+		SDL_Delay(2000000);
+	}
 
-enum
-{
-    EXIT 
-};
-
-
-void Menu( int value )
-{
-    switch( value )
-    {
-    case EXIT:
-        exit( 0 );
-    }
-}
-
-int main( int argc, char * argv[] )
-{
-    glutInit( & argc, argv );
-   
-    glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB );
-   
-    glutInitWindowSize( 400, 400 );
-   
-    glutCreateWindow( "Aurus Engine" );
-   
-    glutDisplayFunc( Display );
-   
-    glutReshapeFunc( Reshape );
-   
-    glutCreateMenu( Menu );
-   
-    #ifdef WIN32
-   
-    glutAddMenuEntry( "Exit", EXIT );
-    #else
-   
-    glutAddMenuEntry( "Exit", EXIT );
-    #endif
-   
-    glutAttachMenu( GLUT_RIGHT_BUTTON );
-   
-    glutMainLoop();
-    return 0;
+	SDL_DestroyTexture(texture);
+	SDL_FreeSurface(imageSurface);
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	IMG_Quit();
+	SDL_Quit();
+	return 0;
 }

@@ -13,14 +13,19 @@ inline int DiceRollOneSix () {
     return OnedDSix;
 };
 
-struct MainDataStruct
+typedef struct
+{
+    u32 ItemID;
+}ConvoyData[UINT16_MAX];
+
+typedef struct 
 {
     u8 CurrentChaptID; //current ChapterID
     u16 CurrGold; //Gold Team has
-    u32 ConvoyData[UINT32_MAX]; //Inventory data in item indexes
-    u16 TeamData[UINT16_MAX]; //CharIDs
+    u16 TeamData[INT8_MAX]; //CharIDs
     s8 PermaFlagData[INT8_MAX]; //max 127 perma flags here for sanity sake
-};
+    ConvoyData Convoy[];
+}MainData;
 
 struct ChapterData
 {
@@ -30,7 +35,7 @@ struct ChapterData
     u8 ChapterType;
 };
 
-typedef enum ChapterType
+enum ChapterType
 {
     CHAPTER_TYPE_ROUT,
     CHAPTER_TYPE_ESCAPE,
@@ -39,6 +44,3 @@ typedef enum ChapterType
     CHAPTER_TYPE_KILL_BOSS,
     CHAPTER_TYPE_SPECIAL,
 };
-
-
-struct MainDataStruct MainData;

@@ -57,7 +57,7 @@ int IncreaseStat(s8 stat, s8 statgrowth){
     return stat;
 };
 
-int AddLevel (struct BattleUnit unit)
+int AddLevel (BattleUnit unit)
 {
     u8 level = unit.Unitinfo.level;
 
@@ -75,7 +75,7 @@ int AddLevel (struct BattleUnit unit)
     return level;
 };
 
-int GenerateBattleStruct (struct SelectedUnit unit, struct BattleUnit bunit) {
+int GenerateBattleStruct ( SelectedUnit unit, BattleUnit bunit) {
     bunit.Unitinfo = unit;
     bunit.EquippedWeapon = unit.Inventory[0x0]; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
     bunit.MaxHP = unit.MaxHP;
@@ -98,7 +98,7 @@ int GenerateBattleStruct (struct SelectedUnit unit, struct BattleUnit bunit) {
     return 0;
 };
 
-void MoveBattleState(struct BattleUnit Unit, struct BattleUnit AttackTarget)
+void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
 {
 
     //15, 20, 25 spd +1 round
@@ -145,9 +145,9 @@ void MoveBattleState(struct BattleUnit Unit, struct BattleUnit AttackTarget)
 };
 
 void Initiate_Battle() {
-    GenerateBattleStruct(SelectedUnit, Actor); //on player turn this is the player characters, on enemy its enemy characters
-    GenerateBattleStruct(EnemyUnit, Recipient);
-    MoveBattleState(Actor, Recipient);
+    //GenerateBattleStruct(SelectedUnit, Actor); //on player turn this is the player characters, on enemy its enemy characters
+    //GenerateBattleStruct(EnemyUnit, Recipient);
+    //MoveBattleState(Actor, Recipient);
 
     //TODO: Add here OpenGL shit here
 
@@ -166,7 +166,7 @@ void Initiate_Battle() {
     return;
 };
 
-int Initiate_PreBattleSkills(struct BattleUnit Unit) {
+int Initiate_PreBattleSkills( BattleUnit Unit) {
     u32 i;
 
     for(i=0;i <= (sizeof(Unit.Unitinfo.Unit.CharSkills) / sizeof(Unit.Unitinfo.Unit.CharSkills[0]));i++)
@@ -182,14 +182,14 @@ int Initiate_PreBattleSkills(struct BattleUnit Unit) {
     return skill;
 };
 
-void CalcAttack(struct BattleUnit Unit)
+void CalcAttack( BattleUnit Unit)
 {
     Unit.UnitDamage += CharInventory[Unit.EquippedWeapon].Attack;
 
     return;
 }
 
-void ApplyPreBattleSkills(u8 skill, struct BattleUnit Unit)
+void ApplyPreBattleSkills(u8 skill,  BattleUnit Unit)
 {
 
     /*
@@ -200,7 +200,7 @@ void ApplyPreBattleSkills(u8 skill, struct BattleUnit Unit)
     return;
 }
 
-void SMTLikeRes(struct BattleUnit Unit, struct BattleUnit AttackTarget)
+void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
 {
 
     //.. its not necessarly the fastest way to do this mechanic but for sure its one of the easiest
@@ -252,7 +252,7 @@ void SMTLikeRes(struct BattleUnit Unit, struct BattleUnit AttackTarget)
     return;
 }
 
-void CalcHit(struct BattleUnit Unit, struct BattleUnit AttackTarget)
+void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
 {
     
     //over / underflow checker

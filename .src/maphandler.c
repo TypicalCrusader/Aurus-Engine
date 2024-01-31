@@ -1,15 +1,19 @@
 ﻿#include "../include/map.h"
 
-void IncreaseTurnCounter()
+void IncreaseTurnCounter(CurrentMap Map)
 {
-    CurrentMap.CurrentTurn += 1;
+    Map.CurrentTurn += 1;
     return;
 };
 
 int InitialiseMap()
 {
-
+    return 0;
 };
 
 
+void CheckTileType()
+{
 
+    return;
+};

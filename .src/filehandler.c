@@ -1,23 +1,28 @@
-﻿#include "../include/types.h"
+﻿#include <SDL.h>
+#include <SDL_image.h>
+#include "../include/types.h"
+#include <string.h>
 
-struct FileDataStruct
-{
-    int EntryIndex;
-    int EntrySize;
-    int EntryData[];
-    short CRC16;
+
+
+int Load_Texture_path(char File_gfx_folder[], char File_file_name[], char File_extension[]) {
+
+	char File_name_1[] = "./data/gfx/";
+	char File_path[UINT8_MAX];
+	strcpy_s(File_path, sizeof(File_name_1), File_name_1);
+	strcpy_s(File_path, sizeof(File_gfx_folder), File_gfx_folder);
+	strcpy_s(File_path, sizeof(File_file_name), File_file_name);
+	strcpy_s(File_path, 1, ".");
+	strcpy_s(File_path, sizeof(File_extension), File_extension);
+
+
+	return File_path;
 };
 
-
-struct filestructure
+int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SDL_Texture* Texture, char File_path[])
 {
-    short FileHandlerVer; //0001,0002 ect
-    u8 ArchiveType; // 00-Universal, 01 Image - dds, 02 - image - tga, 03 - image - png, 04 - Anim data - pngs mixed with anim commands, 05 - music - mid, 06 - music - obb
-    bool IsEncrypted; //True for encrypted archive, False for not encrypted archive
-    bool IsCompressed; //True if Compressed, only avilable for universal and image data sans 04
-    int ArchiveSize; // Size of archive in bytes, just for redundancy
-    struct FileDataStruct FileData;
-    short CRC16; //obvious
+	SDL_RWops* RW_ops;
+	RW_ops = SDL_RWFromFile(File_path, "r");
+
+	return 0;
 };
-
-

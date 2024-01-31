@@ -1,8 +1,8 @@
 #include "map.h"
 
-struct BattleUnit 
+typedef struct 
 {
-    struct SelectedUnit Unitinfo;
+    SelectedUnit Unitinfo;
     u16 EquippedWeapon;
     s8 MaxHP;
     s8 CurrentHp;
@@ -14,19 +14,19 @@ struct BattleUnit
     s8 CurrentLck;
     s8 CurrentDex;     
     s16 UnitDamage;    
-};
+}BattleUnit;
 
-extern struct BattleUnit Actor;
-extern struct BattleUnit Recipient;
+BattleUnit Actor;
+BattleUnit Recipient;
 
-struct BattleState
+typedef struct
 {
     u8 BattleStatus;
     u8 BattleAttackType;
     u8 BattleRange;
-};
+}BattleState;
 
-extern struct BattleState Battle;
+BattleState Battle;
 
 enum BattleStatus
 {
