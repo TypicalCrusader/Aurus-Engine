@@ -5,7 +5,7 @@ struct DialogueDataEntry
     char DialogueData[50]; //Yaml Entry 
 };
 
-enum SpecialCharacters
+enum SpecialCharacters //aka how engine interepretes [COMMAND]
 {
     ENUM_SPECIAL_NEW_LINE  = 0xc28c,       //0xC2 0x8C
     ENUM_SPECIAL_END_ENTRY = 0xc28e,       //0xC2 0x8E

@@ -17,7 +17,7 @@ struct InventoryData
     u8 AffinityRes;
     u8 AffinityNul;
     u8 AffinityAbs;
-}CharInventory[UINT16_MAX];
+}CharInventory[5];
 
 enum ItemType
 {

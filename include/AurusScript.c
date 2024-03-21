@@ -43,9 +43,9 @@ int CheckTempFlag(u8 Flag)
 
 void AddGoldToTeam(u16 GoldAmount, MainData Data)
 {
-    if((GoldAmount + Data.CurrGold ) > UINT16_MAX)
+    if((GoldAmount + Data.CurrGold ) > MAX_GOLD_AMOUNT)
     {
-        assert((GoldAmount + Data.CurrGold ) > UINT16_MAX);
+        return;
     }
     Data.CurrGold += GoldAmount;
     return;
@@ -61,15 +61,17 @@ void AddItemToCharacter(u16 CharID, u16 ItemID, MainData Data, CurrChar Char){
             return;
         }
     }
-    for(i=0;i<=UINT16_MAX;i++)
+    for(i=0;i <= CONVOY_MAX_SIZE;i++)
     {
-        if(Data.Convoy[i]->ItemID == 0)
+        if(Data.Convoy[i].ItemID == 0)
         {
-            Data.Convoy[i]->ItemID = Char[CharID].InventoryData[0x5]; //move last item in this to convoy in this case
-            Char[CharID].InventoryData[0x5] = ItemID;
+            u32 item = Char[CharID].InventoryData[4]; //move last item in this to convoy in this case
+            Data.Convoy[i].ItemID = item;
+            item = ItemID;
+            Char[CharID].InventoryData[4] = ItemID;
             return;
         }
-        if (i == UINT16_MAX)
+        if (i == CONVOY_MAX_SIZE)
         {
             return;
         }
@@ -81,14 +83,14 @@ void AddItemToCharacter(u16 CharID, u16 ItemID, MainData Data, CurrChar Char){
 void AddItemToConvoy(u16 ItemID, MainData Data)
 {
     u16 i;
-    for(i=0;i<=UINT16_MAX;i++)
+    for(i=0;i<= CONVOY_MAX_SIZE;i++)
     {
-        if(Data.Convoy[i]->ItemID == 0)
+        if(Data.Convoy[i].ItemID == 0)
         {
-            Data.Convoy[i]->ItemID = ItemID;
+            Data.Convoy[i].ItemID = ItemID;
             return;
         }
-        if (i == UINT16_MAX)
+        if (i == CONVOY_MAX_SIZE)
         {
             return;
         }

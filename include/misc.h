@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define CONVOY_MAX_SIZE     1500
+#define MAX_GOLD_AMOUNT     9999
+
 inline int DiceRollOnehundred () {
     srand(time(0));
     int OnedDHundred = (rand() % (100 - 1 + 1)) + 1;    
@@ -15,8 +18,9 @@ inline int DiceRollOneSix () {
 
 typedef struct
 {
-    u32 ItemID;
-}ConvoyData[UINT16_MAX];
+    u16 ItemID;
+    u8  StackedItem;
+}ConvoyData[CONVOY_MAX_SIZE];
 
 typedef struct 
 {
@@ -24,7 +28,7 @@ typedef struct
     u16 CurrGold; //Gold Team has
     u16 TeamData[INT8_MAX]; //CharIDs
     s8 PermaFlagData[INT8_MAX]; //max 127 perma flags here for sanity sake
-    ConvoyData Convoy[];
+    ConvoyData Convoy;
 }MainData;
 
 struct ChapterData

@@ -172,7 +172,7 @@ struct RaceStruct
     bool RaceSMTShouldNullAtk;    
 };
 
-struct RaceStruct Race;
+struct RaceStruct Race[];
 
 enum ClassType
 {

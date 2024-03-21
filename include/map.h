@@ -2,8 +2,12 @@
 #include "char.h"
 #include <stdint.h>
 
-#define MAX_MAP_SIZE        125
-#define MAX_MAP_CHANGES      64
+#define MAX_MAP_SIZE                125
+#define MAX_MAP_CHANGES             64
+
+#define MAX_DEPLOYED_PC_UNITS       16
+#define MAX_DEPLOYED_ENEMY_UNITS    64
+#define MAX_DEPLOYED_ALLY_UNITS     32
 
 typedef struct
 {
@@ -54,25 +58,27 @@ typedef struct
 {
     u8 MapX;
     u8 MapY;
-    MapTile Tile[MAX_MAP_SIZE][MAX_MAP_SIZE]; //2d array why the fuck i havent realised this is good way to do it before i looked at fucking sdl2 tutorol....
+    MapTile *Tile[MAX_MAP_SIZE][MAX_MAP_SIZE]; //2d array why the fuck i havent realised this is good way to do it before i looked at fucking sdl2 tutorol....
     u8 UsedTileSet;
     u8 UsedPallete;
-    MapChange Mapchange[MAX_MAP_CHANGES]; // offset list for map changes
+    MapChange *Mapchange[MAX_MAP_CHANGES]; // offset list for map changes
 }MapData;
 
 typedef struct
 {
     u8 CurrentTurn; //256 max turns, here for redundancy
     u8 ChapterID; //Not Neccesarly needed but can be useful for script to distinguish which chapter events to run also additional redundancy
-    MapData Map;
+    MapData *Map;
     bool UseFOW;
-    u8 EnemyUnits[INT8_MAX]; //Unit IDs
-    u8 PlayerUnits[INT8_MAX]; //unit IDs
-    u8 AllyUnits[INT8_MAX]; //Unit IDs
-    struct {
+    struct
+    {
+        u8 UnitID;
+    }*EnemyUnit[MAX_DEPLOYED_ENEMY_UNITS], *PlayerUnits[MAX_DEPLOYED_PC_UNITS], *AllyUnits[MAX_DEPLOYED_ALLY_UNITS];
+    struct 
+    {
         u8 X;
         u8 Y;
-    }SelectedTile;
+    }*SelectedTile;
 }CurrentMap;
 
 enum TileType
