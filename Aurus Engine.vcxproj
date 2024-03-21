@@ -68,8 +68,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\MINGw_Dev_libs\SDL2-2.28.5\include;C:\MINGw_Dev_libs\SDL2_image-2.8.2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\MINGw_Dev_libs\SDL2_image-2.8.2\lib\x64;C:\MINGw_Dev_libs\SDL2-2.28.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\MINGw_Dev_libs\SDL2-2.28.5\include;C:\MINGw_Dev_libs\SDL2_image-2.8.2\include;C:\MINGw_Dev_libs\SDL2_mixer-2.8.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\MINGw_Dev_libs\SDL2_image-2.8.2\lib\x64;C:\MINGw_Dev_libs\SDL2-2.28.5\lib\x64;C:\MINGw_Dev_libs\SDL2_mixer-2.8.0\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -93,6 +93,10 @@
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -151,6 +155,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\zlib_static.1.2.11.9\build\native\zlib_static.targets" Condition="Exists('packages\zlib_static.1.2.11.9\build\native\zlib_static.targets')" />
     <Import Project="packages\libpng_static.1.6.39.1\build\native\libpng_static.targets" Condition="Exists('packages\libpng_static.1.6.39.1\build\native\libpng_static.targets')" />
+    <Import Project="packages\libxml2-vc140-static-32_64.2.9.4.1\build\native\libxml2-vc140-static-32_64.targets" Condition="Exists('packages\libxml2-vc140-static-32_64.2.9.4.1\build\native\libxml2-vc140-static-32_64.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -158,5 +163,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\zlib_static.1.2.11.9\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\zlib_static.1.2.11.9\build\native\zlib_static.targets'))" />
     <Error Condition="!Exists('packages\libpng_static.1.6.39.1\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\libpng_static.1.6.39.1\build\native\libpng_static.targets'))" />
+    <Error Condition="!Exists('packages\libxml2-vc140-static-32_64.2.9.4.1\build\native\libxml2-vc140-static-32_64.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\libxml2-vc140-static-32_64.2.9.4.1\build\native\libxml2-vc140-static-32_64.targets'))" />
   </Target>
 </Project>

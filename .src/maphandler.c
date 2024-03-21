@@ -2,8 +2,18 @@
 
 void IncreaseTurnCounter(CurrentMap Map)
 {
-    Map.CurrentTurn += 1;
-    return;
+    int Currentturn = Map.CurrentTurn;
+    int * Currentturn = (int*)malloc(n * sizeof(Map));
+
+    if (Currentturn != NULL) {
+        Currentturn += 1;
+        return;
+        free;
+    }
+    else {
+        free; //even though no memory was assigned its still best to clear the mem
+        return -1;
+    }
 };
 
 int InitialiseMap()
