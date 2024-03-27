@@ -1,5 +1,8 @@
-#include <windows.h>
-#include "../include/graphics.h"
+#ifdef WIN32
+	#include <windows.h>
+#endif
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
