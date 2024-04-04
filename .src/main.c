@@ -1,12 +1,8 @@
 #ifdef _WIN32
 	#include <windows.h>
-	#include <SDL.h>
-	#include <SDL_image.h>
 #endif
-#ifndef _WIN32
-	#include "SDL2/SDL.h"
-	#include "SDL2/SDL_image.h"
-#endif
+#include <SDL.h>
+#include <SDL_image.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
