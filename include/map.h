@@ -66,7 +66,7 @@ typedef struct
 
 typedef struct
 {
-    u8 CurrentTurn; //256 max turns, here for redundancy
+    u8 CurrentTurn; //256 max turns, here for redundancy, and the fact that some chapters are goin to have multiple maps
     u8 ChapterID; //Not Neccesarly needed but can be useful for script to distinguish which chapter events to run also additional redundancy
     MapData *Map;
     bool UseFOW;

@@ -166,4 +166,36 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: \
  /usr/include/SDL2/SDL_version.h /usr/include/SDL2/SDL_locale.h \
  /usr/include/SDL2/SDL_misc.h /usr/include/SDL2/SDL_image.h \
  /usr/include/SDL2/SDL.h \
- /usr/lib/gcc/x86_64-redhat-linux/13/include/stdbool.h
+ /usr/lib/gcc/x86_64-redhat-linux/13/include/stdbool.h \
+ /home/typical/git\ repos/aurus-engine/.src/../.src/filehandler.c \
+ /usr/include/SDL2/SDL_mixer.h \
+ /home/typical/git\ repos/aurus-engine/.src/../.src/../include/types.h \
+ /usr/include/assert.h /usr/include/libxml2/libxml/xmlreader.h \
+ /usr/include/libxml2/libxml/xmlversion.h \
+ /usr/include/libxml2/libxml/xmlexports.h \
+ /usr/include/libxml2/libxml/tree.h \
+ /usr/lib/gcc/x86_64-redhat-linux/13/include/limits.h \
+ /usr/lib/gcc/x86_64-redhat-linux/13/include/syslimits.h \
+ /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+ /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+ /usr/include/bits/pthread_stack_min-dynamic.h \
+ /usr/include/bits/pthread_stack_min.h /usr/include/bits/posix2_lim.h \
+ /usr/include/libxml2/libxml/xmlstring.h \
+ /usr/include/libxml2/libxml/xmlregexp.h \
+ /usr/include/libxml2/libxml/dict.h \
+ /usr/include/libxml2/libxml/xmlmemory.h \
+ /usr/include/libxml2/libxml/threads.h \
+ /usr/include/libxml2/libxml/globals.h \
+ /usr/include/libxml2/libxml/parser.h /usr/include/libxml2/libxml/hash.h \
+ /usr/include/libxml2/libxml/valid.h \
+ /usr/include/libxml2/libxml/xmlerror.h \
+ /usr/include/libxml2/libxml/list.h \
+ /usr/include/libxml2/libxml/xmlautomata.h \
+ /usr/include/libxml2/libxml/entities.h \
+ /usr/include/libxml2/libxml/encoding.h /usr/include/iconv.h \
+ /usr/include/libxml2/libxml/xmlIO.h /usr/include/libxml2/libxml/SAX2.h \
+ /usr/include/libxml2/libxml/relaxng.h \
+ /usr/include/libxml2/libxml/xmlschemas.h \
+ /home/typical/git\ repos/aurus-engine/.src/../.src/../include/map.h \
+ /home/typical/git\ repos/aurus-engine/.src/../.src/../include/types.h \
+ /home/typical/git\ repos/aurus-engine/.src/../.src/../include/char.h

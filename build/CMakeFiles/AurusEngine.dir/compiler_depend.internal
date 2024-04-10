@@ -3,6 +3,10 @@
 
 CMakeFiles/AurusEngine.dir/.src/main.c.o
  /home/typical/git repos/aurus-engine/.src/main.c
+ /home/typical/git repos/aurus-engine/include/char.h
+ /home/typical/git repos/aurus-engine/include/map.h
+ /home/typical/git repos/aurus-engine/include/types.h
+ /home/typical/git repos/aurus-engine/.src/filehandler.c
  /usr/include/SDL2/SDL.h
  /usr/include/SDL2/SDL_assert.h
  /usr/include/SDL2/SDL_atomic.h
@@ -33,6 +37,7 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o
  /usr/include/SDL2/SDL_messagebox.h
  /usr/include/SDL2/SDL_metal.h
  /usr/include/SDL2/SDL_misc.h
+ /usr/include/SDL2/SDL_mixer.h
  /usr/include/SDL2/SDL_mouse.h
  /usr/include/SDL2/SDL_mutex.h
  /usr/include/SDL2/SDL_pixels.h
@@ -56,6 +61,7 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o
  /usr/include/SDL2/begin_code.h
  /usr/include/SDL2/close_code.h
  /usr/include/alloca.h
+ /usr/include/assert.h
  /usr/include/bits/atomic_wide_counter.h
  /usr/include/bits/byteswap.h
  /usr/include/bits/endian.h
@@ -67,10 +73,15 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o
  /usr/include/bits/fp-logb.h
  /usr/include/bits/libc-header-start.h
  /usr/include/bits/libm-simd-decl-stubs.h
+ /usr/include/bits/local_lim.h
  /usr/include/bits/long-double.h
  /usr/include/bits/math-vector.h
  /usr/include/bits/mathcalls-helper-functions.h
  /usr/include/bits/mathcalls.h
+ /usr/include/bits/posix1_lim.h
+ /usr/include/bits/posix2_lim.h
+ /usr/include/bits/pthread_stack_min-dynamic.h
+ /usr/include/bits/pthread_stack_min.h
  /usr/include/bits/pthreadtypes-arch.h
  /usr/include/bits/pthreadtypes.h
  /usr/include/bits/select.h
@@ -115,7 +126,32 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o
  /usr/include/features.h
  /usr/include/gnu/stubs-64.h
  /usr/include/gnu/stubs.h
+ /usr/include/iconv.h
  /usr/include/inttypes.h
+ /usr/include/libxml2/libxml/SAX2.h
+ /usr/include/libxml2/libxml/dict.h
+ /usr/include/libxml2/libxml/encoding.h
+ /usr/include/libxml2/libxml/entities.h
+ /usr/include/libxml2/libxml/globals.h
+ /usr/include/libxml2/libxml/hash.h
+ /usr/include/libxml2/libxml/list.h
+ /usr/include/libxml2/libxml/parser.h
+ /usr/include/libxml2/libxml/relaxng.h
+ /usr/include/libxml2/libxml/threads.h
+ /usr/include/libxml2/libxml/tree.h
+ /usr/include/libxml2/libxml/valid.h
+ /usr/include/libxml2/libxml/xmlIO.h
+ /usr/include/libxml2/libxml/xmlautomata.h
+ /usr/include/libxml2/libxml/xmlerror.h
+ /usr/include/libxml2/libxml/xmlexports.h
+ /usr/include/libxml2/libxml/xmlmemory.h
+ /usr/include/libxml2/libxml/xmlreader.h
+ /usr/include/libxml2/libxml/xmlregexp.h
+ /usr/include/libxml2/libxml/xmlschemas.h
+ /usr/include/libxml2/libxml/xmlstring.h
+ /usr/include/libxml2/libxml/xmlversion.h
+ /usr/include/limits.h
+ /usr/include/linux/limits.h
  /usr/include/math.h
  /usr/include/stdc-predef.h
  /usr/include/stdint.h
@@ -186,6 +222,7 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o
  /usr/lib/gcc/x86_64-redhat-linux/13/include/ia32intrin.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/immintrin.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/keylockerintrin.h
+ /usr/lib/gcc/x86_64-redhat-linux/13/include/limits.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/lwpintrin.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/lzcntintrin.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/mm_malloc.h
@@ -210,6 +247,7 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o
  /usr/lib/gcc/x86_64-redhat-linux/13/include/stdbool.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/stddef.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/stdint.h
+ /usr/lib/gcc/x86_64-redhat-linux/13/include/syslimits.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/tbmintrin.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/tmmintrin.h
  /usr/lib/gcc/x86_64-redhat-linux/13/include/tsxldtrkintrin.h
