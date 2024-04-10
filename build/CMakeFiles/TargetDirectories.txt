@@ -1,3 +1,0 @@
-/home/typical/git repos/aurus-engine/build/CMakeFiles/AurusEngine.dir
-/home/typical/git repos/aurus-engine/build/CMakeFiles/edit_cache.dir
-/home/typical/git repos/aurus-engine/build/CMakeFiles/rebuild_cache.dir
