@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "../.src/filehandler.c"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 800;
@@ -13,6 +14,9 @@ const int SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[])
 {
+
+	CurrentMap Map;
+	Load_Map_data_from_path("1","1",Map);
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 	SDL_Event event;

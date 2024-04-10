@@ -1,6 +1,8 @@
 #include "types.h"
 #include <stdint.h>
 
+#define RACESAMOUNT 15
+
 struct ClassStruct
 {
     u8 ClassID;
@@ -172,7 +174,7 @@ struct RaceStruct
     bool RaceSMTShouldNullAtk;    
 };
 
-struct RaceStruct Race[];
+struct RaceStruct Race[RACESAMOUNT];
 
 enum ClassType
 {

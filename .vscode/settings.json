@@ -1,6 +1,7 @@
 {
     "cmake.configureOnOpen": false,
     "files.associations": {
-        "sdl_image.h": "c"
+        "sdl_image.h": "c",
+        "string.h": "c"
     }
 }
