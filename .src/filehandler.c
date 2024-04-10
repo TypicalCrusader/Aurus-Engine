@@ -1,4 +1,5 @@
-﻿#include <SDL.h>
+﻿#pragma once
+#include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include "../include/types.h"
@@ -9,13 +10,17 @@
 
 
 
-char Load_File_path( char File_folder_path[],  char File_file_name[], char File_extension[]) {
+extern char Load_File_path( char File_folder_path[],  char File_file_name[], char File_extension[]) {
 
 	char File_name_1[] = "../data/";
 
 	//sadly strcpy_s is not part of open standard, thus ggc on linux doesnt supports it
 	#ifdef _WIN32
-		char File_path[UINT8_MAX];
+		#ifndef __GNUC__
+			char* File_path = malloc(100 * (1 + ((strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + 1))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
+		#else
+			char File_path[(strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)]
+		#endif	
 		strcpy_s(File_path, sizeof(File_name_1), *File_name_1);
 		strcpy_s(File_path, sizeof(File_folder_path), *File_folder_path);
 		strcpy_s(File_path, sizeof(File_file_name), *File_file_name);
@@ -23,7 +28,11 @@ char Load_File_path( char File_folder_path[],  char File_file_name[], char File_
 		strcpy_s(File_path, sizeof(File_extension), *File_extension);
 	#else
 		char ExtDot[1] = ".";	
-		char File_path[(strlen(File_name_1)-1)+(strlen(File_folder_path)+strlen(File_file_name))+(strlen(File_file_name)+strlen(File_extension))+(strlen(ExtDot)-1)];
+		#ifndef __GNUC__
+				char* File_path = malloc(100 * (1 + ((strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
+		#else
+				char File_path[(strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)]
+		#endif	
 		//cursed but memory safe
 		//TODO: add for loops 
 		char* buffer = malloc(300);
@@ -41,23 +50,23 @@ char Load_File_path( char File_folder_path[],  char File_file_name[], char File_
 				File_path[i] = buffer[i];					
 			}			
 			memcpy(buffer, File_file_name, strlen(File_file_name));
-			for(i=(strlen(File_folder_path)+1);(i>strlen(File_folder_path)) && (i<=strlen(File_file_name));i+1)
+			for(i=((strlen(File_name_1)+strlen(File_folder_path))+1);(i>strlen(File_folder_path)) && (i<=strlen(File_file_name));i+1)
 			{
 				File_path[i] = buffer[i];					
 			}				
-			File_path[strlen(File_folder_path)] = File_path + *buffer;
+			//File_path[strlen(File_folder_path)] = File_path + *buffer;
 			memcpy(buffer, ExtDot, strlen(ExtDot)-1);
-			for(i=(strlen(File_file_name)+1);(i>strlen(File_file_name)) && (i<=(strlen(ExtDot)-1));i+1)
+			for(i=((strlen(File_name_1) + strlen(File_file_name))+1);(i>strlen(File_file_name)) && (i<=(strlen(ExtDot)-1));i+1)
 			{
 				File_path[i] = buffer[i];					
 			}				
-			File_path[strlen(File_file_name)] = File_path + *buffer;
+			//File_path[strlen(File_file_name)] = File_path + *buffer;
 			memcpy(buffer, File_extension, strlen(File_extension));		
-			for(i=(strlen(File_name_1)-1);(i>File_name_1) && (i<=File_folder_path);i+1)
+			for(i=(strlen(File_extension) + strlen(File_file_name)) + 1; (i>File_name_1) && (i <= File_folder_path); i + 1)
 			{
 				File_path[i] = buffer[i];					
 			}				
-			File_path[strlen(ExtDot)-1] = File_path + *buffer;
+			//    File_path[strlen(ExtDot)-1] = File_path + *buffer;
 			if(File_path[(strlen(File_name_1)-1)+(strlen(File_folder_path)+strlen(File_file_name))+(strlen(File_file_name)+strlen(File_extension))+(strlen(ExtDot)-1)] == NULL)
 			{
 				free(buffer);
@@ -77,7 +86,7 @@ char Load_File_path( char File_folder_path[],  char File_file_name[], char File_
 	return *File_path;
 };
 
-int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SDL_Texture* Texture, char File_path[])
+extern int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SDL_Texture* Texture, char File_path[])
 {
 	SDL_RWops* RW_ops;
 	RW_ops = SDL_RWFromFile(File_path, "r");
@@ -87,12 +96,12 @@ int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SDL_Textu
 
 
 
-int Load_Wav_from_path() //Mix_OpenAudio(44100,AUDIO_F32SYS,2,??? )
+extern int Load_Wav_from_path() //Mix_OpenAudio(44100,AUDIO_F32SYS,2,??? )
 {
 
 }
 
-xmlChar Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]) {
+extern xmlChar Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]) {
 
 	xmlChar key;
 	cur = cur->xmlChildrenNode;
@@ -107,13 +116,13 @@ xmlChar Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]) {
 				cur = cur->next;
 			}
 		}
-		cur = cur->next;
+		//cur = cur->next;
 	}
 	xmlFreeDoc(key);
 	return -1;
 }
 
-int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
+extern int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
 {
 	xmlChar* key;
 	xmlAttr* attribute;
@@ -129,7 +138,7 @@ int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
 					return key;
 				}
 			}
-			attribute = attribute->next;
+			//attribute = attribute->next;
 		}
 		return -1;
 	}
@@ -143,16 +152,34 @@ TODO
 -handle map changes
 */
 
-int Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map )
+extern int Load_Map_data_from_path( char *chapterID, char *chaptermapid, struct CurrentMap Map )
 {
 	//char mapname[INT8_MAX];
 
 	#ifdef _WIN32
-		strcpy_s(mapname, 2, chapterID); //current chapter
-		strcpy_s(mapname, 1, "_");	
-		strcpy_s(mapname, 2, chaptermapid); //most of times = 1 in special cases it can spawn a new map if chapter is multimap
+		#ifndef __GNUC__
+			int* mapname = malloc(100 * (1 + (strlen(chapterID) + strlen(chaptermapid)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
+		#else
+			char mapnamestring[1 + (strlen(chapterID) + strlen(chaptermapid))];
+		#endif		
+		if (mapname != NULL) {
+			strcpy_s(mapname, 2, chapterID); //current chapter
+			strcpy_s(mapname, 1, "_");
+			strcpy_s(mapname, 2, chaptermapid); //most of times = 1 in special cases it can spawn a new map if chapter is multimap
+		}
+		else
+		{
+			free(mapname);
+			return -1;
+		}
+
+		char docname[UINT8_MAX]; Load_File_path("../map/map_", mapname, ".tmx");
 	#else
-		char mapnamestring[1+(strlen(chapterID)+strlen(chaptermapid))];
+		#ifndef __GNUC__
+			int* mapname = malloc(100 * (1 + (strlen(chapterID) + strlen(chaptermapid)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
+		#else
+			char mapnamestring[1 + (strlen(chapterID) + strlen(chaptermapid))];
+		#endif	
 		char* mapname = malloc(30);
 		if (mapname != NULL) {		
 			memset(mapname, "\0", 30);
@@ -171,11 +198,10 @@ int Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map
 			free(mapname);		
 			return -1;
 		}
+
+		char docname[UINT8_MAX]; Load_File_path("../map/map_", mapnamestring, ".tmx");
 	#endif
 
-	printf(mapnamestring);
-
-	char docname[UINT8_MAX]; Load_File_path("../map/map_", mapnamestring, ".tmx");
 
 	xmlDocPtr doc;
 	xmlNodePtr cur;
