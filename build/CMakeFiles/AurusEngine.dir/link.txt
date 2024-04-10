@@ -1,1 +1,1 @@
-/usr/bin/gcc -g CMakeFiles/AurusEngine.dir/.src/main.c.o -o "/home/typical/git repos/aurus-engine/AurusEngine"  /usr/lib64/libSDL2main.a /usr/lib64/libSDL2-2.0.so.0.2800.5 -lSDL2_image -lSDL2_mixer /usr/lib64/libxml2.so 
+/usr/bin/gcc -O2 -g CMakeFiles/AurusEngine.dir/.src/main.c.o -o "/home/typical/git repos/aurus-engine/AurusEngine"  /usr/lib64/libSDL2main.a /usr/lib64/libSDL2-2.0.so.0.2800.5 -lSDL2_image -lSDL2_mixer /usr/lib64/libxml2.so 

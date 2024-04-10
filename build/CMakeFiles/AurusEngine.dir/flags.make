@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I"/home/typical/git repos/aurus-engine/AurusEngine" -I/usr/include/libxml2 -isystem /usr/include/SDL2
 
-C_FLAGS = -g
+C_FLAGS = -O2 -g
 

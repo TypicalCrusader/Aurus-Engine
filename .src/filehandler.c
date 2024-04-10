@@ -11,23 +11,67 @@
 
 char Load_File_path( char File_folder_path[],  char File_file_name[], char File_extension[]) {
 
-	char File_name_1[] = "./data/";
-	char File_path[UINT8_MAX];
+	char File_name_1[] = "../data/";
 
 	//sadly strcpy_s is not part of open standard, thus ggc on linux doesnt supports it
 	#ifdef _WIN32
+		char File_path[UINT8_MAX];
 		strcpy_s(File_path, sizeof(File_name_1), *File_name_1);
 		strcpy_s(File_path, sizeof(File_folder_path), *File_folder_path);
 		strcpy_s(File_path, sizeof(File_file_name), *File_file_name);
 		strcpy_s(File_path, 1, ".");
 		strcpy_s(File_path, sizeof(File_extension), *File_extension);
 	#else
-		char ExtDot[1] = ".";
-		memcpy(File_path, File_name_1, strlen(File_name_1));
-		memcpy(File_path, File_folder_path, strlen(File_folder_path));
-		memcpy(File_path, File_file_name, strlen(File_file_name));
-		memcpy(File_path, ExtDot, strlen(ExtDot));
-		memcpy(File_path, File_extension, strlen(File_extension));								
+		char ExtDot[1] = ".";	
+		char File_path[(strlen(File_name_1)-1)+(strlen(File_folder_path)+strlen(File_file_name))+(strlen(File_file_name)+strlen(File_extension))+(strlen(ExtDot)-1)];
+		//cursed but memory safe
+		//TODO: add for loops 
+		char* buffer = malloc(300);
+		if (buffer != NULL) {		
+			u16 i;
+			memset(buffer, "\0", 300);		
+			memcpy(buffer, File_name_1, strlen(File_name_1)-1);
+			for(i=0;i<=(strlen(File_name_1)-1);i+1)
+			{
+				File_path[i] = buffer[i];					
+			}
+			memcpy(buffer, File_folder_path, strlen(File_folder_path));
+			for(i=(strlen(File_name_1)+1);(i>strlen(File_name_1)) && (i<=strlen(File_folder_path));i+1)
+			{
+				File_path[i] = buffer[i];					
+			}			
+			memcpy(buffer, File_file_name, strlen(File_file_name));
+			for(i=(strlen(File_folder_path)+1);(i>strlen(File_folder_path)) && (i<=strlen(File_file_name));i+1)
+			{
+				File_path[i] = buffer[i];					
+			}				
+			File_path[strlen(File_folder_path)] = File_path + *buffer;
+			memcpy(buffer, ExtDot, strlen(ExtDot)-1);
+			for(i=(strlen(File_file_name)+1);(i>strlen(File_file_name)) && (i<=(strlen(ExtDot)-1));i+1)
+			{
+				File_path[i] = buffer[i];					
+			}				
+			File_path[strlen(File_file_name)] = File_path + *buffer;
+			memcpy(buffer, File_extension, strlen(File_extension));		
+			for(i=(strlen(File_name_1)-1);(i>File_name_1) && (i<=File_folder_path);i+1)
+			{
+				File_path[i] = buffer[i];					
+			}				
+			File_path[strlen(ExtDot)-1] = File_path + *buffer;
+			if(File_path[(strlen(File_name_1)-1)+(strlen(File_folder_path)+strlen(File_file_name))+(strlen(File_file_name)+strlen(File_extension))+(strlen(ExtDot)-1)] == NULL)
+			{
+				free(buffer);
+				return -1;
+			}
+			else
+			{
+				free(buffer);
+			}
+		}
+		else {
+			free(buffer);
+			return -1;
+		}					
 	#endif
 
 	return *File_path;
@@ -101,22 +145,37 @@ TODO
 
 int Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map )
 {
-	char mapname[INT8_MAX];
+	//char mapname[INT8_MAX];
 
 	#ifdef _WIN32
 		strcpy_s(mapname, 2, chapterID); //current chapter
 		strcpy_s(mapname, 1, "_");	
 		strcpy_s(mapname, 2, chaptermapid); //most of times = 1 in special cases it can spawn a new map if chapter is multimap
 	#else
-		char bufr[] = "_";
-		memcpy(mapname, chapterID ,strlen(chapterID)+1);
-		memcpy(mapname,bufr,strlen(bufr));
-		memcpy(mapname,chaptermapid,strlen(chaptermapid));		
+		char mapnamestring[1+(strlen(chapterID)+strlen(chaptermapid))];
+		char* mapname = malloc(30);
+		if (mapname != NULL) {		
+			memset(mapname, "\0", 30);
+			char bufr[] = "_";
+			memmove(mapname, chapterID ,strlen(chapterID));
+			mapnamestring[0]=*mapname;
+			memmove(mapname,bufr,1);
+			mapnamestring[1]=*mapname;
+			memmove(mapname,chaptermapid,strlen(chaptermapid));	
+			mapnamestring[2]=*mapname;
+			mapnamestring[3]="\0";
+			free(mapname);
+		}
+		else
+		{
+			free(mapname);		
+			return -1;
+		}
 	#endif
 
-	printf(mapname);
+	printf(mapnamestring);
 
-	char docname[UINT8_MAX]; Load_File_path("../map/map_", mapname, ".tmx");
+	char docname[UINT8_MAX]; Load_File_path("../map/map_", mapnamestring, ".tmx");
 
 	xmlDocPtr doc;
 	xmlNodePtr cur;

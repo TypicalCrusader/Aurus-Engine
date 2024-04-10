@@ -86,7 +86,9 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
   /usr/include/bits/select.h \
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio.h \
   /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -269,7 +271,7 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 
 /usr/lib/gcc/x86_64-redhat-linux/13/include/xsavecintrin.h:
 
-/usr/include/inttypes.h:
+/usr/lib/gcc/x86_64-redhat-linux/13/include/x86gprintrin.h:
 
 /usr/include/gnu/stubs.h:
 
@@ -339,6 +341,10 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 
 /usr/lib/gcc/x86_64-redhat-linux/13/include/prfchwintrin.h:
 
+/usr/include/bits/stdio.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/13/include/avx512bf16intrin.h:
+
 /usr/include/bits/types/cookie_io_functions_t.h:
 
 /usr/include/bits/stdint-uintn.h:
@@ -400,16 +406,6 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 /usr/include/SDL2/SDL_power.h:
 
 /usr/include/SDL2/SDL_haptic.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/13/include/enqcmdintrin.h:
-
-/usr/include/SDL2/SDL_mutex.h:
-
-/usr/include/bits/types/struct_timespec.h:
-
-/usr/include/SDL2/SDL_hidapi.h:
-
-/usr/include/libxml2/libxml/globals.h:
 
 /usr/include/bits/floatn-common.h:
 
@@ -479,11 +475,9 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 
 /usr/lib/gcc/x86_64-redhat-linux/13/include/syslimits.h:
 
+/usr/include/bits/stdlib-bsearch.h:
+
 /usr/include/SDL2/SDL_misc.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/13/include/avx512vldqintrin.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/13/include/avx512vnniintrin.h:
 
 /usr/include/bits/fp-fast.h:
 
@@ -528,6 +522,16 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 /usr/include/SDL2/SDL_metal.h:
 
 /usr/include/SDL2/SDL_thread.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/13/include/enqcmdintrin.h:
+
+/usr/include/SDL2/SDL_mutex.h:
+
+/usr/include/bits/types/struct_timespec.h:
+
+/usr/include/SDL2/SDL_hidapi.h:
+
+/usr/include/libxml2/libxml/globals.h:
 
 /usr/include/bits/types/__sigset_t.h:
 
@@ -582,6 +586,16 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 /usr/include/gnu/stubs-64.h:
 
 /usr/include/libxml2/libxml/list.h:
+
+/usr/include/inttypes.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/13/include/avx512vnniintrin.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/13/include/avx512vldqintrin.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/13/include/xmmintrin.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/13/include/mwaitxintrin.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/13/include/stddef.h:
 
@@ -677,9 +691,11 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 
 /usr/lib/gcc/x86_64-redhat-linux/13/include/vpclmulqdqintrin.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/13/include/avx5124fmapsintrin.h:
+/usr/lib/gcc/x86_64-redhat-linux/13/include/movdirintrin.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/13/include/avx512bf16intrin.h:
+/usr/lib/gcc/x86_64-redhat-linux/13/include/amxtileintrin.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/13/include/avx5124fmapsintrin.h:
 
 /usr/include/libxml2/libxml/xmlautomata.h:
 
@@ -757,10 +773,6 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 
 /usr/lib/gcc/x86_64-redhat-linux/13/include/mmintrin.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/13/include/amxtileintrin.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/13/include/movdirintrin.h:
-
 /usr/lib/gcc/x86_64-redhat-linux/13/include/sgxintrin.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/13/include/mwaitintrin.h:
@@ -782,9 +794,3 @@ CMakeFiles/AurusEngine.dir/.src/main.c.o: /home/typical/git\ repos/aurus-engine/
 /usr/lib/gcc/x86_64-redhat-linux/13/include/vaesintrin.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/13/include/waitpkgintrin.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/13/include/x86gprintrin.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/13/include/mwaitxintrin.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/13/include/xmmintrin.h:

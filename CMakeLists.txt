@@ -1,5 +1,8 @@
 ﻿cmake_minimum_required(VERSION 3.20)
 
+set(CMAKE_C_COMPILER gcc)
+set(CMAKE_C_FLAGS "-O2")
+
 project(
   AurusEngine
   VERSION 0.1
