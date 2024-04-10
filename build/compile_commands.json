@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/typical/git repos/aurus-engine/build",
-  "command": "/usr/bin/gcc  -I\"/home/typical/git repos/aurus-engine/AurusEngine\" -I/usr/include/libxml2 -isystem /usr/include/SDL2 -g -o CMakeFiles/AurusEngine.dir/.src/main.c.o -c \"/home/typical/git repos/aurus-engine/.src/main.c\"",
-  "file": "/home/typical/git repos/aurus-engine/.src/main.c",
-  "output": "CMakeFiles/AurusEngine.dir/.src/main.c.o"
-}
-]

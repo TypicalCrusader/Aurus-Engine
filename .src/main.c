@@ -1,7 +1,7 @@
 #ifdef _WIN32
 	#include <windows.h>
 #endif
-#include <SDL.h>
+#include <sdl2/sdl.h>
 #include <SDL_image.h>
 #include <stdlib.h>
 #include <stdio.h>
