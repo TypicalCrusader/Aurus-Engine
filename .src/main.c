@@ -1,7 +1,13 @@
-#ifdef _WIN32
+#ifdef _WIN32 //MSCV MY BELOATHED
 	#include <windows.h>
+	#ifdef _MSC_VER
+		#include <sdl.h>
+	#else	
+		#include <sdl2/sdl.h>
+	#endif	
+#else
+	#include <sdl2/sdl.h>
 #endif
-#include <sdl2/sdl.h>
 #include <SDL_image.h>
 #include <stdlib.h>
 #include <stdio.h>
