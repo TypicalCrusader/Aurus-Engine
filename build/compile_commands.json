@@ -1,8 +1,20 @@
 [
 {
   "directory": "/home/typical/git repos/aurus-engine/build",
-  "command": "/usr/bin/gcc  -I\"/home/typical/git repos/aurus-engine/AurusEngine\" -I/usr/include/libxml2 -isystem /usr/include/SDL2 -O2 -g -o CMakeFiles/AurusEngine.dir/.src/main.c.o -c \"/home/typical/git repos/aurus-engine/.src/main.c\"",
+  "command": "/usr/bin/gcc  -I\"/home/typical/git repos/aurus-engine/AurusEngine\" -I/usr/include/SDL2 -I/usr/include/libxml2 -O2 -O0 -o CMakeFiles/AurusEngine.dir/.src/main.c.o -c \"/home/typical/git repos/aurus-engine/.src/main.c\"",
   "file": "/home/typical/git repos/aurus-engine/.src/main.c",
   "output": "CMakeFiles/AurusEngine.dir/.src/main.c.o"
+},
+{
+  "directory": "/home/typical/git repos/aurus-engine/build",
+  "command": "/usr/bin/gcc  -I\"/home/typical/git repos/aurus-engine/AurusEngine\" -I/usr/include/SDL2 -I/usr/include/libxml2 -O2 -O0 -o CMakeFiles/AurusEngine.dir/.src/filehandler.c.o -c \"/home/typical/git repos/aurus-engine/.src/filehandler.c\"",
+  "file": "/home/typical/git repos/aurus-engine/.src/filehandler.c",
+  "output": "CMakeFiles/AurusEngine.dir/.src/filehandler.c.o"
+},
+{
+  "directory": "/home/typical/git repos/aurus-engine/build",
+  "command": "/usr/bin/gcc  -I\"/home/typical/git repos/aurus-engine/AurusEngine\" -I/usr/include/SDL2 -I/usr/include/libxml2 -O2 -O0 -o CMakeFiles/AurusEngine.dir/.src/battlehandler.c.o -c \"/home/typical/git repos/aurus-engine/.src/battlehandler.c\"",
+  "file": "/home/typical/git repos/aurus-engine/.src/battlehandler.c",
+  "output": "CMakeFiles/AurusEngine.dir/.src/battlehandler.c.o"
 }
 ]

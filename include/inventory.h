@@ -1,3 +1,7 @@
+#pragma once
+#ifndef _MYHEADER_H_
+#define _MYHEADER_H_
+#endif
 #include "../include/types.h"
 
 struct InventoryData

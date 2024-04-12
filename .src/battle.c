@@ -1,7 +1,9 @@
+
 #include "../include/battle.h"
 #include "../include/inventory.h"
 #include "../include/misc.h"
 #include "../include/skills.h"
+#include "../include/char.h"
 #include <stdint.h>
 
 int IncreaseStat(s8 stat, s8 statgrowth){

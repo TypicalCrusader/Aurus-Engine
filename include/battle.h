@@ -1,3 +1,7 @@
+#pragma once
+#ifndef _MYHEADER_H_
+#define _MYHEADER_H_
+#endif
 #include "map.h"
 
 typedef struct 
@@ -61,3 +65,14 @@ enum BattleRange
     BATTLE_RANGE_2_MAGIC,
     BATTLE_RANGE_3_MAGIC
 };
+
+int GenerateBattleStruct ( SelectedUnit , BattleUnit );
+int Initiate_PreBattleSkills( BattleUnit );
+int BattleLoop();
+void AttackFunc();
+void Initiate_Battle();
+void CalcAttack( BattleUnit );
+void MoveBattleState( BattleUnit , BattleUnit );
+void ApplyPreBattleSkills(u8 ,  BattleUnit );
+void SMTLikeRes( BattleUnit ,  BattleUnit );
+void CalcHit( BattleUnit , BattleUnit );

@@ -1,20 +1,17 @@
+#pragma once
+#ifndef _MYHEADER_H_
+#define _MYHEADER_H_
+#endif
 #include <stdlib.h>
 #include <time.h>
+#include "types.h"
 
 #define CONVOY_MAX_SIZE     1500
 #define MAX_GOLD_AMOUNT     9999
 
-int DiceRollOnehundred () {
-    srand(time(0));
-    int OnedDHundred = (rand() % (100 - 1 + 1)) + 1;    
-    return OnedDHundred;
-};
-
-int DiceRollOneSix () {
-    srand(time(0));
-    int OnedDSix = (rand() % (6 - 1 + 1)) + 1;    
-    return OnedDSix;
-};
+int DiceRollOnehundred ();
+int DiceRollOneSix ();
+int DiceRollOneTwenty ();
 
 typedef struct
 {

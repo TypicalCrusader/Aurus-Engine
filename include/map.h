@@ -1,3 +1,7 @@
+#pragma once
+#ifndef _MYHEADER_H_
+#define _MYHEADER_H_
+#endif
 #include "types.h"
 #include "char.h"
 #include <stdint.h>
@@ -111,3 +115,11 @@ enum TileType
     SPECIAL_TYPE_FORT,
     SPECIAL_TYPE_COLLUMN
 };
+
+void IncreaseTurnCounter(CurrentMap );
+int InitialiseMap();
+void CheckTileType();
+int CheckMapChangeExists();
+int ChangeMapChange();
+int ApplyMapEffect();
+int ChangeMapMidChapter();

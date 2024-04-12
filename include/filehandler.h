@@ -1,0 +1,19 @@
+#pragma once
+#ifndef _MYHEADER_H_
+#define _MYHEADER_H_
+#endif
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+#include "../include/types.h"
+#include <string.h>
+#include <libxml/xmlreader.h>
+#include <stdio.h>
+#include "../include/map.h"
+
+int Load_File_path( char File_folder_path[],  char File_file_name[], char File_extension[]);
+int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SDL_Texture* Texture, char File_path[]);
+int Load_Wav_from_path();
+int Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]);
+int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[]);
+char Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map );

@@ -1,6 +1,8 @@
 # Aurus-Engine
-SRPG engine writen 100% in C, for use in SRPG games 
+C and SDL2 based SRPG game engine
 
-Made Because of anger at other engines by Typical for Tales of Aurus
+Made with explicit purpuose of creating open source SRPG engine that doesnt limit comercial purposes.
 
-Dont Expect anything more here until i will make the actual engine boot lmao
+OS Supported
+- Any OS that supports SDL2
+- Any OS that is on either x86_64/aarch64/arm

@@ -1,11 +1,4 @@
-#include "types.h"
-#include "misc.h"
-#include "char.h"
-#include "inventory.h"
-#include <stdlib.h>
-#include <assert.h>
-
-u8 PermaFlags[UINT8_MAX];
+#include "../include/aurusscript.h"
 
 void SetPermaFlagTo(u8 Flag, u8 SetUnset )
 {
@@ -23,7 +16,6 @@ int CheckPermaFlag(u8 Flag)
     return PermaFlags[Flag];
 };
 
-u8 TempFlags[UINT8_MAX];
 
 void SetTempFlagto(u8 Flag, u8 SetUnset)
 {
@@ -41,8 +33,9 @@ int CheckTempFlag(u8 Flag)
     return TempFlags[Flag];
 };
 
-void AddGoldToTeam(u16 GoldAmount, MainData Data)
+void AddGoldToTeam(u16 GoldAmount)
 {
+    MainData Data;
     if((GoldAmount + Data.CurrGold ) > MAX_GOLD_AMOUNT)
     {
         return;
@@ -51,8 +44,10 @@ void AddGoldToTeam(u16 GoldAmount, MainData Data)
     return;
 };
 
-void AddItemToCharacter(u16 CharID, u16 ItemID, MainData Data, CurrChar Char){
+void AddItemToCharacter(u16 CharID, u16 ItemID){
     u16 i;
+    CurrCharData *Char;
+    MainData Data;
     for(i=0;i<5;i++)
     {
         if (Char[CharID].InventoryData[i] == 0)
@@ -80,8 +75,9 @@ void AddItemToCharacter(u16 CharID, u16 ItemID, MainData Data, CurrChar Char){
     return;
 };
 
-void AddItemToConvoy(u16 ItemID, MainData Data)
+void AddItemToConvoy(u16 ItemID)
 {
+    MainData Data;
     u16 i;
     for(i=0;i<= CONVOY_MAX_SIZE;i++)
     {

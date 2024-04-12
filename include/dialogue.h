@@ -1,4 +1,8 @@
-﻿#include "types.h"
+﻿#pragma once
+#ifndef _MYHEADER_H_
+#define _MYHEADER_H_
+#endif
+#include "types.h"
 
 struct DialogueDataEntry
 {

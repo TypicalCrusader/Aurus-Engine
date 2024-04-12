@@ -1,16 +1,7 @@
-﻿#pragma once
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#include "../include/types.h"
-#include <string.h>
-#include <libxml/xmlreader.h>
-#include <stdio.h>
-#include "../include/map.h"
+﻿
+#include "../include/filehandler.h"
 
-
-
-extern char Load_File_path( char File_folder_path[],  char File_file_name[], char File_extension[]) {
+int Load_File_path( char File_folder_path[],  char File_file_name[], char File_extension[]) {
 
 	char File_name_1[] = "../data/";
 
@@ -31,15 +22,15 @@ extern char Load_File_path( char File_folder_path[],  char File_file_name[], cha
 		#ifndef __GNUC__
 				char* File_path = malloc(100 * (1 + ((strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
 		#else
-				char File_path[(strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)]
+				char File_path[(strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)];
 		#endif	
 		//cursed but memory safe
 		//TODO: add for loops 
 		char* buffer = malloc(300);
 		if (buffer != NULL) {		
 			u16 i;
-			memset(buffer, "\0", 300);		
-			memcpy(buffer, File_name_1, strlen(File_name_1)-1);
+			memset(buffer, '\0', 300);		
+			memcpy(buffer, File_name_1, (strlen(File_name_1)-1));
 			for(i=0;i<=(strlen(File_name_1)-1);i+1)
 			{
 				File_path[i] = buffer[i];					
@@ -55,19 +46,19 @@ extern char Load_File_path( char File_folder_path[],  char File_file_name[], cha
 				File_path[i] = buffer[i];					
 			}				
 			//File_path[strlen(File_folder_path)] = File_path + *buffer;
-			memcpy(buffer, ExtDot, strlen(ExtDot)-1);
+			memcpy(buffer, ExtDot, 1);
 			for(i=((strlen(File_name_1) + strlen(File_file_name))+1);(i>strlen(File_file_name)) && (i<=(strlen(ExtDot)-1));i+1)
 			{
 				File_path[i] = buffer[i];					
 			}				
 			//File_path[strlen(File_file_name)] = File_path + *buffer;
 			memcpy(buffer, File_extension, strlen(File_extension));		
-			for(i=(strlen(File_extension) + strlen(File_file_name)) + 1; (i>File_name_1) && (i <= File_folder_path); i + 1)
+			for(i=(strlen(File_extension) + strlen(File_file_name)) + 1; (i>strlen(File_name_1)) && (i <= strlen(File_folder_path)); i + 1)
 			{
 				File_path[i] = buffer[i];					
 			}				
 			//    File_path[strlen(ExtDot)-1] = File_path + *buffer;
-			if(File_path[(strlen(File_name_1)-1)+(strlen(File_folder_path)+strlen(File_file_name))+(strlen(File_file_name)+strlen(File_extension))+(strlen(ExtDot)-1)] == NULL)
+			if(File_path[(strlen(File_name_1)-1)+(strlen(File_folder_path)+strlen(File_file_name))+(strlen(File_file_name)+strlen(File_extension))+(strlen(ExtDot)-1)] !=  '\0')
 			{
 				free(buffer);
 				return -1;
@@ -86,7 +77,7 @@ extern char Load_File_path( char File_folder_path[],  char File_file_name[], cha
 	return *File_path;
 };
 
-extern int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SDL_Texture* Texture, char File_path[])
+int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SDL_Texture* Texture, char File_path[])
 {
 	SDL_RWops* RW_ops;
 	RW_ops = SDL_RWFromFile(File_path, "r");
@@ -94,14 +85,12 @@ extern int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SD
 	return 0;
 };
 
-
-
-extern int Load_Wav_from_path() //Mix_OpenAudio(44100,AUDIO_F32SYS,2,??? )
+int Load_Wav_from_path() //Mix_OpenAudio(44100,AUDIO_F32SYS,2,??? )
 {
-
+	return 0;
 }
 
-extern xmlChar Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]) {
+int Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]) {
 
 	xmlChar key;
 	cur = cur->xmlChildrenNode;
@@ -122,7 +111,7 @@ extern xmlChar Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childnam
 	return -1;
 }
 
-extern int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
+int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
 {
 	xmlChar* key;
 	xmlAttr* attribute;
@@ -131,7 +120,7 @@ extern int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname
 		cur = cur->xmlChildrenNode;
 		while (cur != NULL) {
 			if ((!xmlStrcmp(cur->name, (const xmlChar)"property"))) {
-				if (attribute->name == propertyname)
+				if (attribute->name == *propertyname)
 				{
 					key = xmlGetProp(cur, attribute->name);
 					xmlFree(attribute);
@@ -152,9 +141,8 @@ TODO
 -handle map changes
 */
 
-extern int Load_Map_data_from_path( char *chapterID, char *chaptermapid, struct CurrentMap Map )
+char Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map )
 {
-	//char mapname[INT8_MAX];
 
 	#ifdef _WIN32
 		#ifndef __GNUC__
@@ -182,7 +170,7 @@ extern int Load_Map_data_from_path( char *chapterID, char *chaptermapid, struct 
 		#endif	
 		char* mapname = malloc(30);
 		if (mapname != NULL) {		
-			memset(mapname, "\0", 30);
+			memset(mapname, '\0', 30);
 			char bufr[] = "_";
 			memmove(mapname, chapterID ,strlen(chapterID));
 			mapnamestring[0]=*mapname;
@@ -199,7 +187,12 @@ extern int Load_Map_data_from_path( char *chapterID, char *chaptermapid, struct 
 			return -1;
 		}
 
-		char docname[UINT8_MAX]; Load_File_path("../map/map_", mapnamestring, ".tmx");
+		#ifndef __GNUC__
+			char* docname = malloc(100 * (1 + (strlen(chapterID) + strlen(chaptermapid)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT		
+		#else
+			char *docname[1 + (strlen(chapterID) + strlen(chaptermapid))];
+		#endif	
+		*docname = (char*) Load_File_path("../map/map_", mapnamestring, ".tmx");		
 	#endif
 
 
@@ -242,7 +235,7 @@ extern int Load_Map_data_from_path( char *chapterID, char *chaptermapid, struct 
 		xmlChar TilePalette = Get_Properties_Value(doc, cur, "TilePalette");		//which internal tileset palette it is using
 
 		//get map tile data
-		xmlChar* MaptileData = Parse_map_XML_values(doc, cur, "data");
+		xmlChar MaptileData = Parse_map_XML_values(doc, cur, "data");
 
 		//finally free memory, this is bc we dont need to reside in memory 100% of the time
 		xmlFree(cur);
@@ -258,6 +251,9 @@ extern int Load_Map_data_from_path( char *chapterID, char *chaptermapid, struct 
 
 		//test for tommorow
 		printf(MaptileData);
+
+		return 0;
 	}
 
+	return 0;
 }

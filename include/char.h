@@ -1,7 +1,13 @@
+#pragma once
+#ifndef _MYHEADER_H_
+#define _MYHEADER_H_
+#endif
 #include "types.h"
-#include <stdint.h>
 
 #define RACESAMOUNT 15
+
+int AddLevel (); //this can either be used with BUnit or CurrUnit
+int IncreaseStat(s8 , s8 ); //this can either be used with BUnit or CurrUnit
 
 struct ClassStruct
 {
@@ -94,8 +100,8 @@ struct CharacterData
 typedef struct
 {
     u16 UnitID;
-    struct CharacterData CharData;
-    struct ClassStruct ClassData;
+    struct CharacterData *CharData;
+    struct ClassStruct *ClassData;
     u16 InventoryData[0x5];
     u16 CurrentSkills[UINT8_MAX];
     s8 CurrHp;
@@ -122,7 +128,8 @@ typedef struct
     u8 CurrEarth;
     u8 CurrStaves;
     u8 CurrStone;
-}CurrChar[UINT16_MAX];
+}CurrCharData;
+
 
 enum gender {
     GENDER_MALE,
@@ -172,9 +179,7 @@ struct RaceStruct
     struct RaceSMTLikeRes SMTRes;
     struct RaceBoostStruct Raceboost;
     bool RaceSMTShouldNullAtk;    
-};
-
-struct RaceStruct Race[RACESAMOUNT];
+}Race[RACESAMOUNT];
 
 enum ClassType
 {
