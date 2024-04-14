@@ -64,3 +64,11 @@
 /.vs/Aurus Engine/v17/Browse.VC.db-wal
 /.vs/Aurus Engine/v17/Browse.VC.opendb
 /.vs/Aurus Engine/v17/ipch/AutoPCH/88ee2bdc7fb36c37/FILEHANDLER.ipch
+/x64/Debug/Aurus Engine.exp
+/x64/Debug/Aurus Engine.lib
+/x64/Debug/Aurus Engine.tlog/link.read.2.tlog
+/x64/Debug/Aurus Engine.tlog/link-cvtres.read.1.tlog
+/x64/Debug/Aurus Engine.tlog/link-cvtres.write.1.tlog
+/x64/Debug/Aurus Engine.tlog/link-rc.read.1.tlog
+/x64/Debug/Aurus Engine.tlog/link-rc.write.1.tlog
+/x64/Debug/Aurus Engine.tlog/unsuccessfulbuild
