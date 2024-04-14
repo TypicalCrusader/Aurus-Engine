@@ -1,9 +1,6 @@
 ﻿cmake_minimum_required(VERSION 3.29)
 
-find_program(CMAKE_C_COMPILER NAMES $ENV{CC} gcc PATHS ENV PATH NO_DEFAULT_PATH)
-
-
-#since on windows this piece of shit refuses to compile shit properly DESPITE it actually working i need to add this monstrocity, god has mercy on my soul
+#IF ON WINDOWS AND USING CYGWIN, YOU MUST CHANGE `exec_prefix` TO THE PATH OF CYGWIN eg. "C:\cygwin64\" AND ADD `includedir` "/usr/" between "${prefix}" and "include" IN "cygwin64\lib\cmake\SDL2\sdl2-config.cmake"
 
 project(
   AurusEngine
@@ -13,19 +10,23 @@ project(
   HOMEPAGE_URL "https://github.com/TypicalCrusader/Aurus-Engine"
 )
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
+
 if (WIN32)
   message("Detected Windows as OS")
+  if (NOT CMAKE_SIZEOF_VOID_P EQUAL ( 8 OR 4)) #fallback to detect architecture if somehow CMAKE_SIZEOF_VOID_P is of wrong value
+    message(WARNING "CMAKE_SIZEOF_VOID_P doesnt have expected value, implying we build for 64 bit")
+    set(CMAKE_SIZEOF_VOID_P "8")
+  endif()  
   if (CMAKE_SIZEOF_VOID_P EQUAL 8)
     message("Detected 64 bit OS")
   elseif (CMAKE_SIZEOF_VOID_P EQUAL 4)
     message("Detected 32 bit OS")  
   else()
+    message(FATAL_ERROR "CMAKE_SIZEOF_VOID_P is neither 4 or 8 this should never happen,\nCMAKE_SIZEOF_VOID_P value is:" ${CMAKE_SIZEOF_VOID_P} )
     message(FATAL_ERROR "Cannot Detect OS Architecture")   
   endif()
-    list(APPEND CMAKE_PREFIX_PATH "C:/cygwin64/lib/cmake/SDL2")
-    set(SDL2_INCLUDE_DIR /usr/include/SDL2)
-    set(SDL2_LIBRARY /usr/lib/libSDL2.so)  
-    set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
+    #set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 elseif(LINUX)
   message("Detected Linux as OS")
   set(LIBXML2_INCLUDE_DIR "/usr/include/libxml2")
@@ -46,21 +47,39 @@ if(CMAKE_C_COMPILER_ID MATCHES "GNU")
   set(CMAKE_C_FLAGS "-O2")
   set(CMAKE_C_FLAGS_DEBUG "-O0")
   set(CMAKE_C_FLAGS_RELEASE "-O2")
+  if(WIN32)
+    set(CMAKE_C_FLAGS_INIT "-m32")  
+    set(CMAKE_EXE_LINKER_FLAGS_INIT    "-m32")
+    set(CMAKE_MODULE_LINKER_FLAGS_INIT "-m32")
+    set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")    
+  endif()  
   Message("Detected GCC as compiler")  
 elseif(CMAKE_C_COMPILER_ID MATCHES "Clang")
   set(CMAKE_C_FLAGS "-O2")
   set(CMAKE_C_FLAGS_DEBUG "-O0")
   set(CMAKE_C_FLAGS_RELEASE "-O2")
+  if(WIN32)
+    set(CMAKE_C_FLAGS_INIT "-m32")  
+    set(CMAKE_EXE_LINKER_FLAGS_INIT    "-m32")
+    set(CMAKE_MODULE_LINKER_FLAGS_INIT "-m32")
+    set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")    
+  endif()  
   Message("Detected Clang as compiler")    
-elseif(CMAKE_C_COMPILER_ID MATCHES "MSVC")
+elseif(CMAKE_C_COMPILER_ID MATCHES "MSVC") #as always only they have different flags....
   set(CMAKE_C_FLAGS "/O2")
   set(CMAKE_C_FLAGS_DEBUG "/OD")
   set(CMAKE_C_FLAGS_RELEASE "/O2")  
   Message("Detected MSVC as compiler")    
-elseif(CMAKE_C_COMPILER_ID MATCHES "ARMCC")
+elseif(CMAKE_C_COMPILER_ID MATCHES "ARMCC") #if you are a madman then sure fuckin do it....
   set(CMAKE_C_FLAGS "-O2")
   set(CMAKE_C_FLAGS_DEBUG "-O0")
   set(CMAKE_C_FLAGS_RELEASE "-O2")  
+  if(WIN32)
+    set(CMAKE_C_FLAGS_INIT "-m32")  
+    set(CMAKE_EXE_LINKER_FLAGS_INIT    "-m32")
+    set(CMAKE_MODULE_LINKER_FLAGS_INIT "-m32")
+    set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")    
+  endif()  
   Message("Detected ARMCC as compiler")    
 else()
   message(FATAL_ERROR "Trying to build project with unsupported compiler")   
@@ -88,13 +107,13 @@ include_directories(
 add_executable(AurusEngine 
   ${CMAKE_CURRENT_SOURCE_DIR}/.src/main.c 
   ${CMAKE_CURRENT_SOURCE_DIR}/.src/filehandler.c
-  ${CMAKE_CURRENT_SOURCE_DIR}/.src/battlehandler.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/.src/battle.c
 )
 target_link_libraries(
   ${PROJECT_NAME} 
-  ${SDL2_LIBRARY} 
+  #${SDL2_LIBRARY} 
   #${SDL2IMAGE_LIBRARIES} 
-  #SDL2
+  SDL2
   SDL2_image
   SDL2_mixer
   ${LIBXML2_LIBRARIES}
