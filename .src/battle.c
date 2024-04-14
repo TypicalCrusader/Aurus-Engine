@@ -1,10 +1,7 @@
-
 #include "../include/battle.h"
-#include "../include/inventory.h"
-#include "../include/misc.h"
-#include "../include/skills.h"
-#include "../include/char.h"
 #include <stdint.h>
+
+struct RaceStruct Race[RACESAMOUNT];
 
 int IncreaseStat(s8 stat, s8 statgrowth){
     s8 maxstat = stat * 100; 

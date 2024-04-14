@@ -1,13 +1,9 @@
 #pragma once
-#ifndef _MYHEADER_H_
-#define _MYHEADER_H_
-#endif
+
 #include "types.h"
 
 #define RACESAMOUNT 15
 
-int AddLevel (); //this can either be used with BUnit or CurrUnit
-int IncreaseStat(s8 , s8 ); //this can either be used with BUnit or CurrUnit
 
 struct ClassStruct
 {
@@ -179,7 +175,7 @@ struct RaceStruct
     struct RaceSMTLikeRes SMTRes;
     struct RaceBoostStruct Raceboost;
     bool RaceSMTShouldNullAtk;    
-}Race[RACESAMOUNT];
+};
 
 enum ClassType
 {

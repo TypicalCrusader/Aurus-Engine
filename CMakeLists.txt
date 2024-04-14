@@ -106,6 +106,7 @@ include_directories(
 
 add_executable(AurusEngine 
   ${CMAKE_CURRENT_SOURCE_DIR}/.src/main.c 
+  ${CMAKE_CURRENT_SOURCE_DIR}/.src/misc.c  
   ${CMAKE_CURRENT_SOURCE_DIR}/.src/filehandler.c
   ${CMAKE_CURRENT_SOURCE_DIR}/.src/battle.c
 )

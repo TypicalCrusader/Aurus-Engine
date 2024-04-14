@@ -1,7 +1,7 @@
 #pragma once
-#ifndef _MYHEADER_H_
-#define _MYHEADER_H_
-#endif
+#include "inventory.h"
+#include "skills.h"
+#include "char.h"
 #include "map.h"
 
 typedef struct 
@@ -66,6 +66,21 @@ enum BattleRange
     BATTLE_RANGE_3_MAGIC
 };
 
+/*
+    `int AddLevel` - Adds level to x character
+    \param `unit` Battle Unit which will get increased level
+    \returns increased `level`
+    \since This Function is available since version 0.1 of Aurus Engine
+*/
+int AddLevel (BattleUnit unit); 
+/*
+    `int IncreaseStat` - Adds level to x character
+    \param `stat` Current Statistics number (eg. if you have 4 ATK the value will be 4)
+    \param `statgrowth` Grow rate of selected statistics represented in form of intiger going from 0 to 100
+    \returns increased `stat`
+    \since This Function is available since version 0.1 of Aurus Engine
+*/
+int IncreaseStat(s8 stat, s8 statgrowth); //this can either be used with BUnit or CurrUnit
 int GenerateBattleStruct ( SelectedUnit , BattleUnit );
 int Initiate_PreBattleSkills( BattleUnit );
 int BattleLoop();
