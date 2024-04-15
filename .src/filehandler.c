@@ -6,7 +6,7 @@ int Load_File_path( char File_folder_path[],  char File_file_name[], char File_e
 	char File_name_1[] = "../data/";
 
 	//sadly strcpy_s is not part of open standard, thus ggc on linux doesnt supports it
-	#ifdef _WIN32
+	#ifndef __GNUC__
 		#ifndef __GNUC__
 			char* File_path = malloc(100 * (1 + ((strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + 1))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
 		#else
@@ -144,7 +144,7 @@ TODO
 char Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map )
 {
 
-	#ifdef _WIN32
+	#ifndef __GNUC__
 		#ifndef __GNUC__
 			int* mapname = malloc(100 * (1 + (strlen(chapterID) + strlen(chaptermapid)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
 		#else

@@ -3,6 +3,7 @@
 #include "skills.h"
 #include "char.h"
 #include "map.h"
+#include "misc.h"
 
 typedef struct 
 {

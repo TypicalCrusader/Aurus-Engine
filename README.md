@@ -3,7 +3,7 @@ C and SDL2 based SRPG game engine
 
 Made with explicit purpuose of creating open source SRPG engine that doesnt limit comercial purposes.
 
-On windows while using cmakefiles for your own sanity please use cygwin and its default install path
+On windows while using cmakefiles for your own sanity please use MSYS2 ucrt64 and its default install path
 
 OS Supported
 - Any OS that supports SDL2

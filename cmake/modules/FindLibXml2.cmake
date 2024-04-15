@@ -55,7 +55,7 @@ The following cache variables may also be set:
 # use pkg-config to get the directories and then use these values
 # in the find_path() and find_library() calls
 
-set(WINDOWSHATEMEAAAAAAA "C:/cygwin64")
+set(WINDOWSHATEMEAAAAAAA "C:/msys64/ucrt64")
 
 find_package(PkgConfig QUIET)
 PKG_CHECK_MODULES(PC_LIBXML QUIET libxml-2.0)
@@ -65,7 +65,7 @@ find_path(LIBXML2_INCLUDE_DIR NAMES libxml/xpath.h
    ${PC_LIBXML_INCLUDEDIR}
    ${PC_LIBXML_INCLUDE_DIRS}
    PATH_SUFFIXES libxml2
-   PATHS ${WINDOWSHATEMEAAAAAAA}"/usr/include/libxml2"    
+   PATHS ${WINDOWSHATEMEAAAAAAA}"/include/libxml2"    
    )
 
 # CMake 3.9 and below used 'LIBXML2_LIBRARIES' as the name of

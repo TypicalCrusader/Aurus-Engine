@@ -6,9 +6,23 @@
 
 #define CONVOY_MAX_SIZE     1500
 #define MAX_GOLD_AMOUNT     9999
-
+/*
+    `int DiceRollOnehundred` - Roll 1d100 dice
+    \returns `OnedDHundred`
+    \since This Function is available since version 0.1 of Aurus Engine
+*/
 int DiceRollOnehundred ();
+/*
+    `int DiceRollOneSix` - Roll 1d6 dice
+    \returns `OnedDSix`
+    \since This Function is available since version 0.1 of Aurus Engine
+*/
 int DiceRollOneSix ();
+/*
+    `int DiceRollOneTwenty` - - Roll 1d20 dice
+    \returns `OneDTwenty`
+    \since This Function is available since version 0.1 of Aurus Engine
+*/
 int DiceRollOneTwenty ();
 
 typedef struct

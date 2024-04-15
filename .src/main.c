@@ -21,34 +21,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
-#ifdef _WIN32 //MSCV MY BELOATHED
-	#include <windows.h>
-	#ifdef _MSC_VER
-		#include <sdl.h>
-	#else	
-		#include <sdl2/sdl.h>
-	#endif	
-#else
-	#include <SDL2/SDL.h>
-#endif
-#include <SDL_image.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "../include/map.h"
+#include "../include/global.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-int Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map );
-
 int main(int argc, char* argv[])
 {
 
-	CurrentMap Map;
-	char* filepath = Load_Map_data_from_path("1","1",Map);
+	printf("EGG");
+
+	//CurrentMap Map;
+	//char* filepath = (char*) Load_Map_data_from_path("1","1",Map);
+	printf("69");
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 	SDL_Event event;
@@ -94,7 +80,7 @@ int main(int argc, char* argv[])
 			printf("windowSurface could not initialize! SDL_Error: %s\n", SDL_GetError());
 			return -1;
 		}*/
-		imageSurface = IMG_Load("./data/gfx/test.png"); //pure fucking cancer
+		imageSurface = IMG_Load("../data/gfx/test.png"); //pure fucking cancer
 		if (imageSurface == NULL)
 		{
 			printf("imageSurface could not initialize! SDL_Error: %s\n", SDL_GetError());
