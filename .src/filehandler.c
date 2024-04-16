@@ -1,80 +1,31 @@
 ﻿
 #include "../include/filehandler.h"
 
-int Load_File_path( char File_folder_path[],  char File_file_name[], char File_extension[]) {
+char* Load_File_path( char File_folder_path[],  char File_file_name[], char File_extension[]) {
 
-	char File_name_1[] = "../data/";
+	char File_name_1[] = "./data/";
 
 	//sadly strcpy_s is not part of open standard, thus ggc on linux doesnt supports it
-	#ifndef __GNUC__
-		#ifndef __GNUC__
-			char* File_path = malloc(100 * (1 + ((strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + 1))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
-		#else
-			char File_path[(strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)]
-		#endif	
-		strcpy_s(File_path, sizeof(File_name_1), *File_name_1);
-		strcpy_s(File_path, sizeof(File_folder_path), *File_folder_path);
-		strcpy_s(File_path, sizeof(File_file_name), *File_file_name);
-		strcpy_s(File_path, 1, ".");
-		strcpy_s(File_path, sizeof(File_extension), *File_extension);
-	#else
-		char ExtDot[1] = ".";	
-		#ifndef __GNUC__
-				char* File_path = malloc(100 * (1 + ((strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
-		#else
-				char File_path[(strlen(File_name_1) - 1) + (strlen(File_folder_path) + strlen(File_file_name)) + (strlen(File_file_name) + strlen(File_extension)) + (strlen(ExtDot) - 1)];
-		#endif	
-		//cursed but memory safe
-		//TODO: add for loops 
-		char* buffer = malloc(300);
-		if (buffer != NULL) {		
-			u16 i;
-			memset(buffer, '\0', 300);		
-			memcpy(buffer, File_name_1, (strlen(File_name_1)-1));
-			for(i=0;i<=(strlen(File_name_1)-1);i+1)
-			{
-				File_path[i] = buffer[i];					
-			}
-			memcpy(buffer, File_folder_path, strlen(File_folder_path));
-			for(i=(strlen(File_name_1)+1);(i>strlen(File_name_1)) && (i<=strlen(File_folder_path));i+1)
-			{
-				File_path[i] = buffer[i];					
-			}			
-			memcpy(buffer, File_file_name, strlen(File_file_name));
-			for(i=((strlen(File_name_1)+strlen(File_folder_path))+1);(i>strlen(File_folder_path)) && (i<=strlen(File_file_name));i+1)
-			{
-				File_path[i] = buffer[i];					
-			}				
-			//File_path[strlen(File_folder_path)] = File_path + *buffer;
-			memcpy(buffer, ExtDot, 1);
-			for(i=((strlen(File_name_1) + strlen(File_file_name))+1);(i>strlen(File_file_name)) && (i<=(strlen(ExtDot)-1));i+1)
-			{
-				File_path[i] = buffer[i];					
-			}				
-			//File_path[strlen(File_file_name)] = File_path + *buffer;
-			memcpy(buffer, File_extension, strlen(File_extension));		
-			for(i=(strlen(File_extension) + strlen(File_file_name)) + 1; (i>strlen(File_name_1)) && (i <= strlen(File_folder_path)); i + 1)
-			{
-				File_path[i] = buffer[i];					
-			}				
-			//    File_path[strlen(ExtDot)-1] = File_path + *buffer;
-			if(File_path[(strlen(File_name_1)-1)+(strlen(File_folder_path)+strlen(File_file_name))+(strlen(File_file_name)+strlen(File_extension))+(strlen(ExtDot)-1)] !=  '\0')
-			{
-				free(buffer);
-				return -1;
-			}
-			else
-			{
-				free(buffer);
-			}
-		}
-		else {
-			free(buffer);
-			return -1;
-		}					
-	#endif
+	char ExtDot[1] = ".";	
+	//cursed but memory safe
+	char* buffer = malloc((strlen(File_name_1)+strlen(File_folder_path)+strlen(File_file_name)+1+strlen(File_extension)+1));
 
-	return *File_path;
+	if (buffer != NULL) {		
+		//u16 i;
+		memset(buffer, '\0', (strlen(File_name_1)+strlen(File_folder_path)+strlen(File_file_name)+strlen(ExtDot)+strlen(File_extension)+1));		
+		memcpy(buffer, File_name_1, strlen(File_name_1));
+		memcpy(buffer+strlen(File_name_1), File_folder_path, strlen(File_folder_path));		
+		memcpy(buffer+(strlen(File_name_1)+strlen(File_folder_path)), File_file_name, strlen(File_file_name));
+		memcpy(buffer+(strlen(File_name_1)+strlen(File_folder_path)+strlen(File_file_name)), ExtDot, 1);
+		memcpy(buffer+(strlen(File_name_1)+strlen(File_folder_path)+strlen(File_file_name)+1), File_extension, strlen(File_extension));
+		memcpy(buffer+(strlen(File_name_1)+strlen(File_folder_path)+strlen(File_file_name)+1+strlen(File_extension)), "\0" , 1);	
+		printf("%s\n",buffer);	
+	}
+	else {
+		free(buffer);
+		return -1;
+	}					
+	return buffer;
 };
 
 int Load_texture_from_path(SDL_Surface* Image, SDL_Renderer* Renderer, SDL_Texture* Texture, char File_path[])
@@ -141,71 +92,42 @@ TODO
 -handle map changes
 */
 
-char Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map )
+char* Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map )
 {
+	char bufr[] = "_";
+	char* mapname = malloc(sizeof(chapterID)+sizeof(bufr)+sizeof(chaptermapid));
+	if (mapname != NULL) {		
+		memset(mapname, '\0', (sizeof(chapterID)+sizeof(bufr)+sizeof(chaptermapid)));
+		memcpy(mapname, chapterID ,strlen(chapterID));
+		memcpy(mapname+strlen(chapterID),bufr,1);
+		memcpy(mapname+(strlen(chapterID)+1),chaptermapid,strlen(chaptermapid));
+	}
+	else
+	{
+		free(mapname);		
+		return -1;
+	}
 
-	#ifndef __GNUC__
-		#ifndef __GNUC__
-			int* mapname = malloc(100 * (1 + (strlen(chapterID) + strlen(chaptermapid)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
-		#else
-			char mapnamestring[1 + (strlen(chapterID) + strlen(chaptermapid))];
-		#endif		
-		if (mapname != NULL) {
-			strcpy_s(mapname, 2, chapterID); //current chapter
-			strcpy_s(mapname, 1, "_");
-			strcpy_s(mapname, 2, chaptermapid); //most of times = 1 in special cases it can spawn a new map if chapter is multimap
-		}
-		else
-		{
-			free(mapname);
-			return -1;
-		}
-
-		char docname[UINT8_MAX]; Load_File_path("../map/map_", mapname, ".tmx");
-	#else
-		#ifndef __GNUC__
-			int* mapname = malloc(100 * (1 + (strlen(chapterID) + strlen(chaptermapid)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT
-		#else
-			char mapnamestring[1 + (strlen(chapterID) + strlen(chaptermapid))];
-		#endif	
-		char* mapname = malloc(30);
-		if (mapname != NULL) {		
-			memset(mapname, '\0', 30);
-			char bufr[] = "_";
-			memmove(mapname, chapterID ,strlen(chapterID));
-			mapnamestring[0]=*mapname;
-			memmove(mapname,bufr,1);
-			mapnamestring[1]=*mapname;
-			memmove(mapname,chaptermapid,strlen(chaptermapid));	
-			mapnamestring[2]=*mapname;
-			mapnamestring[3]="\0";
-			free(mapname);
-		}
-		else
-		{
-			free(mapname);		
-			return -1;
-		}
-
-		#ifndef __GNUC__
-			char* docname = malloc(100 * (1 + (strlen(chapterID) + strlen(chaptermapid)))); //to state that MSCV, Clang and MINGW ARE FUCKING IDIOTIC IN THIS CASE WOULD BE AN UNDERSTATEMENT		
-		#else
-			char *docname[1 + (strlen(chapterID) + strlen(chaptermapid))];
-		#endif	
-		*docname = (char*) Load_File_path("../map/map_", mapnamestring, ".tmx");		
-	#endif
-
+	char* docname = malloc(strlen(mapname) + 1 + (strlen(chapterID) + strlen(chaptermapid))+1);
+	//printf("%s\n", mapname);
+	//printf("%s\n", sizeof(mapname));			
+	docname = Load_File_path("map/map_", mapname, "tmx");		
+	//printf("%s\n", docname, "\n");
 
 	xmlDocPtr doc;
 	xmlNodePtr cur;
 	char outputstring; //its always an string....
 
+	printf("egg");
 	doc = xmlParseFile(docname);
+	printf("egg");
 
 	if (doc == NULL) {
 		fprintf(stderr, "Document not parsed successfully. \n");
 		return 0;
 	}
+
+	printf("3\n");
 
 	cur = xmlDocGetRootElement(doc);
 
@@ -221,13 +143,22 @@ char Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Ma
 		return 0;
 	}
 
+	printf("4\n");
+
 	//get 2 properties held on "map"
 	xmlChar MapX = Get_Properties_Value(doc, cur, "width");						//map X (width)
+
+	printf("joebama");
+
 	xmlChar MapY = Get_Properties_Value(doc, cur, "height");						//map Y (height)
+
+	printf("5\n");
 
 	cur = cur -> xmlChildrenNode;
 	while (cur != NULL) {
 		
+		printf("6\n");
+
 		//get properties	
 		xmlChar ChapterID = Get_Properties_Value(doc, cur, "ChapterID");			//map chapter id
 		xmlChar MapChangesID = Get_Properties_Value(doc, cur, "MapChangesID");		//how many map changes there are
@@ -241,6 +172,8 @@ char Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Ma
 		xmlFree(cur);
 		xmlFree(doc);
 
+		printf("7\n");
+
 		//save data to map structs >:)
 		Map.Map->MapX = (intptr_t)MapX;
 		Map.Map->MapY = (intptr_t)MapY;
@@ -249,11 +182,15 @@ char Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Ma
 	
 		//now to handle the meh stuff
 
+		printf("8\n");
+
 		//test for tommorow
 		printf(MaptileData);
 
 		return 0;
 	}
+
+	printf("5\n");
 
 	return 0;
 }

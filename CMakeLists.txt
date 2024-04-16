@@ -10,6 +10,7 @@ project(
   HOMEPAGE_URL "https://github.com/TypicalCrusader/Aurus-Engine"
 )
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/..")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
 if (WIN32)
@@ -69,7 +70,8 @@ elseif(CMAKE_C_COMPILER_ID MATCHES "MSVC") #as always only they have different f
   set(CMAKE_C_FLAGS "/O2")
   set(CMAKE_C_FLAGS_DEBUG "/OD")
   set(CMAKE_C_FLAGS_RELEASE "/O2")  
-  Message("Detected MSVC as compiler")    
+  Message("Detected MSVC as compiler")   
+  message(WARNING "For your own sanity i recommend NOT using MSVC") 
 elseif(CMAKE_C_COMPILER_ID MATCHES "ARMCC") #if you are a madman then sure fuckin do it....
   set(CMAKE_C_FLAGS "-O2")
   set(CMAKE_C_FLAGS_DEBUG "-O0")

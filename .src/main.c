@@ -29,12 +29,8 @@ const int SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[])
 {
-
-	printf("EGG");
-
-	//CurrentMap Map;
-	//char* filepath = (char*) Load_Map_data_from_path("1","1",Map);
-	printf("69");
+	CurrentMap Map;
+	char* filepath = Load_Map_data_from_path("1","1",Map);
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 	SDL_Event event;
@@ -80,7 +76,7 @@ int main(int argc, char* argv[])
 			printf("windowSurface could not initialize! SDL_Error: %s\n", SDL_GetError());
 			return -1;
 		}*/
-		imageSurface = IMG_Load("../data/gfx/test.png"); //pure fucking cancer
+		imageSurface = IMG_Load("./data/gfx/test.png"); //pure fucking cancer
 		if (imageSurface == NULL)
 		{
 			printf("imageSurface could not initialize! SDL_Error: %s\n", SDL_GetError());

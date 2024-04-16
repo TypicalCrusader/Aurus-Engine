@@ -1,11 +1,17 @@
 {
-    "cmake.configureOnOpen": false,
     "files.associations": {
-        "sdl_image.h": "c",
-        "string.h": "c",
-        "xmlreader.h": "c",
+        "stdlib.h": "c",
         "stdint.h": "c",
+        "inventory.h": "c",
+        "char.h": "c",
+        "filehandler.h": "c",
         "sdl.h": "c",
+        "battle.h": "c",
+        "sdl_main.h": "c",
+        "global.h": "c",
+        "stdio.h": "c",
+        "sdl_image.h": "c",
         "sdl_mixer.h": "c"
-    }
+    },
+    "cmake.sourceDirectory": "D:/Programowanie/C/Aurus-Engine/Aurus-Engine"
 }
