@@ -1,6 +1,6 @@
 ﻿#include "../include/map.h"
 
-static void IncreaseTurnCounter(CurrentMap Map)
+void IncreaseTurnCounter(CurrentMap Map)
 {
     Map.CurrentTurn += 1;
     return;

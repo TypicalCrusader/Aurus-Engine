@@ -114,10 +114,11 @@ enum TileType
     SPECIAL_TYPE_COLLUMN
 };
 
-void IncreaseTurnCounter(CurrentMap );
+static inline void IncreaseTurnCounter(CurrentMap );
 int InitialiseMap();
 void CheckTileType();
-int CheckMapChangeExists();
-int ChangeMapChange();
+static inline u8 CheckMapChangeExists();
+void ChangeMapChange();
 int ApplyMapEffect();
 int ChangeMapMidChapter();
+void ActivateMapSkill();

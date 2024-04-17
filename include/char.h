@@ -98,8 +98,9 @@ typedef struct
     u16 UnitID;
     struct CharacterData *CharData;
     struct ClassStruct *ClassData;
+    struct RaceStruct *Race;
     u16 InventoryData[0x5];
-    u16 CurrentSkills[UINT8_MAX];
+    u16 CurrentSkills;
     s8 CurrHp;
     s8 CurrAtk;
     s8 CurrMag;
@@ -125,7 +126,6 @@ typedef struct
     u8 CurrStaves;
     u8 CurrStone;
 }CurrCharData;
-
 
 enum gender {
     GENDER_MALE,
@@ -188,3 +188,10 @@ enum ClassType
     TYPE_MONSTER,
 };
 
+static inline void ExchangeInvSlotInfo();
+static inline void ChangeGender(); //fuckin dragons are putting magic into the water that turns the heckin humans gae
+static inline void ChangeAlignment();
+static inline s8 GetStat();
+static inline u8 GetWpnSkill();
+static inline u16 GetCharID();
+static inline u8 GetRace();

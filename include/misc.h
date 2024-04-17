@@ -11,19 +11,19 @@
     \returns `OnedDHundred`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-int DiceRollOnehundred ();
+static inline u8 DiceRollOnehundred ();
 /*
     `int DiceRollOneSix` - Roll 1d6 dice
     \returns `OnedDSix`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-int DiceRollOneSix ();
+static inline u8 DiceRollOneSix ();
 /*
     `int DiceRollOneTwenty` - - Roll 1d20 dice
     \returns `OneDTwenty`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-int DiceRollOneTwenty ();
+static inline u8 DiceRollOneTwenty ();
 
 typedef struct
 {

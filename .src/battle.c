@@ -3,7 +3,7 @@
 
 struct RaceStruct Race[RACESAMOUNT];
 
-int IncreaseStat(s8 stat, s8 statgrowth){
+s8 IncreaseStat(s8 stat, s8 statgrowth){
     s8 maxstat = stat * 100; 
     s8 currentstat = maxstat / statgrowth;
     currentstat = maxstat / statgrowth;
@@ -56,7 +56,7 @@ int IncreaseStat(s8 stat, s8 statgrowth){
     return stat;
 };
 
-int AddLevel (BattleUnit unit)
+u8 AddLevel (BattleUnit unit)
 {
     u8 level = unit.Unitinfo.level;
 
@@ -74,7 +74,7 @@ int AddLevel (BattleUnit unit)
     return level;
 };
 
-int GenerateBattleStruct ( SelectedUnit unit, BattleUnit bunit) {
+BattleUnit (GenerateBattleStruct ( SelectedUnit unit, BattleUnit bunit)) {
     bunit.Unitinfo = unit;
     bunit.EquippedWeapon = unit.Inventory[0x0]; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
     bunit.MaxHP = unit.MaxHP;
@@ -90,11 +90,11 @@ int GenerateBattleStruct ( SelectedUnit unit, BattleUnit bunit) {
     if(unit.Class.ClassType != TYPE_MAGICAL)
     {
         bunit.UnitDamage = unit.CurrentAtk; //base
-        return 0;
+        return bunit;
     }  
     bunit.UnitDamage = unit.CurrentMag; //base           
 
-    return 0;
+    return bunit;
 };
 
 void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
@@ -146,7 +146,7 @@ void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
 void Initiate_Battle() {
     //GenerateBattleStruct(SelectedUnit, Actor); //on player turn this is the player characters, on enemy its enemy characters
     //GenerateBattleStruct(EnemyUnit, Recipient);
-    //MoveBattleState(Actor, Recipient);
+    MoveBattleState(Actor, Recipient);
 
     //TODO: Add here OpenGL shit here
 
@@ -324,7 +324,7 @@ void AttackFunc() {
     return;
 };
 
-int BattleLoop(){
+void BattleLoop(){
     Initiate_Battle();
     ApplyPreBattleSkills(Initiate_PreBattleSkills(Actor), Actor);
     ApplyPreBattleSkills(Initiate_PreBattleSkills(Recipient), Recipient);
@@ -335,5 +335,5 @@ int BattleLoop(){
     }
 
     //post battle skills go here
-    return 0;
+    return;
 };

@@ -16,14 +16,14 @@ u8 TempFlags[UINT8_MAX];
     \returns Returns Flag Value which is `0` if unset and `1` if set
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void SetPermaFlagTo(u8 Flag, u8 SetUnset );
+static inline void SetPermaFlagTo(u8 Flag, u8 SetUnset );
 /*
     `CheckPermaFlag` - Checks Permament flag value and returns it
     \param `Flag` FlagID
     \returns `PermaFlags[Flag]`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-int CheckPermaFlag(u8 Flag);
+static inline u8 CheckPermaFlag(u8 Flag);
 /*
     `void SetTempFlagto` - Sets Temporary flag to either `0` or `1`
     Temporary Flags despite getting unset upon chapter's end persist through midchapter saves
@@ -32,14 +32,14 @@ int CheckPermaFlag(u8 Flag);
     \returns Returns Flag Value which is `0` if unset and `1` if set
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void SetTempFlagto(u8 Flag, u8 SetUnset);
+static inline void SetTempFlagto(u8 Flag, u8 SetUnset);
 /*
     `CheckTempFlag` - Checks Temporary flag value and returns it
     \param `Flag` FlagID
     \returns `TempFlags[Flag]`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-int CheckTempFlag(u8 Flag);
+static inline u8 CheckTempFlag(u8 Flag);
 /*
     `AddGoldToTeam` - Adds `GoldAmount` to Gold Data
     \param `GoldAmount`  Amount of Gold to add 
@@ -70,7 +70,7 @@ void AddItemToConvoy(u16 ItemID);
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void ChangeBattleMusic(u16 TrackID, u32 Ticks);
+static inline void ChangeBattleMusic(u16 TrackID, u32 Ticks);
 /*
     `ChangeMapMusic` - Changes Map music the the `TrackID` provided to function after amount of `Ticks` set passed
     \param `TrackID` TrackID
@@ -78,21 +78,21 @@ void ChangeBattleMusic(u16 TrackID, u32 Ticks);
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void ChangeMapMusic(u16 TrackID, u32 Ticks);
+static inline void ChangeMapMusic(u16 TrackID, u32 Ticks);
 /*
     `RoutCharacter` - Removes character from map without killing the character
     \param `CharID` Character ID
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void RoutCharacter(u16 CharID);
+static inline void RoutCharacter(u16 CharID);
 /*
     `KillCharacter` - Kills character and removes them from map
     \param `CharID` Character ID
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void KillCharacter(u16 CharID);
+static inline void KillCharacter(u16 CharID);
 /*
     `SpawnUnit` - Spawns Character of `CharID` with `Faction` `Skills` and `Inventory` on the map,
     \param `CharID` Character ID
@@ -158,7 +158,7 @@ void SpawnDialogue(char* DialogueEntry, u8 DialogueType, bool DeadSpeak, u8 BoxP
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine    
 */
-void SpawnCGImage(u16 ImageID);
+static inline void SpawnCGImage(u16 ImageID);
 /*
     `Chapter` - Function storing important values for current chapter
     \param `ChapterID` ChapterID (aka its number)
@@ -172,14 +172,14 @@ void Chapter(u16 ChapterID, u8 WinType, bool ChapterMultiMap);
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void GameOver();
+static inline void GameOver();
 /*
     `EndChapter` - sucessfully finish currently played chapter
     \param None
     \returns None    
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void EndChapter();
+static inline void EndChapter();
 /*
     MapEvent
     \param `MapEvent` Spawn an Map event of selected Type at selected coordinated
@@ -190,9 +190,17 @@ void EndChapter();
     - 2 - Castle
     - 3 - Temple
     - 4 - Shop (requires usage of `Shop` before calling `MapEvent`)
+    - 5 - Door
+    - 6 - Generic Map Change
     \returns None    
     \since This Function is available since version 0.1 of Aurus Engine
 */
 void MapEvent(u8 EventType, u8 MapX, u8 MapY);
+static inline void SaveValueToMemslot();
+static inline u8 ReturnMemslotValue();
+static inline void DisplayChoice();
+static inline void ChangeClass();
+static inline void ChangeSide();
+
 
 

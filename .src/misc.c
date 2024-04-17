@@ -1,19 +1,19 @@
 #include "../include/misc.h"
 
-int DiceRollOnehundred () {
+u8 DiceRollOnehundred () {
     srand(time(0));
-    int OnedDHundred = (rand() % (100 - 1 + 1)) + 1;    
+    u8 OnedDHundred = (rand() % (100 - 1 + 1)) + 1;    
     return OnedDHundred;
 };
 
-int DiceRollOneTwenty () {
+u8 DiceRollOneTwenty () {
     srand(time(0));
-    int OneDTwenty = (rand() % (20 - 1 + 1)) + 1;    
+    u8 OneDTwenty = (rand() % (20 - 1 + 1)) + 1;    
     return OneDTwenty;   
 };
 
-int DiceRollOneSix () {
+u8 DiceRollOneSix () {
     srand(time(0));
-    int OnedDSix = (rand() % (6 - 1 + 1)) + 1;    
+    u8 OnedDSix = (rand() % (6 - 1 + 1)) + 1;    
     return OnedDSix;
 };

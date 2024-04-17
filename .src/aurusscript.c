@@ -11,7 +11,7 @@ void SetPermaFlagTo(u8 Flag, u8 SetUnset )
     return;
 };
 
-int CheckPermaFlag(u8 Flag)
+u8 CheckPermaFlag(u8 Flag)
 {
     return PermaFlags[Flag];
 };
@@ -28,7 +28,7 @@ void SetTempFlagto(u8 Flag, u8 SetUnset)
     return;
 };
 
-int CheckTempFlag(u8 Flag)
+u8 CheckTempFlag(u8 Flag)
 {
     return TempFlags[Flag];
 };

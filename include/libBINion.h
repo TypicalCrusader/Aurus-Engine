@@ -103,3 +103,49 @@ struct file{
     const u16           gpdatacount;    
     struct gp_data      *generaldata;
 };
+
+struct file OpenFileIntoMemory(struct file fileData);
+u8 CheckIsBinionEncrypted();
+u8 CheckIsBinionCompressed();
+u8 CheckBinionEntryType(struct file fileData);
+u32 CalculateBinionCRC32();
+u8 CheckIsBinionCorrupted();
+u16 CalculateBinionEntryCRC16();
+u8 CheckIsEntryCorrupted();
+u8 SaveDatatoBinion();
+u8 ReadDataFromBinion();
+int EncryptBinion();
+int DecryptBinion();
+int CompressBinion();
+int DecompressBinion();
+
+enum image_type
+{
+    IMAGE_TYPE_BMP,
+    IMAGE_TYPE_PNG,
+    IMAGE_TYPE_TIFF
+};
+
+enum sound_type
+{
+    SOUND_TYPE_MID,
+    SOUND_TYPE_WAV,
+    SOUND_TYPE_OGG,
+    SOUND_TYPE_MP3
+};
+
+enum text_type
+{
+    TEXT_TYPE_ANSI,
+    TEXT_TYPE_UNIC,
+    TEXT_TYPE_UTF8,
+    TEXT_TYPE_AURS
+};
+
+enum gp_datatype
+{
+    GP_DATA_TYPE_SCRIPT,
+    GP_DATA_TYPE_ANIM,
+    GP_DATA_TYPE_OTHER
+};
+

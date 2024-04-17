@@ -9,7 +9,7 @@ struct SkillStruct
     char SkillDesc[50];
     char SkillEffect[50];
     u8 SkillActivation;
-}Skills[UINT8_MAX];
+};
 
 enum SkillActivation
 {

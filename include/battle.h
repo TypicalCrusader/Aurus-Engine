@@ -73,7 +73,7 @@ enum BattleRange
     \returns increased `level`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-int AddLevel (BattleUnit unit); 
+u8 AddLevel (BattleUnit unit); 
 /*
     `int IncreaseStat` - Adds level to x character
     \param `stat` Current Statistics number (eg. if you have 4 ATK the value will be 4)
@@ -81,10 +81,10 @@ int AddLevel (BattleUnit unit);
     \returns increased `stat`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-int IncreaseStat(s8 stat, s8 statgrowth); //this can either be used with BUnit or CurrUnit
-int GenerateBattleStruct ( SelectedUnit , BattleUnit );
+s8 IncreaseStat(s8 stat, s8 statgrowth); //this can either be used with BUnit or CurrUnit
+BattleUnit (GenerateBattleStruct ( SelectedUnit unit, BattleUnit bunit));
 int Initiate_PreBattleSkills( BattleUnit );
-int BattleLoop();
+void BattleLoop();
 void AttackFunc();
 void Initiate_Battle();
 void CalcAttack( BattleUnit );
