@@ -145,12 +145,19 @@ char* Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap M
 
 	printf("4\n");
 
+	xmlChar *MapX;
+	xmlChar *MapY;
+
+	MapY = xmlGetProp(cur,"height");
+	MapX = xmlGetProp(cur,"width");
+	printf("%s\n", MapX);
+
 	//get 2 properties held on "map"
-	xmlChar MapX = Get_Properties_Value(doc, cur, "width");						//map X (width)
+	//xmlChar MapX = Get_Properties_Value(doc, cur, "width");						//map X (width)
 
 	printf("joebama");
 
-	xmlChar MapY = Get_Properties_Value(doc, cur, "height");						//map Y (height)
+	//xmlChar MapY = Get_Properties_Value(doc, cur, "height");						//map Y (height)
 
 	printf("5\n");
 
@@ -173,13 +180,21 @@ char* Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap M
 		xmlFree(doc);
 
 		printf("7\n");
-
-		//save data to map structs >:)
-		Map.Map->MapX = (intptr_t)MapX;
-		Map.Map->MapY = (intptr_t)MapY;
-		Map.Map->UsedTileSet = (intptr_t)TileConfig;
-		Map.Map->UsedPallete = (intptr_t)TilePalette;
 	
+		//save data to map structs >:)
+		Map.Map->MapX = GetU8fromChar(MapX);
+
+		printf(2137);
+
+		Map.Map->MapY = GetU8fromChar(MapY);
+		Map.Map->UsedTileSet = GetU8fromChar(TileConfig);
+		Map.Map->UsedPallete = GetU8fromChar(TilePalette);
+	
+		printf("%i\n", Map.Map->MapX);
+		printf("%i\n", Map.Map->MapY);
+		printf("%i\n", Map.Map->UsedTileSet);
+		printf("%i\n", Map.Map->UsedPallete);						
+
 		//now to handle the meh stuff
 
 		printf("8\n");

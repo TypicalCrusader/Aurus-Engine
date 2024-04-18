@@ -1,19 +1,49 @@
 #include "../include/misc.h"
 
-u8 DiceRollOnehundred () {
-    srand(time(0));
-    u8 OnedDHundred = (rand() % (100 - 1 + 1)) + 1;    
-    return OnedDHundred;
+u8 GetU8fromChar (char Convertee)
+{
+    u8 ReturnU8 = Convertee - '0';
+    return ReturnU8;
 };
 
-u8 DiceRollOneTwenty () {
-    srand(time(0));
-    u8 OneDTwenty = (rand() % (20 - 1 + 1)) + 1;    
-    return OneDTwenty;   
+s8 GetS8fromChar (char Convertee)
+{
+    s8 ReturnU8 = Convertee - '0';
+    return ReturnU8;
 };
 
-u8 DiceRollOneSix () {
-    srand(time(0));
-    u8 OnedDSix = (rand() % (6 - 1 + 1)) + 1;    
-    return OnedDSix;
+u16 GetU16fromChar (char Convertee)
+{
+    u16 ReturnU8 = Convertee - '0';
+    return ReturnU8;
+};
+
+s16 GetS16fromChar (char Convertee)
+{
+    s16 ReturnU8 = Convertee - '0';
+    return ReturnU8;
+};
+
+u32 GetU32fromChar (char Convertee)
+{
+    u32 ReturnU8 = Convertee - '0';
+    return ReturnU8;
+};
+
+s32 GetS32fromChar (char Convertee)
+{
+    s32 ReturnU8 = Convertee - '0';
+    return ReturnU8;
+};
+
+u64 GetU64fromChar (char Convertee)
+{
+    u64 ReturnU8 = Convertee - '0';
+    return ReturnU8;
+};
+
+s64 GetS64fromChar (char Convertee)
+{
+    s64 ReturnU8 = Convertee - '0';
+    return ReturnU8;
 };

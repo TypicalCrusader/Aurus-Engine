@@ -1,7 +1,7 @@
-/.vs/**
-/x64/**
-/CMakeFiles/**
-/build/** 
+.vs/
+CMakeFiles/
+build/ 
+/AurusEngine
 /build/.cmake/api/v1/reply/cache-v2-5a3c8c7faf3e296c47d1.json
 /build/.cmake/api/v1/reply/cmakeFiles-v1-040d11ec4afc77a158ba.json
 /build/.cmake/api/v1/reply/codemodel-v2-8c8761a6c5316d4fbb43.json

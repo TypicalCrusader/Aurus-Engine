@@ -3,8 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
-                "C:\\msys64\\ucrt64\\include**"
+                "/home/typical/git repos/aurus-engine/**",
+                "/home/typical/git repos/aurus-engine/C"
             ],
             "defines": [
                 "_DEBUG",
@@ -20,10 +20,20 @@
                 "-lSDL2",
                 "-lSDL2_Image",
                 "-lSDL2_Mixer",
-                "-lLibXML2",
+                "-lxml2",
                 "-O2",
                 "-m32"
-            ]
+            ],
+            "compilerPathInCppPropertiesJson": "C:\\msys64\\ucrt64\\bin\\gcc.exe",
+            "mergeConfigurations": false,
+            "browse": {
+                "path": [
+                    "/home/typical/git repos/aurus-engine/**",
+                    "/home/typical/git repos/aurus-engine/C",
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
         },
         {
             "name": "Linux",
@@ -38,9 +48,9 @@
                 "-lSDL2",
                 "-lSDL2_image",
                 "-lSDL2_mixer",
-                "-llibxml2",
-                "-O2"
-            ]
+                "-lxml2"
+            ],
+            "cStandard": "gnu17"
         }
     ],
     "version": 4

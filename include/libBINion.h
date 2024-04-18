@@ -85,6 +85,12 @@ struct gp_data {
     u8 data;      
 };
 
+struct gp_data_database
+{
+    u8 type;
+    u8 data;
+};
+
 struct header{
     u32  signature;     //4b - BINO
     u8   version;       //1b - 0 = ver. 1.0
@@ -146,6 +152,7 @@ enum gp_datatype
 {
     GP_DATA_TYPE_SCRIPT,
     GP_DATA_TYPE_ANIM,
+    GP_DATA_TYPE_DATABASE,
     GP_DATA_TYPE_OTHER
 };
 

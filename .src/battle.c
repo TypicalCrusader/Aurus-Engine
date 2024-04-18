@@ -1,5 +1,4 @@
 #include "../include/battle.h"
-#include <stdint.h>
 
 struct RaceStruct Race[RACESAMOUNT];
 
@@ -167,6 +166,8 @@ void Initiate_Battle() {
 
 int Initiate_PreBattleSkills( BattleUnit Unit) {
     u32 i;
+
+    struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
 
     for(i=0;i <= (sizeof(Unit.Unitinfo.Unit.CharSkills) / sizeof(Unit.Unitinfo.Unit.CharSkills[0]));i++)
     {

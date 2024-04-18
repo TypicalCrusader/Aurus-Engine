@@ -12,7 +12,8 @@
         "stdio.h": "c",
         "sdl_image.h": "c",
         "sdl_mixer.h": "c",
-        "map.h": "c"
+        "map.h": "c",
+        "misc.h": "c"
     },
-    "cmake.sourceDirectory": "D:/Programowanie/C/Aurus-Engine/Aurus-Engine"
+    "cmake.sourceDirectory": "/home/typical/git repos/aurus-engine"
 }

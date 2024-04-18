@@ -1,6 +1,6 @@
 #include "../include/aurusscript.h"
 
-void SetPermaFlagTo(u8 Flag, u8 SetUnset )
+inline void SetPermaFlagTo(u8 Flag, u8 SetUnset )
 {
     if((SetUnset != 0 ) && (SetUnset != 1) )
     {
@@ -11,13 +11,13 @@ void SetPermaFlagTo(u8 Flag, u8 SetUnset )
     return;
 };
 
-u8 CheckPermaFlag(u8 Flag)
+inline u8 CheckPermaFlag(u8 Flag)
 {
     return PermaFlags[Flag];
 };
 
 
-void SetTempFlagto(u8 Flag, u8 SetUnset)
+inline void SetTempFlagto(u8 Flag, u8 SetUnset)
 {
     if((SetUnset != 0 ) && (SetUnset != 1) )
     {
@@ -28,7 +28,7 @@ void SetTempFlagto(u8 Flag, u8 SetUnset)
     return;
 };
 
-u8 CheckTempFlag(u8 Flag)
+inline u8 CheckTempFlag(u8 Flag)
 {
     return TempFlags[Flag];
 };

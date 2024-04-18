@@ -1,9 +1,10 @@
 #pragma once
+#include "misc.h"
 #include "inventory.h"
 #include "skills.h"
 #include "char.h"
 #include "map.h"
-#include "misc.h"
+#include <stdint.h>
 
 typedef struct 
 {

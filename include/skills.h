@@ -1,6 +1,7 @@
 #pragma once
-
 #include "types.h"
+
+#define MAX_SKILLS_AMOUNT (u8) UINT8_MAX
 
 struct SkillStruct 
 {
@@ -10,6 +11,8 @@ struct SkillStruct
     char SkillEffect[50];
     u8 SkillActivation;
 };
+
+struct SkillStruct Skills;
 
 enum SkillActivation
 {

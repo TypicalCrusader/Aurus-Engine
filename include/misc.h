@@ -11,19 +11,40 @@
     \returns `OnedDHundred`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-static inline u8 DiceRollOnehundred ();
+static inline u8 DiceRollOnehundred() {
+    srand(time(0));
+    u8 OnedDHundred = (rand() % (100 - 1 + 1)) + 1;    
+    return OnedDHundred;
+};
 /*
     `int DiceRollOneSix` - Roll 1d6 dice
     \returns `OnedDSix`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-static inline u8 DiceRollOneSix ();
+static inline u8 DiceRollOneSix() {
+    srand(time(0));
+    u8 OnedDSix = (rand() % (6 - 1 + 1)) + 1;    
+    return OnedDSix;
+};
 /*
     `int DiceRollOneTwenty` - - Roll 1d20 dice
     \returns `OneDTwenty`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-static inline u8 DiceRollOneTwenty ();
+static inline u8 DiceRollOneTwenty() {
+    srand(time(0));
+    u8 OneDTwenty = (rand() % (20 - 1 + 1)) + 1;    
+    return OneDTwenty;   
+};
+
+u8 GetU8fromChar(char Convertee);
+s8 GetS8fromChar(char Convertee);
+u16 GetU16fromChar(char Convertee);
+s16 GetS16fromChar(char Convertee);
+u32 GetU32fromChar(char Convertee);
+s32 GetS32fromChar(char Convertee);
+u64 GetU64fromChar(char Convertee);
+s64 GetS64fromChar(char Convertee);
 
 typedef struct
 {

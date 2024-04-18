@@ -4,7 +4,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 #include <string.h>
-#include <libxml/xmlreader.h>
+#include <libxml/xmlmemory.h>
+#include <libxml/parser.h>
 #include <stdio.h>
 #include "types.h"
 #include "map.h"

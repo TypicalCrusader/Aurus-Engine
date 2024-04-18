@@ -188,10 +188,10 @@ enum ClassType
     TYPE_MONSTER,
 };
 
-static inline void ExchangeInvSlotInfo();
-static inline void ChangeGender(); //fuckin dragons are putting magic into the water that turns the heckin humans gae
-static inline void ChangeAlignment();
-static inline s8 GetStat();
-static inline u8 GetWpnSkill();
-static inline u16 GetCharID();
-static inline u8 GetRace();
+inline void ExchangeInvSlotInfo();
+inline void ChangeGender(); //fuckin dragons are putting magic into the water that turns the heckin humans gae
+inline void ChangeAlignment();
+inline s8 GetStat();
+inline u8 GetWpnSkill();
+inline u16 GetCharID();
+inline u8 GetRace();
