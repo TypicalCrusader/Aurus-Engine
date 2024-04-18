@@ -61,3 +61,29 @@ build/
 /build/compile_commands.json
 /build/Makefile
 /AurusEngine.exe
+/x64/Debug/Aurus Engine.exp
+/x64/Debug/Aurus Engine.lib
+/x64/Debug/Aurus Engine.log
+/x64/Debug/Aurus Engine.pdb
+/x64/Debug/Aurus Engine.tlog/Aurus Engine.lastbuildstate
+/x64/Debug/Aurus Engine.tlog/CL.command.1.tlog
+/x64/Debug/Aurus Engine.tlog/CL.read.1.tlog
+/x64/Debug/Aurus Engine.tlog/CL.write.1.tlog
+/x64/Debug/Aurus Engine.tlog/link.command.1.tlog
+/x64/Debug/Aurus Engine.tlog/link.read.1.tlog
+/x64/Debug/Aurus Engine.tlog/link.read.2.tlog
+/x64/Debug/Aurus Engine.tlog/link.write.1.tlog
+/x64/Debug/Aurus Engine.tlog/link-cvtres.read.1.tlog
+/x64/Debug/Aurus Engine.tlog/link-cvtres.write.1.tlog
+/x64/Debug/Aurus Engine.tlog/link-rc.read.1.tlog
+/x64/Debug/Aurus Engine.tlog/link-rc.write.1.tlog
+/x64/Debug/Aurus Engine.tlog/unsuccessfulbuild
+/x64/Debug/AurusScript.obj
+/x64/Debug/battlehandler.obj
+/x64/Debug/charhandler.obj
+/x64/Debug/filehandler.obj
+/x64/Debug/vc143.pdb
+/x64/Debug/main.obj
+/x64/Debug/maphandler.obj
+/x64/Debug/skillhandler.obj
+/x64/Debug/vc143.idb

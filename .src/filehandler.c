@@ -19,7 +19,6 @@ char* Load_File_path( char File_folder_path[],  char File_file_name[], char File
 		memcpy(buffer+(strlen(File_name_1)+strlen(File_folder_path)+strlen(File_file_name)), ExtDot, 1);
 		memcpy(buffer+(strlen(File_name_1)+strlen(File_folder_path)+strlen(File_file_name)+1), File_extension, strlen(File_extension));
 		memcpy(buffer+(strlen(File_name_1)+strlen(File_folder_path)+strlen(File_file_name)+1+strlen(File_extension)), "\0" , 1);	
-		printf("%s\n",buffer);	
 	}
 	else {
 		free(buffer);
@@ -92,8 +91,12 @@ TODO
 -handle map changes
 */
 
-char* Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap Map )
+int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 {
+	CurrentMap *Map = malloc(sizeof(*Map));
+	
+	printf("%i\n",sizeof(Map));
+
 	char bufr[] = "_";
 	char* mapname = malloc(sizeof(chapterID)+sizeof(bufr)+sizeof(chaptermapid));
 	if (mapname != NULL) {		
@@ -105,22 +108,19 @@ char* Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap M
 	else
 	{
 		free(mapname);		
-		return -1;
+		return NULL;
 	}
 
 	char* docname = malloc(strlen(mapname) + 1 + (strlen(chapterID) + strlen(chaptermapid))+1);
-	//printf("%s\n", mapname);
-	//printf("%s\n", sizeof(mapname));			
-	docname = Load_File_path("map/map_", mapname, "tmx");		
-	//printf("%s\n", docname, "\n");
+	docname = Load_File_path("map/map_", mapname, "tmx");
 
 	xmlDocPtr doc;
 	xmlNodePtr cur;
 	char outputstring; //its always an string....
 
-	printf("egg");
 	doc = xmlParseFile(docname);
-	printf("egg");
+
+	free(docname);
 
 	if (doc == NULL) {
 		fprintf(stderr, "Document not parsed successfully. \n");
@@ -180,27 +180,36 @@ char* Load_Map_data_from_path( char *chapterID, char *chaptermapid, CurrentMap M
 		xmlFree(doc);
 
 		printf("7\n");
-	
+
+		Map -> Map = calloc(1,sizeof(*Map -> Map));
+		//Map -> Map = Malloc(sizeof(*Map -> Map));
+		Map -> Map -> MapX = calloc(1, 1);
+		Map -> Map -> MapY = calloc(1, 1);
+		Map -> Map ->UsedTileSet = calloc(1, 1);
+
+
+		//printf(Map -> Map->MapX);
+
 		//save data to map structs >:)
-		Map.Map->MapX = GetU8fromChar(MapX);
+		Map -> Map-> MapX = GetU8fromChar(MapX);
 
-		printf(2137);
+		printf("%i\n 2137");
 
-		Map.Map->MapY = GetU8fromChar(MapY);
-		Map.Map->UsedTileSet = GetU8fromChar(TileConfig);
-		Map.Map->UsedPallete = GetU8fromChar(TilePalette);
+		Map -> Map-> MapY = GetU8fromChar(MapY);
+		Map -> Map-> UsedTileSet = GetU8fromChar(TileConfig);
+		Map -> Map-> UsedPallete = GetU8fromChar(TilePalette);
 	
-		printf("%i\n", Map.Map->MapX);
-		printf("%i\n", Map.Map->MapY);
-		printf("%i\n", Map.Map->UsedTileSet);
-		printf("%i\n", Map.Map->UsedPallete);						
+		printf("%i\n", Map -> Map->MapX);
+		printf("%i\n", Map -> Map->MapY);
+		printf("%i\n", Map -> Map->UsedTileSet);
+		printf("%i\n", Map -> Map->UsedPallete);						
 
 		//now to handle the meh stuff
 
 		printf("8\n");
 
 		//test for tommorow
-		printf(MaptileData);
+		printf("%u\n", MaptileData);
 
 		return 0;
 	}

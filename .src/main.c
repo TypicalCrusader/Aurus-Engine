@@ -29,8 +29,7 @@ const int SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[])
 {
-	CurrentMap Map;
-	char* filepath = Load_Map_data_from_path("1","1",Map);
+	int* MapStructPtr = Load_Map_data_from_path("1","1");
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 	SDL_Event event;

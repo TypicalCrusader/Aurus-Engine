@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "/home/typical/git repos/aurus-engine/**",
-                "/home/typical/git repos/aurus-engine/C"
+                "/home/typical/git repos/aurus-engine/C",
+                "C:/msys64/ucrt64/include/libxml2"
             ],
             "defines": [
                 "_DEBUG",
