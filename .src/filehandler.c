@@ -22,7 +22,7 @@ char* Load_File_path( char File_folder_path[],  char File_file_name[], char File
 	}
 	else {
 		free(buffer);
-		return -1;
+		return NULL;
 	}					
 	return buffer;
 };
@@ -42,14 +42,14 @@ int Load_Wav_from_path() //Mix_OpenAudio(44100,AUDIO_F32SYS,2,??? )
 
 int Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]) {
 
-	xmlChar key;
+	xmlChar* key;
 	cur = cur->xmlChildrenNode;
 	while (cur != NULL) {
 		if ((!xmlStrcmp(cur->name, (const xmlChar*)"layer"))) {
 			cur = cur->xmlChildrenNode;
 			while (cur != NULL) {
 				if ((!xmlStrcmp(cur->name, (const xmlChar*)childname))) {
-					key = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
+					key  = xmlNodeListGetString(doc, cur->xmlChildrenNode, 1);
 					return key;
 				}
 				cur = cur->next;
@@ -61,7 +61,7 @@ int Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]) {
 	return -1;
 }
 
-int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
+char Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
 {
 	xmlChar* key;
 	xmlAttr* attribute;
@@ -74,7 +74,7 @@ int Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
 				{
 					key = xmlGetProp(cur, attribute->name);
 					xmlFree(attribute);
-					return key;
+					return &key;
 				}
 			}
 			//attribute = attribute->next;
@@ -116,7 +116,6 @@ int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 
 	xmlDocPtr doc;
 	xmlNodePtr cur;
-	char outputstring; //its always an string....
 
 	doc = xmlParseFile(docname);
 
@@ -126,8 +125,6 @@ int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 		fprintf(stderr, "Document not parsed successfully. \n");
 		return 0;
 	}
-
-	printf("3\n");
 
 	cur = xmlDocGetRootElement(doc);
 
@@ -143,8 +140,6 @@ int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 		return 0;
 	}
 
-	printf("4\n");
-
 	xmlChar *MapX;
 	xmlChar *MapY;
 
@@ -152,20 +147,10 @@ int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 	MapX = xmlGetProp(cur,"width");
 	printf("%s\n", MapX);
 
-	//get 2 properties held on "map"
-	//xmlChar MapX = Get_Properties_Value(doc, cur, "width");						//map X (width)
-
-	printf("joebama");
-
-	//xmlChar MapY = Get_Properties_Value(doc, cur, "height");						//map Y (height)
-
-	printf("5\n");
 
 	cur = cur -> xmlChildrenNode;
 	while (cur != NULL) {
 		
-		printf("6\n");
-
 		//get properties	
 		xmlChar ChapterID = Get_Properties_Value(doc, cur, "ChapterID");			//map chapter id
 		xmlChar MapChangesID = Get_Properties_Value(doc, cur, "MapChangesID");		//how many map changes there are
@@ -173,13 +158,11 @@ int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 		xmlChar TilePalette = Get_Properties_Value(doc, cur, "TilePalette");		//which internal tileset palette it is using
 
 		//get map tile data
-		xmlChar MaptileData = Parse_map_XML_values(doc, cur, "data");
+		int MaptileData = Parse_map_XML_values(doc, cur, "data");
 
 		//finally free memory, this is bc we dont need to reside in memory 100% of the time
 		xmlFree(cur);
 		xmlFree(doc);
-
-		printf("7\n");
 
 		Map -> Map = calloc(1,sizeof(*Map -> Map));
 		//Map -> Map = Malloc(sizeof(*Map -> Map));
@@ -193,8 +176,6 @@ int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 		//save data to map structs >:)
 		Map -> Map-> MapX = GetU8fromChar(MapX);
 
-		printf("%i\n 2137");
-
 		Map -> Map-> MapY = GetU8fromChar(MapY);
 		Map -> Map-> UsedTileSet = GetU8fromChar(TileConfig);
 		Map -> Map-> UsedPallete = GetU8fromChar(TilePalette);
@@ -206,15 +187,11 @@ int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 
 		//now to handle the meh stuff
 
-		printf("8\n");
-
 		//test for tommorow
 		printf("%u\n", MaptileData);
 
 		return 0;
 	}
-
-	printf("5\n");
 
 	return 0;
 }

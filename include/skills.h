@@ -6,9 +6,9 @@
 struct SkillStruct 
 {
     u8 SkillID;
-    char SkillName[50]; //this is just for yaml desc string
-    char SkillDesc[50];
-    char SkillEffect[50];
+    char SkillName; //this is just for yaml desc string
+    char SkillDesc;
+    char SkillEffect;
     u8 SkillActivation;
 };
 

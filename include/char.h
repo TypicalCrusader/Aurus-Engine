@@ -8,8 +8,8 @@
 struct ClassStruct
 {
     u8 ClassID;
-    char ClassName[50]; //this is just for yaml desc string
-    char ClassDesc[50];
+    char* ClassName; //this is just for yaml desc string
+    char* ClassDesc;
     u8 ClassType;
     u8 ClassGenderLock;
     u8 ClassSkill;
@@ -188,9 +188,30 @@ enum ClassType
     TYPE_MONSTER,
 };
 
-inline void ExchangeInvSlotInfo();
-inline void ChangeGender(); //fuckin dragons are putting magic into the water that turns the heckin humans gae
-inline void ChangeAlignment();
+static void ExchangeInvSlotInfo(u8 SlotFrom, u8 SlotInto, CurrCharData Character)
+{
+    if(&Character != NULL) //sanity check so we dont access unalocated memory
+    {
+
+    }
+    return;
+};
+inline void ChangeGender(u8 Gender, CurrCharData Character) //fuckin dragons are putting magic into the water that turns the heckin humans gae
+{
+    if(&Character != NULL) //sanity check so we dont access unalocated memory
+    {
+
+    }
+    return;
+}
+inline void ChangeAlignment(u8 Alignment, CurrCharData Character)
+{
+    if(&Character != NULL) //sanity check so we dont access unalocated memory
+    {
+
+    }
+    return;
+}
 inline s8 GetStat();
 inline u8 GetWpnSkill();
 inline u16 GetCharID();

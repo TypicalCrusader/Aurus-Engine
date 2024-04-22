@@ -27,7 +27,7 @@ static inline u8 DiceRollOneSix() {
     return OnedDSix;
 };
 /*
-    `int DiceRollOneTwenty` - - Roll 1d20 dice
+    `int DiceRollOneTwenty` - Roll 1d20 dice
     \returns `OneDTwenty`
     \since This Function is available since version 0.1 of Aurus Engine
 */
@@ -37,14 +37,66 @@ static inline u8 DiceRollOneTwenty() {
     return OneDTwenty;   
 };
 
-u8 GetU8fromChar(char Convertee);
-s8 GetS8fromChar(char Convertee);
-u16 GetU16fromChar(char Convertee);
-s16 GetS16fromChar(char Convertee);
-u32 GetU32fromChar(char Convertee);
-s32 GetS32fromChar(char Convertee);
-u64 GetU64fromChar(char Convertee);
-s64 GetS64fromChar(char Convertee);
+static inline u8 GetU8fromChar (char Convertee)
+{
+    u8 ReturnU8 = Convertee - '0';
+    return ReturnU8;
+};
+
+static inline s8 GetS8fromChar (char Convertee)
+{
+    s8 ReturnS8 = Convertee - '0';
+    return ReturnS8;
+};
+
+static inline u16 GetU16fromChar (char Convertee)
+{
+    u16 Returnu16 = Convertee - '0';
+    return Returnu16;
+};
+
+static inline s16 GetS16fromChar (char Convertee)
+{
+    s16 Returns16 = Convertee - '0';
+    return Returns16;
+};
+
+static inline u32 GetU32fromChar (char Convertee)
+{
+    u32 Returnu32 = Convertee - '0';
+    return Returnu32;
+};
+
+static inline s32 GetS32fromChar (char Convertee)
+{
+    s32 Returns32 = Convertee - '0';
+    return Returns32;
+};
+
+static inline u64 GetU64fromChar (char Convertee)
+{
+    u64 Returnu64 = Convertee - '0';
+    return Returnu64;
+};
+
+static inline s64 GetS64fromChar (char Convertee)
+{
+    s64 Returns64 = Convertee - '0';
+    return Returns64;
+};
+
+static inline f32 GetF32fromChar (char Convertee)
+{
+    f32 ReturnF32 = Convertee - '0';
+    return ReturnF32;
+};
+
+static inline f64 GetF64fromChar (char Convertee)
+{
+    f64 ReturnF64 = Convertee - '0';
+    return ReturnF64;
+};
+
 
 typedef struct
 {
@@ -56,8 +108,8 @@ typedef struct
 {
     u8 CurrentChaptID; //current ChapterID
     u16 CurrGold; //Gold Team has
-    u16 TeamData[INT8_MAX]; //CharIDs
-    s8 PermaFlagData[INT8_MAX]; //max 127 perma flags here for sanity sake
+    u16 TeamData; //CharIDs
+    s8 PermaFlagData; //max 127 perma flags here for sanity sake
     ConvoyData Convoy;
 }MainData;
 

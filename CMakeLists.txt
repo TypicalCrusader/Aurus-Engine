@@ -1,10 +1,8 @@
 ﻿cmake_minimum_required(VERSION 3.29)
 
-#IF ON WINDOWS AND USING CYGWIN, YOU MUST CHANGE `exec_prefix` TO THE PATH OF CYGWIN eg. "C:\cygwin64\" AND ADD `includedir` "/usr/" between "${prefix}" and "include" IN "cygwin64\lib\cmake\SDL2\sdl2-config.cmake"
-
 project(
   AurusEngine
-  VERSION 0.1
+  VERSION 0.1.0.0
   LANGUAGES C
   DESCRIPTION "An C based SRPG FE-GBA Like engine"
   HOMEPAGE_URL "https://github.com/TypicalCrusader/Aurus-Engine"
@@ -32,10 +30,10 @@ elseif(LINUX)
   message("Detected Linux as OS")
   set(LIBXML2_INCLUDE_DIR "/usr/include/libxml2")
   if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(LIBXML2_LIBRARIES /usr/lib64/libxml2.so.2.10.4)
+    #set(LIBXML2_LIBRARIES /usr/lib64/libxml2.so.2.10.4)
     message("Detected 64 bit OS")
   elseif (CMAKE_SIZEOF_VOID_P EQUAL 4)
-    set(LIBXML2_LIBRARIES /usr/lib/libxml2.so.2.10.4) 
+    #set(LIBXML2_LIBRARIES /usr/lib/libxml2.so.2.10.4) 
     message("Detected 32 bit OS") 
   else()
     message(FATAL_ERROR "Cannot Detect OS Architecture")   
@@ -44,47 +42,44 @@ else()
   Message("Your OS is not supported")
 endif()
 
-if(CMAKE_C_COMPILER_ID MATCHES "GNU")
+if(CMAKE_C_COMPILER_ID MATCHES "GNU" OR "Clang" OR "ARMCC" OR "TinyCC" OR "ARMClang")
   set(CMAKE_C_FLAGS "-O2")
   set(CMAKE_C_FLAGS_DEBUG "-O0")
   set(CMAKE_C_FLAGS_RELEASE "-O2")
   if(WIN32)
-    set(CMAKE_C_FLAGS_INIT "-m32")  
-    set(CMAKE_EXE_LINKER_FLAGS_INIT    "-m32")
-    set(CMAKE_MODULE_LINKER_FLAGS_INIT "-m32")
-    set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")    
+    if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+      message("Setting -m64 flag")   
+      set(CMAKE_C_FLAGS_INIT "-m64")  
+      set(CMAKE_EXE_LINKER_FLAGS_INIT    "-m64")
+      set(CMAKE_MODULE_LINKER_FLAGS_INIT "-m64")
+      set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m64")  
+    elseif (CMAKE_SIZEOF_VOID_P EQUAL 4)
+      message("Setting -m32 flag")   
+      set(CMAKE_C_FLAGS_INIT "-m32")  
+      set(CMAKE_EXE_LINKER_FLAGS_INIT    "-m32")
+      set(CMAKE_MODULE_LINKER_FLAGS_INIT "-m32")
+      set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")           
+    endif()
   endif()  
-  Message("Detected GCC as compiler")  
-elseif(CMAKE_C_COMPILER_ID MATCHES "Clang")
-  set(CMAKE_C_FLAGS "-O2")
-  set(CMAKE_C_FLAGS_DEBUG "-O0")
-  set(CMAKE_C_FLAGS_RELEASE "-O2")
-  if(WIN32)
-    set(CMAKE_C_FLAGS_INIT "-m32")  
-    set(CMAKE_EXE_LINKER_FLAGS_INIT    "-m32")
-    set(CMAKE_MODULE_LINKER_FLAGS_INIT "-m32")
-    set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")    
-  endif()  
-  Message("Detected Clang as compiler")    
+  if(CMAKE_C_COMPILER_ID MATCHES "GNU")
+    Message("Detected GCC as compiler")  
+  elseif(CMAKE_C_COMPILER_ID MATCHES "Clang")
+    Message("Detected Clang as compiler")   
+  elseif(CMAKE_C_COMPILER_ID MATCHES "TinyCC") #if you are a madman then sure fuckin do it....
+    Message("Detected TinyCC as compiler")          
+  elseif(CMAKE_C_COMPILER_ID MATCHES "ARMCC") #if you are a madman then sure fuckin do it....
+    Message("Detected ARMCC as compiler")     
+  elseif(CMAKE_C_COMPILER_ID MATCHES "ARMClang") #if you are a madman then sure fuckin do it....
+    Message("Detected ARMClang as compiler")     
+  endif() 
 elseif(CMAKE_C_COMPILER_ID MATCHES "MSVC") #as always only they have different flags....
   set(CMAKE_C_FLAGS "/O2")
   set(CMAKE_C_FLAGS_DEBUG "/OD")
   set(CMAKE_C_FLAGS_RELEASE "/O2")  
   Message("Detected MSVC as compiler")   
   message(WARNING "For your own sanity i recommend NOT using MSVC") 
-elseif(CMAKE_C_COMPILER_ID MATCHES "ARMCC") #if you are a madman then sure fuckin do it....
-  set(CMAKE_C_FLAGS "-O2")
-  set(CMAKE_C_FLAGS_DEBUG "-O0")
-  set(CMAKE_C_FLAGS_RELEASE "-O2")  
-  if(WIN32)
-    set(CMAKE_C_FLAGS_INIT "-m32")  
-    set(CMAKE_EXE_LINKER_FLAGS_INIT    "-m32")
-    set(CMAKE_MODULE_LINKER_FLAGS_INIT "-m32")
-    set(CMAKE_SHARED_LINKER_FLAGS_INIT "-m32")    
-  endif()  
-  Message("Detected ARMCC as compiler")    
 else()
-  message(FATAL_ERROR "Trying to build project with unsupported compiler")   
+  message(FATAL_ERROR "Trying to build project with unsupported/esoteric compiler\nWhy do you do it?")   
 endif()
 
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
@@ -94,6 +89,8 @@ set(CMAKE_C_STANDARD_REQUIRED 17)
 #SDL2
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED PACKAGE_FIND_VERSION_MIN 2.0.0 )
+find_package(SDL2_sound REQUIRED)
+find_package(SDL2_ttf  REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
 #LIBXML
@@ -102,6 +99,8 @@ include_directories(
   ${PROJECT_NAME} 
   ${SDL2MIXER_INCLUDE_DIRS}
   ${SDL2IMAGE_INCLUDE_DIRS}
+  ${SDL2_TTF_INCLUDE_DIRS}
+  ${SDL2_SOUND_INCLUDE_DIR}
   ${SDL2_INCLUDE_DIR}
   ${LIBXML2_INCLUDE_DIR}
 ) 
@@ -118,6 +117,8 @@ target_link_libraries(
   #${SDL2IMAGE_LIBRARIES} 
   SDL2
   SDL2_image
+  SDL2_sound
   SDL2_mixer
+  SDL2_ttf
   ${LIBXML2_LIBRARIES}
 )
