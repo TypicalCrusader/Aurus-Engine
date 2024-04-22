@@ -15,5 +15,5 @@
         "map.h": "c",
         "misc.h": "c"
     },
-    "cmake.sourceDirectory": "D:/Programowanie/C/Aurus-Engine/Aurus-Engine"
+    "cmake.sourceDirectory": "/home/typical/Dokumenty/Aurus-Engine/Aurus-Engine"
 }
