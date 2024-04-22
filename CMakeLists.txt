@@ -89,7 +89,6 @@ set(CMAKE_C_STANDARD_REQUIRED 17)
 #SDL2
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED PACKAGE_FIND_VERSION_MIN 2.0.0 )
-find_package(SDL2_sound REQUIRED)
 find_package(SDL2_ttf  REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
@@ -100,7 +99,6 @@ include_directories(
   ${SDL2MIXER_INCLUDE_DIRS}
   ${SDL2IMAGE_INCLUDE_DIRS}
   ${SDL2_TTF_INCLUDE_DIRS}
-  ${SDL2_SOUND_INCLUDE_DIR}
   ${SDL2_INCLUDE_DIR}
   ${LIBXML2_INCLUDE_DIR}
 ) 
@@ -117,7 +115,6 @@ target_link_libraries(
   #${SDL2IMAGE_LIBRARIES} 
   SDL2
   SDL2_image
-  SDL2_sound
   SDL2_mixer
   SDL2_ttf
   ${LIBXML2_LIBRARIES}

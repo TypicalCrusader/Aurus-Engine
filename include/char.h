@@ -212,7 +212,15 @@ inline void ChangeAlignment(u8 Alignment, CurrCharData Character)
     }
     return;
 }
-inline s8 GetStat();
-inline u8 GetWpnSkill();
-inline u16 GetCharID();
-inline u8 GetRace();
+inline s8 GetStat(){
+    return 0;
+};
+inline u8 GetWpnSkill(){
+    return 0;
+};
+inline u16 GetCharID(){
+    return 0;
+};
+inline u8 GetRace(){
+    return 0;
+};

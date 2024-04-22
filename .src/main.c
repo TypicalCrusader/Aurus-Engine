@@ -29,7 +29,7 @@ const int SCREEN_HEIGHT = 600;
 
 int main(int argc, char* argv[])
 {
-	int* MapStructPtr = Load_Map_data_from_path("1","1");
+	//int* MapStructPtr = Load_Map_data_from_path("1","1");
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
 	SDL_Event event;
@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	window = SDL_CreateWindow("Aurus Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_GRABBED | SDL_WINDOW_INPUT_FOCUS);
+	window = SDL_CreateWindow("Aurus Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_GRABBED );
 	
 	while (!quit)
 	{
