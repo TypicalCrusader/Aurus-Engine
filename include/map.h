@@ -121,7 +121,9 @@ static inline void IncreaseTurnCounter(CurrentMap Map)
 };
 int InitialiseMap();
 void CheckTileType();
-inline u8 CheckMapChangeExists();
+inline u8 CheckMapChangeExists(){
+    return 0;
+};
 void ChangeMapChange();
 int ApplyMapEffect();
 int ChangeMapMidChapter();
