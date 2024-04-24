@@ -61,7 +61,7 @@ typedef struct
 {
     u8 MapX;
     u8 MapY;
-    MapTile *Tile; //2d array why the fuck i havent realised this is good way to do it before i looked at fucking sdl2 tutorol....
+    MapTile *Tile[MAX_MAP_SIZE][MAX_MAP_SIZE]; //2d array why the fuck i havent realised this is good way to do it before i looked at fucking sdl2 tutorol....
     u8 UsedTileSet;
     u8 UsedPallete;
     MapChange *Mapchange; // offset list for map changes
