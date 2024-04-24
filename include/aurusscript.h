@@ -4,6 +4,7 @@
 #include "misc.h"
 #include "char.h"
 #include "inventory.h"
+#include "map.h"
 #include <stdlib.h>
 #include <assert.h>
 
@@ -200,7 +201,9 @@ inline void SaveValueToMemslot();
 inline u8 ReturnMemslotValue();
 inline void DisplayChoice();
 inline void ChangeClass();
-inline void ChangeSide();
+inline void ChangeSide(u8 Side, CurrCharData Char, u16 CharID, CurrentMap Map){
+    return;
+}
 
 
 
