@@ -54,16 +54,17 @@ typedef struct {
     u8 Y;
     u8 sizeX;
     u8 sizeY;
+    bool active;
 }MapChange;
 
 typedef struct
 {
     u8 MapX;
     u8 MapY;
-    MapTile *Tile[MAX_MAP_SIZE][MAX_MAP_SIZE]; //2d array why the fuck i havent realised this is good way to do it before i looked at fucking sdl2 tutorol....
+    MapTile *Tile; //2d array why the fuck i havent realised this is good way to do it before i looked at fucking sdl2 tutorol....
     u8 UsedTileSet;
     u8 UsedPallete;
-    MapChange *Mapchange[MAX_MAP_CHANGES]; // offset list for map changes
+    MapChange *Mapchange; // offset list for map changes
 }MapData;
 
 typedef struct CurrentMap
@@ -75,12 +76,13 @@ typedef struct CurrentMap
     struct
     {
         u8 UnitID;
-    }*EnemyUnit[MAX_DEPLOYED_ENEMY_UNITS], *PlayerUnits[MAX_DEPLOYED_PC_UNITS], *AllyUnits[MAX_DEPLOYED_ALLY_UNITS];
+    }*EnemyUnit, *PlayerUnits, *AllyUnits;
     struct 
     {
         u8 X;
         u8 Y;
     }*SelectedTile;
+    u8 MapEffect;
 }CurrentMap;
 
 enum TileType
@@ -120,11 +122,37 @@ static inline void IncreaseTurnCounter(CurrentMap Map)
     return;
 };
 int InitialiseMap();
-void CheckTileType();
-inline u8 CheckMapChangeExists(){
-    return 0;
+inline u16 CheckTileType(u8 MapX, u8 MapY, CurrentMap Map){
+    //TODO find why the fuck this is wrong?????
+    if(&Map.Map->Tile[MapX][MapY] != NULL)
+    {
+        return Map.Map->Tile[MapX][MapY]->tile;
+    };
+    return -1;
+}
+inline bool CheckMapChangeExists(u8 MapChange, CurrentMap Map){
+    if(&Map.Map->Mapchange[MapChange] != NULL)
+    {
+        return true;
+    };
+    return false;
 };
-void ChangeMapChange();
-int ApplyMapEffect();
+inline void ChangeMapChange(u8 MapChange, CurrentMap Map){
+    if(&Map.Map->Mapchange[MapChange] != NULL)
+    {
+        Map.Map->Mapchange[MapChange].active = true;
+        return;
+    };
+    return;   
+}
+inline void ApplyMapEffect(u8 MapEffect, CurrentMap Map)
+{
+    if(&Map != NULL)
+    {
+        Map.MapEffect = MapEffect;
+        return;
+    }
+    return;
+};
 int ChangeMapMidChapter();
 void ActivateMapSkill();
