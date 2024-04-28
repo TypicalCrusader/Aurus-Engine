@@ -169,6 +169,7 @@ int Initiate_PreBattleSkills( BattleUnit Unit) {
 
     struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
 
+
     for(i=0;i <= (sizeof(Unit.Unitinfo.Unit.CharSkills) / sizeof(Unit.Unitinfo.Unit.CharSkills[0]));i++)
     {
         if (Skills[Unit.Unitinfo.Unit.CharSkills[i]].SkillActivation == SKILL_ACTIVATION_PRE_BATTLE)

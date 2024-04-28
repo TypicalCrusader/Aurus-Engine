@@ -18,7 +18,12 @@ enum SpecialChars
     ENUM_SPECIAL_BEGIN_NARROW,
     ENUM_SPECIAL_END_NARROW,
     ENUM_SPECIAL_DISPLAY_CHARACTER,
-    ENUM_SPECIAL_DISPLAY_CHARACTER_LOCATION
+    ENUM_SPECIAL_DISPLAY_CHARACTER_LOCATION,
+    ENUM_SPECIAL_START_BOLD,
+    ENUM_SPECIAL_END_BOLD,
+    ENUM_SPECIAL_START_ITALIC,
+    ENUM_SPECIAL_END_ITALIC,
+    ENUM_SPECIAL_DISPLAY_CHAR_NAME,
 };
 
 const char *SpecialCharacters[] //aka how engine interepretes [COMMAND]
@@ -32,5 +37,10 @@ const char *SpecialCharacters[] //aka how engine interepretes [COMMAND]
     [ENUM_SPECIAL_BEGIN_NARROW]                 = "[BN]",
     [ENUM_SPECIAL_END_NARROW]                   = "[EN]",
     [ENUM_SPECIAL_DISPLAY_CHARACTER]            = "[DC]",
-    [ENUM_SPECIAL_DISPLAY_CHARACTER_LOCATION]   = "[CL]"
+    [ENUM_SPECIAL_DISPLAY_CHARACTER_LOCATION]   = "[CL]",
+    [ENUM_SPECIAL_START_BOLD]                   = "[SB]",
+    [ENUM_SPECIAL_END_BOLD]                     = "[EB]",
+    [ENUM_SPECIAL_START_ITALIC]                 = "[SI]",
+    [ENUM_SPECIAL_END_ITALIC]                   = "[EI]",
+    [ENUM_SPECIAL_DISPLAY_CHAR_NAME]            = "[DC]"
 };

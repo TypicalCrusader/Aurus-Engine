@@ -11,7 +11,28 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "map.h"
+#include "misc.h"
 
+enum Renderer
+{
+	RENDERER_SOFTWARE,
+	RENDERER_OPENGL,
+	RENDERER_VULCAN,
+	RENDERER_DIRECTX
+};
+
+extern struct gamestate
+{
+	u8 CurrentState;
+	u32 ResX;
+	u32 ResY;
+	u8 RefreshRate;
+	u8 Renderer;
+	bool isOnionOnioned;
+	bool IsBlackFlagSailed;
+	MainData *MainData
+};
 
 
 //GLOBAL DEFINES HERE
+

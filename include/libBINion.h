@@ -46,7 +46,7 @@ The best onion format in the whole universe
 #define MAX_ENTRIES_OF_TYPE_IN_FILE = UINT16_MAX;
 
 struct image {
-    char * ID;
+    u32 ID;
     u8 isCompressed;
     u8 isEncrypted;     
     u8 type; 
@@ -56,7 +56,7 @@ struct image {
 };
 
 struct sound {
-    char * ID;
+    u32 ID;
     u8 isCompressed;    
     u8 isEncrypted;
     u8 type; 
@@ -66,7 +66,7 @@ struct sound {
 };
 
 struct text {
-    char * ID;
+    u32 ID;
     u8 isCompressed;    
     u8 isEncrypted; 
     u8 type;      
@@ -76,7 +76,7 @@ struct text {
 };
 
 struct gp_data {
-    char * ID;
+    u32 ID;
     u8 isCompressed;
     u8 isEncrypted;  
     u8 type;       
@@ -156,3 +156,11 @@ enum gp_datatype
     GP_DATA_TYPE_OTHER
 };
 
+enum gp_data_database_type
+{
+    GP_DATA_DATABASE_CHAR,
+    GP_DATA_DATABASE_SKILL,
+    GP_DATA_DATABASE_MAP,
+    GP_DATA_DATABASE_SKILL,
+    GP_DATA_DATABASE_MISC
+};
