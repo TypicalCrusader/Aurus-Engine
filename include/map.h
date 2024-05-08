@@ -2,6 +2,7 @@
 
 #include "types.h"
 #include "char.h"
+#include "battle.h"
 #include <stdint.h>
 
 #define MAX_MAP_SIZE                125
@@ -43,6 +44,8 @@ typedef struct
     u8 CurrentEarth;
     u8 CurrentStaves;
     u8 CurrentStone;    
+    u8 MapX;
+    u8 MapY;
 }SelectedUnit;
 
 typedef struct {
@@ -156,3 +159,5 @@ inline void ApplyMapEffect(u8 MapEffect, CurrentMap Map)
 };
 int ChangeMapMidChapter();
 void ActivateMapSkill();
+void MoveUnit(SelectedUnit Unit, u8 MapX, u8 MapY);
+void AttackUnit(SelectedUnit Actor, SelectedUnit Recipient);

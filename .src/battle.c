@@ -73,8 +73,18 @@ u8 AddLevel (BattleUnit unit)
     return level;
 };
 
-BattleUnit (GenerateBattleStruct ( SelectedUnit unit, BattleUnit bunit)) {
+BattleUnit (GenerateBattleStruct ( SelectedUnit unit)) {
+
+    BattleUnit bunit;
+    BattleUnit *bunit = malloc(sizeof(BattleUnit));
+    if (&bunit == NULL)
+    {
+        free(&bunit);
+        fprintf(stderr, "Fatal Error: could not allocate memory for Battle Unit Struct in GenerateBattleStruct");
+        return;
+    }
     bunit.Unitinfo = unit;
+    //TODO in future check if its valid item
     bunit.EquippedWeapon = unit.Inventory[0x0]; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
     bunit.MaxHP = unit.MaxHP;
     bunit.CurrentHp = unit.CurrentHp;
@@ -142,29 +152,7 @@ void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
     return;
 };
 
-void Initiate_Battle() {
-    //GenerateBattleStruct(SelectedUnit, Actor); //on player turn this is the player characters, on enemy its enemy characters
-    //GenerateBattleStruct(EnemyUnit, Recipient);
-    MoveBattleState(Actor, Recipient);
-
-    //TODO: Add here OpenGL shit here
-
-    /*
-    - initialise battle gui
-    - show battle gui
-    - show battle spites
-    - show battle bgs
-    
-    =========================================+
-    = Hp |||||||||||| Hit |||  =             =
-    = Atk ||| Def ||| Crt |||  =             =
-    =========================================+
-    */
-
-    return;
-};
-
-int Initiate_PreBattleSkills( BattleUnit Unit) {
+u8 Initiate_PreBattleSkills( BattleUnit Unit) {
     u32 i;
 
     struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
@@ -270,6 +258,13 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
         Skills replacing attacks will go here
     */
 
+    if(&CharInventory == NULL)
+    {
+        free(&CharInventory);
+        fprintf(stderr, "Fatal Error: unalocated memory for CharInventory in GenerateBattleStruct");
+        return;
+    }
+
     //hit
     if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 )) <= (CharInventory[Unit.EquippedWeapon].Accuracy + Unit.CurrentDex - CharInventory[Unit.EquippedWeapon].Weight))
     {
@@ -307,7 +302,7 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
     return;
 };
 
-void AttackFunc() {
+void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
 
     if((Battle.BattleStatus == BATTLE_STATUS_STARTED) || (Battle.BattleStatus == BATTLE_STATUS_FOLLOWUP) || (Battle.BattleStatus == BATTLE_STATUS_THIRD_ATTACK) )
     {
@@ -326,14 +321,36 @@ void AttackFunc() {
     return;
 };
 
-void BattleLoop(){
-    Initiate_Battle();
-    ApplyPreBattleSkills(Initiate_PreBattleSkills(Actor), Actor);
-    ApplyPreBattleSkills(Initiate_PreBattleSkills(Recipient), Recipient);
+//inline void Initiate_Battle(SelectedUnit Actor,SelectedUnit Recipient) {
+
+
+    //TODO: Add here OpenGL shit here
+
+    /*
+    - initialise battle gui
+    - show battle gui
+    - show battle spites
+    - show battle bgs
+    
+    =========================================+
+    = Hp |||||||||||| Hit |||  =             =
+    = Atk ||| Def ||| Crt |||  =             =
+    =========================================+
+    */
+
+//    return;
+//};
+
+void BattleLoop(SelectedUnit Actor,SelectedUnit Recipient){
+    BattleUnit BActor = GenerateBattleStruct(Actor); //on player turn this is the player characters, on enemy its enemy characters
+    BattleUnit BRecipient = GenerateBattleStruct(Recipient);
+    MoveBattleState(BActor, BRecipient);  
+    ApplyPreBattleSkills(Initiate_PreBattleSkills(BActor), BActor);
+    ApplyPreBattleSkills(Initiate_PreBattleSkills(BRecipient), BRecipient);
 
     while (Battle.BattleStatus != BATTLE_STATUS_END){
-        AttackFunc();
-        MoveBattleState(Actor, Recipient);
+        AttackFunc(BActor, BRecipient);
+        MoveBattleState(BActor, BRecipient);
     }
 
     //post battle skills go here

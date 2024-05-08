@@ -5,6 +5,7 @@
 #include "char.h"
 #include "map.h"
 #include <stdint.h>
+#include <stdio.h>
 
 typedef struct 
 {
@@ -83,13 +84,15 @@ u8 AddLevel (BattleUnit unit);
     \since This Function is available since version 0.1 of Aurus Engine
 */
 s8 IncreaseStat(s8 stat, s8 statgrowth); //this can either be used with BUnit or CurrUnit
-BattleUnit (GenerateBattleStruct ( SelectedUnit unit, BattleUnit bunit));
-int Initiate_PreBattleSkills( BattleUnit );
-void BattleLoop();
+BattleUnit (GenerateBattleStruct ( SelectedUnit unit));
+u8 Initiate_PreBattleSkills( BattleUnit );
+void BattleLoop(SelectedUnit Actor,SelectedUnit Recipient);
 void AttackFunc();
-void Initiate_Battle();
+//void Initiate_Battle(BattleUnit Actor, SelectedUnit Recipient);
 void CalcAttack( BattleUnit );
 void MoveBattleState( BattleUnit , BattleUnit );
-void ApplyPreBattleSkills(u8 ,  BattleUnit );
+void ApplyPreBattleSkills(u8 skill,  BattleUnit Unit));
 void SMTLikeRes( BattleUnit ,  BattleUnit );
 void CalcHit( BattleUnit , BattleUnit );
+
+

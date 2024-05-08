@@ -207,21 +207,17 @@ inline void ChangeSide(u8 Side, CurrCharData Char, u16 CharID, CurrentMap Map){
 inline void SetMemSlot(){
     return;
 }
-inline u16 ReturnMemSlot(u16 Memslot){
-    u16 MemslotVal;
-    return MemslotVal;
+inline void AddMemslot(u16 MemSlot, u16 Value){
+    return MemSlot + Value;
 }
-inline void AddMemslot(u16 Memslot){
-    return;
+inline void SubMemSlot(u16 MemSlot, u16 Value){
+    return MemSlot - Value;
 }
-inline void MultMemSlot(u16 Memslot){
-    return;
+inline void MultMemSlot(u16 MemSlot, u16 Value){
+    return MemSlot * Value;
 }
-inline void SubMemSlot(u16 MemSlot){
-    return;
-}
-inline void DivMemSlot(u16 MemSlot){
-    return;
+inline void DivMemSlot(u16 MemSlot, u16 Value){
+    return MemSlot / Value;
 }
 
 
