@@ -14,14 +14,14 @@
 #define MAX_DEPLOYED_ALL_UNITS      MAX_DEPLOYED_PC_UNITS + MAX_DEPLOYED_ENEMY_UNITS + MAX_DEPLOYED_ALLY_UNITS
 
 
-typedef struct SelectedUnitData
+struct SelectedUnitData
 {
     u8 DeploymentIndex;
     struct CharacterData *Unit;
     struct ClassStruct *Class;
     struct AIData *Ai;
+    struct InventoryData *Inventory;
     u8 level;
-    u16 Inventory[0x5];
     s8 MaxHP;
     s8 CurrentHp;
     s8 CurrentAtk;
@@ -166,5 +166,5 @@ inline void ApplyMapEffect(u8 MapEffect)
 };
 int ChangeMapMidChapter();
 void ActivateMapSkill();
-void MoveUnit(struct SelectedUnit Unit, u8 MapX, u8 MapY);
-void AttackUnit(struct SelectedUnit Actor, struct SelectedUnit Recipient);
+void MoveUnit(struct SelectedUnitData Unit, u8 MapX, u8 MapY);
+void AttackUnit(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex);

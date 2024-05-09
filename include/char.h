@@ -114,8 +114,9 @@ struct CurrCharData
     struct ClassStruct *ClassData;
     struct RaceStruct *Race;
     struct MiscCharDataStruct *MiscCharData;
-    u16 InventoryData[0x5];
-    u16 CurrentSkills;
+    struct InventoryData *Inventory;
+    u16 CurrentSkills[5];
+    s8 MaxHP;
     s8 CurrHp;
     s8 CurrAtk;
     s8 CurrMag;
@@ -140,6 +141,7 @@ struct CurrCharData
     u8 CurrEarth;
     u8 CurrStaves;
     u8 CurrStone;
+    u8 CurrLvl;
 };
 
 extern struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];

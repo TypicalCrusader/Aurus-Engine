@@ -57,23 +57,19 @@ s8 IncreaseStat(s8 stat, s8 statgrowth){
 
 u8 AddLevel (BattleUnit unit)
 {
-    u8 level = unit.Unitinfo.level;
+    unit.Unitinfo->CurrAtk += IncreaseStat(unit.Unitinfo->CurrAtk, unit.Unitinfo->CharData->AtkCharGrowth);
+    unit.Unitinfo->CurrMag += IncreaseStat(unit.Unitinfo->CurrMag, unit.Unitinfo->CharData->MagCharGrowth);
+    unit.Unitinfo->CurrHp += IncreaseStat(unit.Unitinfo->CurrHp, unit.Unitinfo->CharData->HpCharGrowth);
+    unit.Unitinfo->CurrDef += IncreaseStat(unit.Unitinfo->CurrDef, unit.Unitinfo->CharData->DefCharGrowth);
+    unit.Unitinfo->CurrMagDef += IncreaseStat(unit.Unitinfo->CurrMagDef, unit.Unitinfo->CharData->MagDefCharGrowth);
+    unit.Unitinfo->CurrSpd += IncreaseStat(unit.Unitinfo->CurrSpd, unit.Unitinfo->CharData->SpdCharGrowth);
+    unit.Unitinfo->CurrLck += IncreaseStat(unit.Unitinfo->CurrLck, unit.Unitinfo->CharData->LckCharGrowth);
+    unit.Unitinfo->CurrDex += IncreaseStat(unit.Unitinfo->CurrDex, unit.Unitinfo->CharData->DexCharGrowth);
 
-    unit.Unitinfo.CurrentAtk += IncreaseStat(unit.Unitinfo.CurrentAtk, unit.Unitinfo.Unit.AtkCharGrowth);
-    unit.Unitinfo.CurrentMag += IncreaseStat(unit.Unitinfo.CurrentMag, unit.Unitinfo.Unit.MagCharGrowth);
-    unit.Unitinfo.CurrentHp += IncreaseStat(unit.Unitinfo.CurrentHp, unit.Unitinfo.Unit.HpCharGrowth);
-    unit.Unitinfo.CurrentDef += IncreaseStat(unit.Unitinfo.CurrentDef, unit.Unitinfo.Unit.DefCharGrowth);
-    unit.Unitinfo.CurrentMagDef += IncreaseStat(unit.Unitinfo.CurrentMagDef, unit.Unitinfo.Unit.MagDefCharGrowth);
-    unit.Unitinfo.CurrentSpd += IncreaseStat(unit.Unitinfo.CurrentSpd, unit.Unitinfo.Unit.SpdCharGrowth);
-    unit.Unitinfo.CurrentLck += IncreaseStat(unit.Unitinfo.CurrentLck, unit.Unitinfo.Unit.LckCharGrowth);
-    unit.Unitinfo.CurrentDex += IncreaseStat(unit.Unitinfo.CurrentDex, unit.Unitinfo.Unit.DexCharGrowth);
-
-    level += 1;
-
-    return level;
+    return unit.Unitinfo->CurrLvl += 1;
 };
 
-BattleUnit (GenerateBattleStruct ()) {
+BattleUnit (GenerateBattleStructPlayer ()) {
 
     if(&SelectedUnit == NULL)
     {
@@ -85,12 +81,12 @@ BattleUnit (GenerateBattleStruct ()) {
     if (&bunit == NULL)
     {
         free(&bunit);
-        fprintf(stderr, "Fatal Error: could not allocate memory for Battle Unit Struct in GenerateBattleStruct");
+        fprintf(stderr, "Fatal Error: could not allocate memory for Battle Unit Struct in GenerateBattleStructPlayer");
         return;
     }
-    bunit.Unitinfo = SelectedUnit;
+    bunit.Unitinfo = SelectedUnit.Unit;
     //TODO in future check if its valid item
-    bunit.EquippedWeapon = SelectedUnit.Inventory[0x0]; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
+    bunit.EquippedWeapon = SelectedUnit.Inventory[0].ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
     bunit.MaxHP = SelectedUnit.MaxHP;
     bunit.CurrentHp = SelectedUnit.CurrentHp;
     bunit.CurrentAtk = SelectedUnit.CurrentAtk;
@@ -107,6 +103,48 @@ BattleUnit (GenerateBattleStruct ()) {
         return bunit;
     }  
     bunit.UnitDamage = SelectedUnit.CurrentMag; //base           
+
+    return bunit;
+};
+
+BattleUnit (GenerateBattleStructEnemy (u16 DevIndex)) {
+
+    if(&CurrentCharacter == NULL)
+    {
+        return;
+    };
+    if(DevIndex > MAX_DEPLOYED_ALL_UNITS)
+    {
+        return;
+    };
+
+    BattleUnit bunit;
+    BattleUnit *bunit = malloc(sizeof(BattleUnit));
+    if (&bunit == NULL)
+    {
+        free(&bunit);
+        fprintf(stderr, "Fatal Error: could not allocate memory for Battle Unit Struct in GenerateBattleStructEnemy");
+        return;
+    }
+    bunit.Unitinfo = &CurrentCharacter[DevIndex];
+    //TODO in future check if its valid item
+    bunit.EquippedWeapon = CurrentCharacter[DevIndex].Inventory[0].ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
+    bunit.MaxHP = CurrentCharacter[DevIndex].MaxHP;
+    bunit.CurrentHp = CurrentCharacter[DevIndex].CurrHp;
+    bunit.CurrentAtk = CurrentCharacter[DevIndex].CurrAtk;
+    bunit.CurrentMag = CurrentCharacter[DevIndex].CurrMag;
+    bunit.CurrentDef = CurrentCharacter[DevIndex].CurrDef;
+    bunit.CurrentMagDef = CurrentCharacter[DevIndex].CurrMagDef;
+    bunit.CurrentSpd  = CurrentCharacter[DevIndex].CurrSpd;
+    bunit.CurrentLck = CurrentCharacter[DevIndex].CurrLck;
+    bunit.CurrentDex = CurrentCharacter[DevIndex].CurrDex;
+
+    if(CurrentCharacter[DevIndex].ClassData->ClassType != TYPE_MAGICAL)
+    {
+        bunit.UnitDamage = CurrentCharacter[DevIndex].CurrAtk; //base
+        return bunit;
+    }  
+    bunit.UnitDamage = CurrentCharacter[DevIndex].CurrMag; //base           
 
     return bunit;
 };
@@ -143,16 +181,16 @@ void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
     }
     else {
         Battle.BattleStatus = BATTLE_STATUS_STARTED;
-        Battle.BattleRange = CharInventory[Unit.EquippedWeapon].AttackRange;
+        Battle.BattleRange = Unit.Unitinfo->Inventory[0].AttackRange;
     }
 
-    if ( (Battle.BattleStatus = BATTLE_STATUS_STARTED) & (CharInventory[Unit.EquippedWeapon].ItemType != ITEM_TYPE_WEAPON)) //this should never happen, you cant attack without a weapon
+    if ( (Battle.BattleStatus = BATTLE_STATUS_STARTED) & (Unit.Unitinfo->Inventory[0].ItemType != ITEM_TYPE_WEAPON)) //this should never happen, you cant attack without a weapon
     {
-        assert(CharInventory[Unit.EquippedWeapon].ItemType != ITEM_TYPE_WEAPON);
+        //TODO fprintf
         return;
     }
 
-    Battle.BattleAttackType = CharInventory[Unit.EquippedWeapon].AttackType;
+    Battle.BattleAttackType = Unit.Unitinfo->Inventory[0].AttackType;
 
     return;
 };
@@ -163,11 +201,11 @@ u8 Initiate_PreBattleSkills( BattleUnit Unit) {
     struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
 
 
-    for(i=0;i <= (sizeof(Unit.Unitinfo.Unit.CharSkills) / sizeof(Unit.Unitinfo.Unit.CharSkills[0]));i++)
+    for(i=0;i <= (sizeof(Unit.Unitinfo->CharData->CharSkills) / sizeof(Unit.Unitinfo->CharData->CharSkills[0]));i++)
     {
-        if (Skills[Unit.Unitinfo.Unit.CharSkills[i]].SkillActivation == SKILL_ACTIVATION_PRE_BATTLE)
+        if (Skills[Unit.Unitinfo->CharData->CharSkills[i]].SkillActivation == SKILL_ACTIVATION_PRE_BATTLE)
         {
-            u8 skill = Skills[Unit.Unitinfo.Unit.CharSkills[i]].SkillID;
+            u8 skill = Skills[Unit.Unitinfo->CharData->CharSkills[i]].SkillID;
             return skill;
         }
     }
@@ -178,7 +216,7 @@ u8 Initiate_PreBattleSkills( BattleUnit Unit) {
 
 void CalcAttack( BattleUnit Unit)
 {
-    Unit.UnitDamage += CharInventory[Unit.EquippedWeapon].Attack;
+    Unit.UnitDamage += Unit.Unitinfo->Inventory[0].Attack;
 
     return;
 }
@@ -187,25 +225,27 @@ void ApplyPreBattleSkills(u8 skill,  BattleUnit Unit)
 {
 
     /*
-         List of pre battle skills and their effect go here
+         List of pre battle skills for player and their effect go here
     
     */
 
     return;
 }
 
+
+
 void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
 {
 
     //.. its not necessarly the fastest way to do this mechanic but for sure its one of the easiest
-    if (Race[Unit.Unitinfo.Unit.RaceID].RaceSMTShouldNullAtk != true) {
+    if (Race[Unit.Unitinfo->CharData->RaceID].RaceSMTShouldNullAtk != true) {
         return;// it means that race doesnt have the smt res array so dont waste time going through loops here
     }
 
     u32 i;
-    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.SpecialWeaponNullDmg) / sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.SpecialWeaponNullDmg[0]));i++)    
+    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.SpecialWeaponNullDmg) / sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.SpecialWeaponNullDmg[0]));i++)    
     {
-        if (Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.SpecialWeaponNullDmg[i] == (u16) CharInventory[Unit.EquippedWeapon].ItemID)
+        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.SpecialWeaponNullDmg[i] == Unit.Unitinfo->Inventory[0].ItemID)
         {
             //ifs based here on item effect and type, most likely only omega and Tyfrang of Revolution will go here
             return;
@@ -213,9 +253,9 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
     
     }    
     
-    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ResAlignmentDmg) / sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ResAlignmentDmg[0]));i++)    
+    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ResAlignmentDmg) / sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ResAlignmentDmg[0]));i++)    
     {
-        if (Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ResAlignmentDmg[i] == (u16) CharInventory[Unit.EquippedWeapon].AffinityRes)
+        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ResAlignmentDmg[i] == Unit.Unitinfo->Inventory[0].AffinityRes)
         {
             Unit.UnitDamage *= 0.25;
             return;
@@ -223,9 +263,9 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
     
     }
 
-    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.NulllignmentDmg) / sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.NulllignmentDmg[0]));i++)    
+    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.NulllignmentDmg) / sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.NulllignmentDmg[0]));i++)    
     {
-        if (Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.NulllignmentDmg[i] == (u16) CharInventory[Unit.EquippedWeapon].AffinityNul)
+        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.NulllignmentDmg[i] == Unit.Unitinfo->Inventory[0].AffinityNul)
         {
             Unit.UnitDamage *= 0;
             return;
@@ -233,9 +273,9 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
     
     }
 
-    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ReverseAlignmentDmg) / sizeof(Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ReverseAlignmentDmg[0]));i++)    
+    for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ReverseAlignmentDmg) / sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ReverseAlignmentDmg[0]));i++)    
     {
-        if (Race[AttackTarget.Unitinfo.Unit.RaceID].SMTRes.ReverseAlignmentDmg[i] == (u16) CharInventory[Unit.EquippedWeapon].AffinityAbs)
+        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ReverseAlignmentDmg[i] == Unit.Unitinfo->Inventory[0].AffinityAbs)
         {
             Unit.UnitDamage *= -1;
             return;
@@ -263,19 +303,20 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
         Skills replacing attacks will go here
     */
 
-    if(&CharInventory == NULL)
+    if(&Unit == NULL)
     {
-        free(&CharInventory);
+        free(&Unit);
         fprintf(stderr, "Fatal Error: unalocated memory for CharInventory in GenerateBattleStruct");
         return;
     }
 
+
     //hit
-    if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 )) <= (CharInventory[Unit.EquippedWeapon].Accuracy + Unit.CurrentDex - CharInventory[Unit.EquippedWeapon].Weight))
+    if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 )) <= (Unit.Unitinfo->Inventory[0].Accuracy + Unit.CurrentDex - Unit.Unitinfo->Inventory[0].Weight))
     {
 
         //check for crit
-        if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 ) ) <= CharInventory[Unit.EquippedWeapon].CritRate)
+        if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 ) ) <= Unit.Unitinfo->Inventory[0].CritRate)
         {
             Unit.UnitDamage *= 2;
             if (Unit.UnitDamage >= 100)
@@ -288,7 +329,7 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
             }
         }
 
-        if(CharInventory[Unit.EquippedWeapon].UseMAG != true)
+        if(Unit.Unitinfo->Inventory[0].UseMAG != true)
         {
             AttackTarget.CurrentHp -= (Unit.UnitDamage - AttackTarget.CurrentDef);
             return;
@@ -307,6 +348,7 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
     return;
 };
 
+
 void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
 
     if((Battle.BattleStatus == BATTLE_STATUS_STARTED) || (Battle.BattleStatus == BATTLE_STATUS_FOLLOWUP) || (Battle.BattleStatus == BATTLE_STATUS_THIRD_ATTACK) )
@@ -320,7 +362,7 @@ void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
     {
         CalcAttack(Recipient);
         SMTLikeRes(Recipient, Actor);
-        CalcHit(Recipient, Actor);
+        CalcHitRecipient(Recipient, Actor);
     }
     
     return;
@@ -346,18 +388,18 @@ void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
 //    return;
 //};
 
-void BattleLoop(struct SelectedUnitData Actor, struct SelectedUnitData Recipient){
+void BattleLoop(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex){
     
-    if(&Actor == NULL || &Recipient == NULL)
+    if(&Actor == NULL || &CurrentCharacter[EnemyUnitDevIndex] == NULL)
     {
         return;
     }
     
-    BattleUnit BActor = GenerateBattleStruct(Actor); //on player turn this is the player characters, on enemy its enemy characters
-    BattleUnit BRecipient = GenerateBattleStruct(Recipient);
+    BattleUnit BActor = GenerateBattleStructPlayer(); //on player turn this is the player characters, on enemy its enemy characters
+    BattleUnit BRecipient = GenerateBattleStructEnemy(EnemyUnitDevIndex);
     MoveBattleState(BActor, BRecipient);  
     ApplyPreBattleSkills(Initiate_PreBattleSkills(BActor), BActor);
-    ApplyPreBattleSkills(Initiate_PreBattleSkills(BRecipient), BRecipient);
+    ApplyPreBattleSkillsAI(Initiate_PreBattleSkillsAI(BRecipient), BRecipient);
 
     while (Battle.BattleStatus != BATTLE_STATUS_END){
         AttackFunc(BActor, BRecipient);

@@ -19,7 +19,9 @@ struct InventoryData
     u8 AffinityRes;
     u8 AffinityNul;
     u8 AffinityAbs;
-}CharInventory[5];
+};
+
+struct InventoryData CharInventory[5];
 
 enum ItemType
 {

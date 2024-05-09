@@ -9,7 +9,7 @@
 
 typedef struct 
 {
-    SelectedUnit Unitinfo;
+    struct CurrCharData *Unitinfo;
     u16 EquippedWeapon;
     s8 MaxHP;
     s8 CurrentHp;
@@ -23,8 +23,8 @@ typedef struct
     s16 UnitDamage;    
 }BattleUnit;
 
-BattleUnit Actor;
-BattleUnit Recipient;
+//BattleUnit Actor;
+//BattleUnitAI Recipient;
 
 typedef struct
 {
@@ -84,14 +84,15 @@ u8 AddLevel (BattleUnit unit);
     \since This Function is available since version 0.1 of Aurus Engine
 */
 s8 IncreaseStat(s8 stat, s8 statgrowth); //this can either be used with BUnit or CurrUnit
-BattleUnit (GenerateBattleStruct ( SelectedUnit unit));
+BattleUnit (GenerateBattleStructPlayer ());
+BattleUnit (GenerateBattleStructEnemy (u16 DevIndex));
 u8 Initiate_PreBattleSkills( BattleUnit );
-void BattleLoop(SelectedUnit Actor,SelectedUnit Recipient);
+void BattleLoop(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex);
 void AttackFunc();
 //void Initiate_Battle(BattleUnit Actor, SelectedUnit Recipient);
 void CalcAttack( BattleUnit );
 void MoveBattleState( BattleUnit , BattleUnit );
-void ApplyPreBattleSkills(u8 skill,  BattleUnit Unit));
+void ApplyPreBattleSkills(u8 skill,  BattleUnit Unit);
 void SMTLikeRes( BattleUnit ,  BattleUnit );
 void CalcHit( BattleUnit , BattleUnit );
 

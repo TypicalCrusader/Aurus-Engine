@@ -24,6 +24,7 @@ enum SpecialChars
     ENUM_SPECIAL_START_ITALIC,
     ENUM_SPECIAL_END_ITALIC,
     ENUM_SPECIAL_DISPLAY_CHAR_NAME,
+    ENUM_SPECIAL_DISPLAY_PRESS_WAIT
 };
 
 const char *SpecialCharacters[] //aka how engine interepretes [COMMAND]
@@ -42,5 +43,6 @@ const char *SpecialCharacters[] //aka how engine interepretes [COMMAND]
     [ENUM_SPECIAL_END_BOLD]                     = "[EB]",
     [ENUM_SPECIAL_START_ITALIC]                 = "[SI]",
     [ENUM_SPECIAL_END_ITALIC]                   = "[EI]",
-    [ENUM_SPECIAL_DISPLAY_CHAR_NAME]            = "[DC]"
+    [ENUM_SPECIAL_DISPLAY_CHAR_NAME]            = "[DC]",
+    [ENUM_SPECIAL_DISPLAY_PRESS_WAIT]           = "[PW]"
 };

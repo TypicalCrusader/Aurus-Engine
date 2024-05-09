@@ -13,13 +13,14 @@ void CheckTileType()
 };
 
 
-void MoveUnit(SelectedUnit Unit, u8 MapX, u8 MapY){
+void MoveUnit(struct SelectedUnitData Unit, u8 MapX, u8 MapY){
     Unit.MapX = MapX;
     Unit.MapY = MapY;
     return;
 }
 
-void AttackUnit(SelectedUnit Actor, SelectedUnit Recipient){
-    BattleLoop(BattleUnit Actor, BattleUnit Recipient);
+void AttackUnit(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex){
+
+    BattleLoop(Actor, EnemyUnitDevIndex);
     return;
 }
