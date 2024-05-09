@@ -5,6 +5,7 @@
 #include "char.h"
 #include "inventory.h"
 #include "map.h"
+#include "ai.h"
 #include <stdlib.h>
 #include <assert.h>
 
@@ -24,7 +25,10 @@ inline void SetPermaFlagTo(u8 Flag, u8 SetUnset );
     \returns `PermaFlags[Flag]`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-inline u8 CheckPermaFlag(u8 Flag);
+inline u8 CheckPermaFlag(u8 Flag)
+{
+    return PermaFlags[Flag];
+};
 /*
     `void SetTempFlagto` - Sets Temporary flag to either `0` or `1`
     Temporary Flags despite getting unset upon chapter's end persist through midchapter saves
@@ -33,14 +37,17 @@ inline u8 CheckPermaFlag(u8 Flag);
     \returns Returns Flag Value which is `0` if unset and `1` if set
     \since This Function is available since version 0.1 of Aurus Engine
 */
-inline void SetTempFlagto(u8 Flag, u8 SetUnset);
+void SetTempFlagto(u8 Flag, u8 SetUnset);
 /*
     `CheckTempFlag` - Checks Temporary flag value and returns it
     \param `Flag` FlagID
     \returns `TempFlags[Flag]`
     \since This Function is available since version 0.1 of Aurus Engine
 */
-inline u8 CheckTempFlag(u8 Flag);
+inline u8 CheckTempFlag(u8 Flag)
+{
+    return TempFlags[Flag];
+};
 /*
     `AddGoldToTeam` - Adds `GoldAmount` to Gold Data
     \param `GoldAmount`  Amount of Gold to add 
@@ -56,7 +63,7 @@ void AddGoldToTeam(u16 GoldAmount);
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void AddItemToCharacter(u16 CharID, u16 ItemID);
+void AddItemToCharacter(u16 ItemID);
 /*
     `AddItemToConvoy` - Adds `Item` to Convoy, if convoy is full and item has special flag then first non story important item shall be purged from convoy data.
     \param `ItemID` ItemID
@@ -201,23 +208,38 @@ inline void SaveValueToMemslot();
 inline u8 ReturnMemslotValue();
 inline void DisplayChoice();
 inline void ChangeClass();
-inline void ChangeSide(u8 Side, CurrCharData Char, u16 CharID, CurrentMap Map){
+inline void ChangeSide(u8 Side, CurrCharData Char, u16 CharID){
     return;
 }
-inline void SetMemSlot(){
-    return;
+inline u16 SetMemSlot(u8 MemSlotIndex, u16 Value){
+    if (MemSlotIndex > 20){
+        return -1;
+    }
+    return MemSlot[MemSlotIndex] = Value;
 }
-inline u16 AddMemslot(u16 MemSlot, u16 Value){
-    return MemSlot + Value;
+inline u16 AddMemslot(u8 MemSlotIndex, u16 Value){
+    if (MemSlotIndex > 20){
+        return -1;
+    }    
+    return MemSlot[MemSlotIndex] + Value;
 }
-inline u16 SubMemSlot(u16 MemSlot, u16 Value){
-    return MemSlot - Value;
+inline u16 SubMemSlot(u8 MemSlotIndex, u16 Value){
+    if (MemSlotIndex > 20){
+        return -1;
+    }    
+    return MemSlot[MemSlotIndex] - Value;
 }
-inline u16 MultMemSlot(u16 MemSlot, u16 Value){
-    return MemSlot * Value;
+inline u16 MultMemSlot(u8 MemSlotIndex, u16 Value){
+    if (MemSlotIndex > 20){
+        return -1;
+    }    
+    return MemSlot[MemSlotIndex] * Value;
 }
-inline u16 DivMemSlot(u16 MemSlot, u16 Value){
-    return MemSlot / Value;
+inline u16 DivMemSlot(u8 MemSlotIndex, u16 Value){
+    if (MemSlotIndex > 20){
+        return -1;
+    }    
+    return MemSlot[MemSlotIndex] / Value;
 }
 
 

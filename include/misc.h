@@ -97,21 +97,24 @@ static inline f64 GetF64fromChar (char Convertee)
     return ReturnF64;
 };
 
+extern u16 MemSlot[16];
 
-typedef struct
+typedef struct ConvoyData
 {
     u16 ItemID;
     u8  StackedItem;
 }ConvoyData[CONVOY_MAX_SIZE];
 
-typedef struct 
+typedef struct MainDataStruct
 {
     u8 CurrentChaptID; //current ChapterID
     u16 CurrGold; //Gold Team has
     u16 TeamData; //CharIDs
     s8 PermaFlagData; //max 127 perma flags here for sanity sake
-    ConvoyData Convoy;
-}MainData;
+    ConvoyData *Convoy;
+};
+
+extern struct MainDataStruct MainData; 
 
 struct ChapterData
 {

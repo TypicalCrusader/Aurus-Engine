@@ -1,6 +1,7 @@
 #pragma once
 
 #include "types.h"
+#include "ai.h"
 #include "map.h"
 
 #define RACESAMOUNT 15
@@ -52,6 +53,7 @@ struct ClassStruct
 
 struct CharacterData
 {
+    u8 DevelopmentIndex;
     u16 UnitID;
     char CharName[50]; //this is just for yaml desc string
     char CharDesc[50];

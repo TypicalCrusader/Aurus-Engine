@@ -14,11 +14,12 @@
 #define MAX_DEPLOYED_ALL_UNITS      MAX_DEPLOYED_PC_UNITS + MAX_DEPLOYED_ENEMY_UNITS + MAX_DEPLOYED_ALLY_UNITS
 
 
-typedef struct
+typedef struct SelectedUnitData
 {
-    u16 DeploymentIndex;
-    struct CharacterData Unit;
-    struct ClassStruct Class;
+    u8 DeploymentIndex;
+    struct CharacterData *Unit;
+    struct ClassStruct *Class;
+    struct AIData *Ai;
     u8 level;
     u16 Inventory[0x5];
     s8 MaxHP;
@@ -48,7 +49,9 @@ typedef struct
     u8 CurrentStone;    
     u8 MapX;
     u8 MapY;
-}SelectedUnit;
+};
+
+extern struct SelectedUnitData SelectedUnit;
 
 typedef struct {
 	u16 tile; //just a type of tile

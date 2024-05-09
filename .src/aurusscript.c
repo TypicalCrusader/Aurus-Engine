@@ -11,13 +11,7 @@ inline void SetPermaFlagTo(u8 Flag, u8 SetUnset )
     return;
 };
 
-inline u8 CheckPermaFlag(u8 Flag)
-{
-    return PermaFlags[Flag];
-};
-
-
-inline void SetTempFlagto(u8 Flag, u8 SetUnset)
+void SetTempFlagto(u8 Flag, u8 SetUnset)
 {
     if((SetUnset != 0 ) && (SetUnset != 1) )
     {
@@ -28,42 +22,56 @@ inline void SetTempFlagto(u8 Flag, u8 SetUnset)
     return;
 };
 
-inline u8 CheckTempFlag(u8 Flag)
-{
-    return TempFlags[Flag];
-};
-
 void AddGoldToTeam(u16 GoldAmount)
 {
-    MainData Data;
-    if((GoldAmount + Data.CurrGold ) > MAX_GOLD_AMOUNT)
+    if(&MainData == NULL)
     {
         return;
     }
-    Data.CurrGold += GoldAmount;
+
+    if((GoldAmount + MainData.CurrGold ) > MAX_GOLD_AMOUNT)
+    {
+        return;
+    }
+    MainData.CurrGold += GoldAmount;
     return;
 };
 
-void AddItemToCharacter(u16 CharID, u16 ItemID){
+void AddItemToCharacter(u16 ItemID){
     u16 i;
-    CurrCharData *Char;
-    MainData Data;
+
+    if(&SelectedUnit == NULL)
+    {
+        return;
+    }
+    if(&CurrentCharacter == NULL)
+    {
+        return;
+    }
+
+    u8 CharID = SelectedUnit.DeploymentIndex;
+
+    if(CharID > MAX_DEPLOYED_ALL_UNITS)
+    {
+        return;
+    }
+
     for(i=0;i<5;i++)
     {
-        if (Char[CharID].InventoryData[i] == 0)
+        if (CurrentCharacter[CharID].InventoryData[i] == 0)
         {
-            Char[CharID].InventoryData[i] = ItemID;
+            CurrentCharacter[CharID].InventoryData[i] = ItemID;
             return;
         }
     }
     for(i=0;i <= CONVOY_MAX_SIZE;i++)
     {
-        if(Data.Convoy[i].ItemID == 0)
+        if(MainData.Convoy[i]->ItemID == 0)
         {
-            u32 item = Char[CharID].InventoryData[4]; //move last item in this to convoy in this case
-            Data.Convoy[i].ItemID = item;
+            u32 item = CurrentCharacter[CharID].InventoryData[4]; //move last item in this to convoy in this case
+            MainData.Convoy[i]->ItemID = item;
             item = ItemID;
-            Char[CharID].InventoryData[4] = ItemID;
+            CurrentCharacter[CharID].InventoryData[4] = ItemID;
             return;
         }
         if (i == CONVOY_MAX_SIZE)
@@ -77,13 +85,17 @@ void AddItemToCharacter(u16 CharID, u16 ItemID){
 
 void AddItemToConvoy(u16 ItemID)
 {
-    MainData Data;
+    if(&MainData == NULL)
+    {
+        return;
+    }
+
     u16 i;
     for(i=0;i<= CONVOY_MAX_SIZE;i++)
     {
-        if(Data.Convoy[i].ItemID == 0)
+        if(MainData.Convoy[i]->ItemID == 0)
         {
-            Data.Convoy[i].ItemID = ItemID;
+            MainData.Convoy[i]->ItemID = ItemID;
             return;
         }
         if (i == CONVOY_MAX_SIZE)

@@ -37,3 +37,14 @@ enum AITypes{ //4Bytes
     AI6_AI_SPECIAL_NONE     = (1<<27),
     //REMAINING 4 BITS RN ARE UNUSED
 };
+
+struct AIData
+{
+    u8 AI1     : 4;
+    u8 AI2     : 4;
+    u8 AI3     : 8;
+    u8 AI4     : 4;
+    u8 AI5     : 4;
+    u8 AI6     : 4;
+    u8 Padding : 4;
+};
