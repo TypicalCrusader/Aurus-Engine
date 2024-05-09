@@ -103,13 +103,13 @@ inline void KillCharacter(u16 CharID);
     - 2 - Ally (NPC) Faction
     - 3 - 2nd Enemy Faction (for cases where Many factions fight against you and each other)
     - 4 - 3rd Enemy Faction (see above)
-    \param `AiData` - Bitfield Values for ai - TODO ME
+    \param `AiData` - ai values, look at ai.h for more information
     \param `Inventory` - character inventory - stores IDs of items
     \param `Skills` - character skills - stores IDs of skills    
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void SpawnUnit(u16 CharID, u8 Faction, struct AiData Ai, u16 Inventory[0x5], u16 Skills[0x5]);
+void SpawnUnit(u16 CharID, u8 Faction, u32 AI , u16 Inventory[0x5], u16 Skills[0x5], u8 MapX, u8 MapY, bool TakeDataFromSave);
 /*
     `MoveUnit` - moves character on map
     \param `CharID` Character ID
@@ -207,16 +207,16 @@ inline void ChangeSide(u8 Side, CurrCharData Char, u16 CharID, CurrentMap Map){
 inline void SetMemSlot(){
     return;
 }
-inline void AddMemslot(u16 MemSlot, u16 Value){
+inline u16 AddMemslot(u16 MemSlot, u16 Value){
     return MemSlot + Value;
 }
-inline void SubMemSlot(u16 MemSlot, u16 Value){
+inline u16 SubMemSlot(u16 MemSlot, u16 Value){
     return MemSlot - Value;
 }
-inline void MultMemSlot(u16 MemSlot, u16 Value){
+inline u16 MultMemSlot(u16 MemSlot, u16 Value){
     return MemSlot * Value;
 }
-inline void DivMemSlot(u16 MemSlot, u16 Value){
+inline u16 DivMemSlot(u16 MemSlot, u16 Value){
     return MemSlot / Value;
 }
 

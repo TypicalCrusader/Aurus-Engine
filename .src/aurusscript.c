@@ -95,5 +95,36 @@ void AddItemToConvoy(u16 ItemID)
     return;
 };
 
+void SpawnUnit(u16 CharID, u8 Faction, u32 AI, u16 Inventory[0x5], u16 Skills[0x5], u8 MapX, u8 MapY, bool TakeDataFromSave)
+{
 
+    //sanity checks so we never access unalocated memory thus causing segfault
+    //TODO: ADD fprintf to stderr
+    if(&Character == NULL)
+    {
+        return;
+    }
+    if(&CurrentCharacter == NULL)
+    {
+        return;
+    }
+    if(&CurrentCharacter[0] == NULL ) //somehow its unalocated thus something broke
+    {
+        return;
+    }
+    if(&CurrentCharacter[MAX_DEPLOYED_ALL_UNITS] == NULL)
+    {
+        return;
+    }
+    if(CurrentCharacter[MAX_DEPLOYED_ALL_UNITS].UnitID >= 0)
+    {
+        return;
+    }
+    if(MapY > MAX_MAP_SIZE || MapY > MAX_MAP_SIZE)
+    {
+        return;
+    }
+
+    return;
+}
 

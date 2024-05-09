@@ -1,6 +1,7 @@
 #pragma once
 
 #include "types.h"
+#include "map.h"
 
 #define RACESAMOUNT 15
 
@@ -93,6 +94,8 @@ struct CharacterData
     u8 BaseStone;
 };
 
+extern struct CharacterData Character[UINT16_MAX];
+
 typedef struct
 {
     u16 UnitID;
@@ -126,6 +129,8 @@ typedef struct
     u8 CurrStaves;
     u8 CurrStone;
 }CurrCharData;
+
+extern CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
 
 enum gender {
     GENDER_MALE,
@@ -176,6 +181,8 @@ struct RaceStruct
     struct RaceBoostStruct Raceboost;
     bool RaceSMTShouldNullAtk;    
 };
+
+extern struct RaceStruct Race[RACESAMOUNT];
 
 enum ClassType
 {

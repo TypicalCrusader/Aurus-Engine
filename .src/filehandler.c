@@ -93,7 +93,7 @@ TODO
 
 int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 {
-	CurrentMap *Map = malloc(sizeof(*Map));
+	struct CurrentMap *Map = malloc(sizeof(*Map));
 	
 	printf("%i\n",sizeof(Map));
 

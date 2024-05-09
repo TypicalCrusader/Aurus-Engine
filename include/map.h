@@ -11,6 +11,8 @@
 #define MAX_DEPLOYED_PC_UNITS       16
 #define MAX_DEPLOYED_ENEMY_UNITS    64
 #define MAX_DEPLOYED_ALLY_UNITS     32
+#define MAX_DEPLOYED_ALL_UNITS      MAX_DEPLOYED_PC_UNITS + MAX_DEPLOYED_ENEMY_UNITS + MAX_DEPLOYED_ALLY_UNITS
+
 
 typedef struct
 {
@@ -86,7 +88,9 @@ typedef struct CurrentMap
         u8 Y;
     }*SelectedTile;
     u8 MapEffect;
-}CurrentMap;
+};
+
+extern struct CurrentMap CurrentMap;
 
 enum TileType
 {
@@ -119,40 +123,40 @@ enum TileType
     SPECIAL_TYPE_COLLUMN
 };
 
-static inline void IncreaseTurnCounter(CurrentMap Map)
+
+static inline void IncreaseTurnCounter()
 {
-    Map.CurrentTurn += 1;
+    CurrentMap.CurrentTurn += 1;
     return;
 };
 int InitialiseMap();
-inline u16 CheckTileType(u8 MapX, u8 MapY, CurrentMap Map){
-    //TODO find why the fuck this is wrong?????
-    if(&Map.Map->Tile[MapX][MapY] != NULL)
+inline u16 CheckTileType(u8 MapX, u8 MapY){
+    if(&CurrentMap.Map->Tile[MapX][MapY] != NULL)
     {
-        return Map.Map->Tile[MapX][MapY]->tile;
+        return CurrentMap.Map->Tile[MapX][MapY]->tile;
     };
     return -1;
 }
-inline bool CheckMapChangeExists(u8 MapChange, CurrentMap Map){
-    if(&Map.Map->Mapchange[MapChange] != NULL)
+inline bool CheckMapChangeExists(u8 MapChange){
+    if(&CurrentMap.Map->Mapchange[MapChange] != NULL)
     {
         return true;
     };
     return false;
 };
-inline void ChangeMapChange(u8 MapChange, CurrentMap Map){
-    if(&Map.Map->Mapchange[MapChange] != NULL)
+inline void ChangeMapChange(u8 MapChange){
+    if(&CurrentMap.Map->Mapchange[MapChange] != NULL)
     {
-        Map.Map->Mapchange[MapChange].active = true;
+        CurrentMap.Map->Mapchange[MapChange].active = true;
         return;
     };
     return;   
 }
-inline void ApplyMapEffect(u8 MapEffect, CurrentMap Map)
+inline void ApplyMapEffect(u8 MapEffect)
 {
-    if(&Map != NULL)
+    if(&CurrentMap != NULL)
     {
-        Map.MapEffect = MapEffect;
+        CurrentMap.MapEffect = MapEffect;
         return;
     }
     return;
