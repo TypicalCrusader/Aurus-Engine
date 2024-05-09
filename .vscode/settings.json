@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.txt": "ck3",
         "stdlib.h": "c",
         "stdint.h": "c",
         "inventory.h": "c",
@@ -14,6 +15,7 @@
         "sdl_mixer.h": "c",
         "map.h": "c",
         "misc.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "aurusscript.h": "c"
     },
 }

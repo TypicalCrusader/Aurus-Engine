@@ -105,7 +105,7 @@ typedef struct ConvoyData
     u8  StackedItem;
 }ConvoyData[CONVOY_MAX_SIZE];
 
-typedef struct MainDataStruct
+struct MainDataStruct
 {
     u8 CurrentChaptID; //current ChapterID
     u16 CurrGold; //Gold Team has

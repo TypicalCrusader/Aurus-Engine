@@ -40,10 +40,15 @@ void AddGoldToTeam(u16 GoldAmount)
 void AddItemToCharacter(u16 ItemID){
     u16 i;
 
+    struct SelectedUnitData SelectedUnit;
+
     if(&SelectedUnit == NULL)
     {
         return;
     }
+    
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+
     if(&CurrentCharacter == NULL)
     {
         return;
@@ -58,9 +63,9 @@ void AddItemToCharacter(u16 ItemID){
 
     for(i=0;i<5;i++)
     {
-        if (CurrentCharacter[CharID].InventoryData[i] == 0)
+        if (CurrentCharacter[CharID].Inventory[i].ItemID == 0)
         {
-            CurrentCharacter[CharID].InventoryData[i] = ItemID;
+            CurrentCharacter[CharID].Inventory[i].ItemID = ItemID;
             return;
         }
     }
@@ -68,10 +73,10 @@ void AddItemToCharacter(u16 ItemID){
     {
         if(MainData.Convoy[i]->ItemID == 0)
         {
-            u32 item = CurrentCharacter[CharID].InventoryData[4]; //move last item in this to convoy in this case
+            u32 item = CurrentCharacter[CharID].Inventory[4].ItemID; //move last item in this to convoy in this case
             MainData.Convoy[i]->ItemID = item;
             item = ItemID;
-            CurrentCharacter[CharID].InventoryData[4] = ItemID;
+            CurrentCharacter[CharID].Inventory[4].ItemID = ItemID;
             return;
         }
         if (i == CONVOY_MAX_SIZE)
@@ -116,6 +121,9 @@ void SpawnUnit(u16 CharID, u8 Faction, u32 AI, u16 Inventory[0x5], u16 Skills[0x
     {
         return;
     }
+
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+
     if(&CurrentCharacter == NULL)
     {
         return;

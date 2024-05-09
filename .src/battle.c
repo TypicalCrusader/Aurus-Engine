@@ -69,82 +69,86 @@ u8 AddLevel (BattleUnit unit)
     return unit.Unitinfo->CurrLvl += 1;
 };
 
-BattleUnit (GenerateBattleStructPlayer ()) {
+BattleUnit* (GenerateBattleStructPlayer ()) {
+
+    struct SelectedUnitData SelectedUnit;
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];    
 
     if(&SelectedUnit == NULL)
     {
-        return;
+        return NULL;
     };
 
-    BattleUnit bunit;
-    BattleUnit *bunit = malloc(sizeof(BattleUnit));
+    BattleUnit *bunit;
+    bunit = malloc(sizeof(BattleUnit));
     if (&bunit == NULL)
     {
         free(&bunit);
         fprintf(stderr, "Fatal Error: could not allocate memory for Battle Unit Struct in GenerateBattleStructPlayer");
-        return;
+        return NULL;
     }
-    bunit.Unitinfo = SelectedUnit.Unit;
+    bunit->Unitinfo = SelectedUnit.Unit;
     //TODO in future check if its valid item
-    bunit.EquippedWeapon = SelectedUnit.Inventory[0].ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
-    bunit.MaxHP = SelectedUnit.MaxHP;
-    bunit.CurrentHp = SelectedUnit.CurrentHp;
-    bunit.CurrentAtk = SelectedUnit.CurrentAtk;
-    bunit.CurrentMag = SelectedUnit.CurrentMag;
-    bunit.CurrentDef = SelectedUnit.CurrentDef;
-    bunit.CurrentMagDef = SelectedUnit.CurrentMagDef;
-    bunit.CurrentSpd  = SelectedUnit.CurrentSpd;
-    bunit.CurrentLck = SelectedUnit.CurrentLck;
-    bunit.CurrentDex = SelectedUnit.CurrentDex;
+    bunit->EquippedWeapon = SelectedUnit.Inventory[0].ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
+    bunit->MaxHP = SelectedUnit.MaxHP;
+    bunit->CurrentHp = SelectedUnit.CurrentHp;
+    bunit->CurrentAtk = SelectedUnit.CurrentAtk;
+    bunit->CurrentMag = SelectedUnit.CurrentMag;
+    bunit->CurrentDef = SelectedUnit.CurrentDef;
+    bunit->CurrentMagDef = SelectedUnit.CurrentMagDef;
+    bunit->CurrentSpd  = SelectedUnit.CurrentSpd;
+    bunit->CurrentLck = SelectedUnit.CurrentLck;
+    bunit->CurrentDex = SelectedUnit.CurrentDex;
 
     if(SelectedUnit.Class->ClassType != TYPE_MAGICAL)
     {
-        bunit.UnitDamage = SelectedUnit.CurrentAtk; //base
+        bunit->UnitDamage = SelectedUnit.CurrentAtk; //base
         return bunit;
     }  
-    bunit.UnitDamage = SelectedUnit.CurrentMag; //base           
+    bunit->UnitDamage = SelectedUnit.CurrentMag; //base           
 
     return bunit;
 };
 
-BattleUnit (GenerateBattleStructEnemy (u16 DevIndex)) {
+BattleUnit* (GenerateBattleStructEnemy (u16 DevIndex)) {
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
 
     if(&CurrentCharacter == NULL)
     {
-        return;
+        return NULL;
     };
     if(DevIndex > MAX_DEPLOYED_ALL_UNITS)
     {
-        return;
+        return NULL;
     };
 
-    BattleUnit bunit;
-    BattleUnit *bunit = malloc(sizeof(BattleUnit));
-    if (&bunit == NULL)
+    BattleUnit *bunit;
+    bunit = malloc(sizeof(BattleUnit));
+    if (bunit == NULL)
     {
-        free(&bunit);
+        free(bunit);
         fprintf(stderr, "Fatal Error: could not allocate memory for Battle Unit Struct in GenerateBattleStructEnemy");
-        return;
+        return NULL;
     }
-    bunit.Unitinfo = &CurrentCharacter[DevIndex];
+    bunit->Unitinfo = &CurrentCharacter[DevIndex];
     //TODO in future check if its valid item
-    bunit.EquippedWeapon = CurrentCharacter[DevIndex].Inventory[0].ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
-    bunit.MaxHP = CurrentCharacter[DevIndex].MaxHP;
-    bunit.CurrentHp = CurrentCharacter[DevIndex].CurrHp;
-    bunit.CurrentAtk = CurrentCharacter[DevIndex].CurrAtk;
-    bunit.CurrentMag = CurrentCharacter[DevIndex].CurrMag;
-    bunit.CurrentDef = CurrentCharacter[DevIndex].CurrDef;
-    bunit.CurrentMagDef = CurrentCharacter[DevIndex].CurrMagDef;
-    bunit.CurrentSpd  = CurrentCharacter[DevIndex].CurrSpd;
-    bunit.CurrentLck = CurrentCharacter[DevIndex].CurrLck;
-    bunit.CurrentDex = CurrentCharacter[DevIndex].CurrDex;
+    bunit->EquippedWeapon = CurrentCharacter[DevIndex].Inventory[0].ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
+    bunit->MaxHP = CurrentCharacter[DevIndex].MaxHP;
+    bunit->CurrentHp = CurrentCharacter[DevIndex].CurrHp;
+    bunit->CurrentAtk = CurrentCharacter[DevIndex].CurrAtk;
+    bunit->CurrentMag = CurrentCharacter[DevIndex].CurrMag;
+    bunit->CurrentDef = CurrentCharacter[DevIndex].CurrDef;
+    bunit->CurrentMagDef = CurrentCharacter[DevIndex].CurrMagDef;
+    bunit->CurrentSpd  = CurrentCharacter[DevIndex].CurrSpd;
+    bunit->CurrentLck = CurrentCharacter[DevIndex].CurrLck;
+    bunit->CurrentDex = CurrentCharacter[DevIndex].CurrDex;
 
     if(CurrentCharacter[DevIndex].ClassData->ClassType != TYPE_MAGICAL)
     {
-        bunit.UnitDamage = CurrentCharacter[DevIndex].CurrAtk; //base
+        bunit->UnitDamage = CurrentCharacter[DevIndex].CurrAtk; //base
         return bunit;
     }  
-    bunit.UnitDamage = CurrentCharacter[DevIndex].CurrMag; //base           
+    bunit->UnitDamage = CurrentCharacter[DevIndex].CurrMag; //base           
 
     return bunit;
 };
@@ -153,6 +157,8 @@ void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
 {
 
     //15, 20, 25 spd +1 round
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+    BattleState Battle;
 
     if(Battle.BattleStatus >= BATTLE_STATUS_STARTED ){
         Battle.BattleStatus += 1;
@@ -199,7 +205,7 @@ u8 Initiate_PreBattleSkills( BattleUnit Unit) {
     u32 i;
 
     struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
-
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
 
     for(i=0;i <= (sizeof(Unit.Unitinfo->CharData->CharSkills) / sizeof(Unit.Unitinfo->CharData->CharSkills[0]));i++)
     {
@@ -351,6 +357,9 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
 
 void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
 
+    BattleState Battle;
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+
     if((Battle.BattleStatus == BATTLE_STATUS_STARTED) || (Battle.BattleStatus == BATTLE_STATUS_FOLLOWUP) || (Battle.BattleStatus == BATTLE_STATUS_THIRD_ATTACK) )
     {
 
@@ -362,7 +371,7 @@ void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
     {
         CalcAttack(Recipient);
         SMTLikeRes(Recipient, Actor);
-        CalcHitRecipient(Recipient, Actor);
+        CalcHit(Recipient, Actor);
     }
     
     return;
@@ -390,16 +399,19 @@ void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
 
 void BattleLoop(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex){
     
+    BattleState Battle;
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+
     if(&Actor == NULL || &CurrentCharacter[EnemyUnitDevIndex] == NULL)
     {
         return;
     }
     
-    BattleUnit BActor = GenerateBattleStructPlayer(); //on player turn this is the player characters, on enemy its enemy characters
-    BattleUnit BRecipient = GenerateBattleStructEnemy(EnemyUnitDevIndex);
+    BattleUnit BActor = *GenerateBattleStructPlayer(); //on player turn this is the player characters, on enemy its enemy characters
+    BattleUnit BRecipient = *GenerateBattleStructEnemy(EnemyUnitDevIndex);
     MoveBattleState(BActor, BRecipient);  
     ApplyPreBattleSkills(Initiate_PreBattleSkills(BActor), BActor);
-    ApplyPreBattleSkillsAI(Initiate_PreBattleSkillsAI(BRecipient), BRecipient);
+    ApplyPreBattleSkills(Initiate_PreBattleSkills(BRecipient), BRecipient);
 
     while (Battle.BattleStatus != BATTLE_STATUS_END){
         AttackFunc(BActor, BRecipient);

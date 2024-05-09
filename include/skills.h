@@ -12,7 +12,7 @@ struct SkillStruct
     u8 SkillActivation;
 };
 
-struct SkillStruct Skills;
+extern struct SkillStruct Skills;
 
 enum SkillActivation
 {

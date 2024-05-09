@@ -52,6 +52,7 @@ struct SelectedUnitData
 };
 
 extern struct SelectedUnitData SelectedUnit;
+extern struct SelectedUnitData Actor;
 
 typedef struct {
 	u16 tile; //just a type of tile
@@ -93,7 +94,7 @@ typedef struct CurrentMap
     u8 MapEffect;
 };
 
-extern struct CurrentMap CurrentMap;
+extern struct CurrentMap CurrMap;
 
 enum TileType
 {
@@ -123,43 +124,42 @@ enum TileType
     SPECIAL_TYPE_THRONE,
     SPECIAL_TYPE_GUARD_POST,
     SPECIAL_TYPE_FORT,
-    SPECIAL_TYPE_COLLUMN
+    SPECIAL_TYPE_COLLUMN,
 };
-
 
 static inline void IncreaseTurnCounter()
 {
-    CurrentMap.CurrentTurn += 1;
+    CurrMap.CurrentTurn += 1;
     return;
 };
 int InitialiseMap();
 inline u16 CheckTileType(u8 MapX, u8 MapY){
-    if(&CurrentMap.Map->Tile[MapX][MapY] != NULL)
+    if(&CurrMap.Map->Tile[MapX][MapY] != NULL)
     {
-        return CurrentMap.Map->Tile[MapX][MapY]->tile;
+        return CurrMap.Map->Tile[MapX][MapY]->tile;
     };
     return -1;
 }
 inline bool CheckMapChangeExists(u8 MapChange){
-    if(&CurrentMap.Map->Mapchange[MapChange] != NULL)
+    if(&CurrMap.Map->Mapchange[MapChange] != NULL)
     {
         return true;
     };
     return false;
 };
 inline void ChangeMapChange(u8 MapChange){
-    if(&CurrentMap.Map->Mapchange[MapChange] != NULL)
+    if(&CurrMap.Map->Mapchange[MapChange] != NULL)
     {
-        CurrentMap.Map->Mapchange[MapChange].active = true;
+        CurrMap.Map->Mapchange[MapChange].active = true;
         return;
     };
     return;   
 }
 inline void ApplyMapEffect(u8 MapEffect)
 {
-    if(&CurrentMap != NULL)
+    if(&CurrMap != NULL)
     {
-        CurrentMap.MapEffect = MapEffect;
+        CurrMap.MapEffect = MapEffect;
         return;
     }
     return;

@@ -30,7 +30,7 @@ extern struct gamestate
 	u8 Renderer;
 	bool isOnionOnioned;
 	bool IsBlackFlagSailed;
-	MainData *MainData
+	struct MainDataStruct *MainData;
 };
 
 

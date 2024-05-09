@@ -33,7 +33,7 @@ typedef struct
     u8 BattleRange;
 }BattleState;
 
-BattleState Battle;
+extern BattleState Battle;
 
 enum BattleStatus
 {
@@ -84,8 +84,8 @@ u8 AddLevel (BattleUnit unit);
     \since This Function is available since version 0.1 of Aurus Engine
 */
 s8 IncreaseStat(s8 stat, s8 statgrowth); //this can either be used with BUnit or CurrUnit
-BattleUnit (GenerateBattleStructPlayer ());
-BattleUnit (GenerateBattleStructEnemy (u16 DevIndex));
+BattleUnit* (GenerateBattleStructPlayer ());
+BattleUnit* (GenerateBattleStructEnemy (u16 DevIndex));
 u8 Initiate_PreBattleSkills( BattleUnit );
 void BattleLoop(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex);
 void AttackFunc();

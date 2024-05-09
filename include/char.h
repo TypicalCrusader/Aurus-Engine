@@ -6,6 +6,11 @@
 
 #define RACESAMOUNT 15
 
+//need to do that because GCC is retarded :/
+#define MAX_DEPLOYED_PC_UNITS       16
+#define MAX_DEPLOYED_ENEMY_UNITS    64
+#define MAX_DEPLOYED_ALLY_UNITS     32
+#define MAX_DEPLOYED_ALL_UNITS      MAX_DEPLOYED_PC_UNITS + MAX_DEPLOYED_ENEMY_UNITS + MAX_DEPLOYED_ALLY_UNITS
 
 struct ClassStruct
 {
@@ -209,90 +214,10 @@ enum ClassType
     TYPE_MONSTER,
 };
 
-static void ExchangeInvSlotInfo(u8 SlotFrom, u8 SlotInto)
-{
-    if(&Character != NULL) //sanity check so we dont access unalocated memory
-    {
-
-    }
-    return;
-};
-inline void ChangeGender(u8 Gender) //fuckin dragons are putting magic into the water that turns the heckin humans gae
-{
-    if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
-    {
-        return;
-    }
-    if(Gender > GENDER_NONE) //3 defined
-    {
-        return;
-    }
-
-    CurrentCharacter->MiscCharData->gender = Gender;
-
-    return;
-}
-inline void ChangeAlignment(u8 Alignment)
-{
-    if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
-    {
-        return;
-    }
-    if(Alignment > ALIGNMENT_ANIMA) 
-    {
-        return;
-    }
-    CurrentCharacter->CharData->alignment = Alignment;
-
-    return;
-}
+void ExchangeInvSlotInfo(u8 SlotFrom, u8 SlotInto);
+void ChangeGender(u8 Gender);
+void ChangeAlignment(u8 Alignment);
 //0-23 follows the CurrCharData order
-inline u8 GetStatSkill(u8 Stat){
-    if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
-    {
-        return;
-    }
-    if(Stat > 23) 
-    {
-        return;
-    }
-    if(&CurrentCharacter + (39+Stat) == NULL)
-    {
-        return;
-    }
-    if(&SelectedUnit == NULL){
-        return;
-    }
-    #if UINTPTR_MAX != UINT32_MAX
-        u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (39+Stat);
-    #elif UINTPTR_MAX == UINT32_MAX
-        u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (23+Stat);
-    #else
-        //something is severly fucked
-        //TODO ADD ERROR HERE
-        return -1;
-    #endif
-    return StatVal;
-};
-inline u16 GetCharID(){
-    if(&SelectedUnit == NULL)
-    {
-        return -1;
-    }
-    if(&SelectedUnit.Unit == NULL)
-    {
-        return -1;
-    }    
-    return SelectedUnit.Unit->UnitID;
-};
-inline u8 GetRace(){
-    if(&SelectedUnit == NULL)
-    {
-        return -1;
-    }
-    if(&SelectedUnit.Unit == NULL)
-    {
-        return -1;
-    }
-    return SelectedUnit.Unit->RaceID;
-};
+u8 GetStatSkill(u8 Stat);
+u16 GetCharID();
+u8 GetRace();
