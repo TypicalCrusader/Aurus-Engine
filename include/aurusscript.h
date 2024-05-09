@@ -208,7 +208,7 @@ inline void SaveValueToMemslot();
 inline u8 ReturnMemslotValue();
 inline void DisplayChoice();
 inline void ChangeClass();
-inline void ChangeSide(u8 Side, CurrCharData Char, u16 CharID){
+inline void ChangeSide(u8 Side, u8 DeploymentIndex){
     return;
 }
 inline u16 SetMemSlot(u8 MemSlotIndex, u16 Value){

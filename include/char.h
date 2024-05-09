@@ -53,7 +53,6 @@ struct ClassStruct
 
 struct CharacterData
 {
-    u8 DevelopmentIndex;
     u16 UnitID;
     char CharName[50]; //this is just for yaml desc string
     char CharDesc[50];
@@ -98,12 +97,23 @@ struct CharacterData
 
 extern struct CharacterData Character[UINT16_MAX];
 
-typedef struct
+struct MiscCharDataStruct
 {
+    u8 gender;
+    u8 MapX;
+    u8 MapY;
+    u8 Faction;
+    struct AIData *AI;
+};
+
+struct CurrCharData
+{
+    u8 DevelopmentIndex;
     u16 UnitID;
     struct CharacterData *CharData;
     struct ClassStruct *ClassData;
     struct RaceStruct *Race;
+    struct MiscCharDataStruct *MiscCharData;
     u16 InventoryData[0x5];
     u16 CurrentSkills;
     s8 CurrHp;
@@ -130,9 +140,9 @@ typedef struct
     u8 CurrEarth;
     u8 CurrStaves;
     u8 CurrStone;
-}CurrCharData;
+};
 
-extern CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+extern struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
 
 enum gender {
     GENDER_MALE,
@@ -197,7 +207,7 @@ enum ClassType
     TYPE_MONSTER,
 };
 
-static void ExchangeInvSlotInfo(u8 SlotFrom, u8 SlotInto, CurrCharData Character)
+static void ExchangeInvSlotInfo(u8 SlotFrom, u8 SlotInto)
 {
     if(&Character != NULL) //sanity check so we dont access unalocated memory
     {
@@ -205,24 +215,47 @@ static void ExchangeInvSlotInfo(u8 SlotFrom, u8 SlotInto, CurrCharData Character
     }
     return;
 };
-inline void ChangeGender(u8 Gender, CurrCharData Character) //fuckin dragons are putting magic into the water that turns the heckin humans gae
+inline void ChangeGender(u8 Gender) //fuckin dragons are putting magic into the water that turns the heckin humans gae
 {
-    if(&Character != NULL) //sanity check so we dont access unalocated memory
+    if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
     {
-
+        return;
     }
+    if(Gender > GENDER_NONE) //3 defined
+    {
+        return;
+    }
+
+    CurrentCharacter->MiscCharData->gender = Gender;
+
     return;
 }
-inline void ChangeAlignment(u8 Alignment, CurrCharData Character)
+inline void ChangeAlignment(u8 Alignment)
 {
-    if(&Character != NULL) //sanity check so we dont access unalocated memory
+    if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
     {
-
+        return;
     }
+    if(Alignment > ALIGNMENT_ANIMA) 
+    {
+        return;
+    }
+    CurrentCharacter->CharData->alignment = Alignment;
+
     return;
 }
-inline s8 GetStat(){
-    return 0;
+//0-23 follows the CurrCharData order
+inline s8 GetStat(s8 Stat){
+    if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
+    {
+        return;
+    }
+    if(Stat > 23) 
+    {
+        return;
+    }
+
+    return ;
 };
 inline u8 GetWpnSkill(){
     return 0;
