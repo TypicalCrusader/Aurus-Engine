@@ -245,7 +245,7 @@ inline void ChangeAlignment(u8 Alignment)
     return;
 }
 //0-23 follows the CurrCharData order
-inline s8 GetStat(s8 Stat){
+inline u8 GetStat(u8 Stat){
     if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
     {
         return;
@@ -254,8 +254,23 @@ inline s8 GetStat(s8 Stat){
     {
         return;
     }
-
-    return ;
+    if(&CurrentCharacter + (39+Stat) == NULL)
+    {
+        return;
+    }
+    if(&SelectedUnit == NULL){
+        return;
+    }
+    #if UINTPTR_MAX != UINT32_MAX
+        u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (39+Stat);
+    #elif UINTPTR_MAX == UINT32_MAX
+        u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (23+Stat);
+    #else
+        //something is severly fucked
+        //TODO ADD ERROR HERE
+        return -1;
+    #endif
+    return StatVal;
 };
 inline u8 GetWpnSkill(){
     return 0;

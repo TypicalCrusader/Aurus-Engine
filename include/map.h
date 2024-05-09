@@ -166,5 +166,5 @@ inline void ApplyMapEffect(u8 MapEffect)
 };
 int ChangeMapMidChapter();
 void ActivateMapSkill();
-void MoveUnit(SelectedUnit Unit, u8 MapX, u8 MapY);
-void AttackUnit(SelectedUnit Actor, SelectedUnit Recipient);
+void MoveUnit(struct SelectedUnit Unit, u8 MapX, u8 MapY);
+void AttackUnit(struct SelectedUnit Actor, struct SelectedUnit Recipient);

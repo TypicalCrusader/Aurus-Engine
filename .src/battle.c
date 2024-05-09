@@ -73,7 +73,12 @@ u8 AddLevel (BattleUnit unit)
     return level;
 };
 
-BattleUnit (GenerateBattleStruct ( SelectedUnit unit)) {
+BattleUnit (GenerateBattleStruct ()) {
+
+    if(&SelectedUnit == NULL)
+    {
+        return;
+    };
 
     BattleUnit bunit;
     BattleUnit *bunit = malloc(sizeof(BattleUnit));
@@ -83,25 +88,25 @@ BattleUnit (GenerateBattleStruct ( SelectedUnit unit)) {
         fprintf(stderr, "Fatal Error: could not allocate memory for Battle Unit Struct in GenerateBattleStruct");
         return;
     }
-    bunit.Unitinfo = unit;
+    bunit.Unitinfo = SelectedUnit;
     //TODO in future check if its valid item
-    bunit.EquippedWeapon = unit.Inventory[0x0]; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
-    bunit.MaxHP = unit.MaxHP;
-    bunit.CurrentHp = unit.CurrentHp;
-    bunit.CurrentAtk = unit.CurrentAtk;
-    bunit.CurrentMag = unit.CurrentMag;
-    bunit.CurrentDef = unit.CurrentDef;
-    bunit.CurrentMagDef = unit.CurrentMagDef;
-    bunit.CurrentSpd  = unit.CurrentSpd;
-    bunit.CurrentLck = unit.CurrentLck;
-    bunit.CurrentDex = unit.CurrentDex;
+    bunit.EquippedWeapon = SelectedUnit.Inventory[0x0]; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
+    bunit.MaxHP = SelectedUnit.MaxHP;
+    bunit.CurrentHp = SelectedUnit.CurrentHp;
+    bunit.CurrentAtk = SelectedUnit.CurrentAtk;
+    bunit.CurrentMag = SelectedUnit.CurrentMag;
+    bunit.CurrentDef = SelectedUnit.CurrentDef;
+    bunit.CurrentMagDef = SelectedUnit.CurrentMagDef;
+    bunit.CurrentSpd  = SelectedUnit.CurrentSpd;
+    bunit.CurrentLck = SelectedUnit.CurrentLck;
+    bunit.CurrentDex = SelectedUnit.CurrentDex;
 
-    if(unit.Class.ClassType != TYPE_MAGICAL)
+    if(SelectedUnit.Class->ClassType != TYPE_MAGICAL)
     {
-        bunit.UnitDamage = unit.CurrentAtk; //base
+        bunit.UnitDamage = SelectedUnit.CurrentAtk; //base
         return bunit;
     }  
-    bunit.UnitDamage = unit.CurrentMag; //base           
+    bunit.UnitDamage = SelectedUnit.CurrentMag; //base           
 
     return bunit;
 };
@@ -341,7 +346,13 @@ void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
 //    return;
 //};
 
-void BattleLoop(SelectedUnit Actor,SelectedUnit Recipient){
+void BattleLoop(struct SelectedUnitData Actor, struct SelectedUnitData Recipient){
+    
+    if(&Actor == NULL || &Recipient == NULL)
+    {
+        return;
+    }
+    
     BattleUnit BActor = GenerateBattleStruct(Actor); //on player turn this is the player characters, on enemy its enemy characters
     BattleUnit BRecipient = GenerateBattleStruct(Recipient);
     MoveBattleState(BActor, BRecipient);  
