@@ -245,7 +245,7 @@ inline void ChangeAlignment(u8 Alignment)
     return;
 }
 //0-23 follows the CurrCharData order
-inline u8 GetStat(u8 Stat){
+inline u8 GetStatSkill(u8 Stat){
     if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
     {
         return;
@@ -272,12 +272,25 @@ inline u8 GetStat(u8 Stat){
     #endif
     return StatVal;
 };
-inline u8 GetWpnSkill(){
-    return 0;
-};
 inline u16 GetCharID(){
-    return 0;
+    if(&SelectedUnit == NULL)
+    {
+        return -1;
+    }
+    if(&SelectedUnit.Unit == NULL)
+    {
+        return -1;
+    }    
+    return SelectedUnit.Unit->UnitID;
 };
 inline u8 GetRace(){
-    return 0;
+    if(&SelectedUnit == NULL)
+    {
+        return -1;
+    }
+    if(&SelectedUnit.Unit == NULL)
+    {
+        return -1;
+    }
+    return SelectedUnit.Unit->RaceID;
 };
