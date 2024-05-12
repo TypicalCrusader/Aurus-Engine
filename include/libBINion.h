@@ -110,10 +110,10 @@ struct file{
     struct gp_data      *generaldata;
 };
 
-struct file OpenFileIntoMemory(struct file fileData);
+struct file* OpenFileIntoMemory(struct file *fileData);
 u8 CheckIsBinionEncrypted();
 u8 CheckIsBinionCompressed();
-u8 CheckBinionEntryType(struct file fileData);
+u8 CheckBinionEntryType(struct file *fileData);
 u32 CalculateBinionCRC32();
 u8 CheckIsBinionCorrupted();
 u16 CalculateBinionEntryCRC16();
