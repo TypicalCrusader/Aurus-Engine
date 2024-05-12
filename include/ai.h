@@ -38,6 +38,7 @@ enum AITypes{ //4Bytes
     //REMAINING 4 BITS RN ARE UNUSED
 };
 
+//move right u32 param value in spawn unit by 4 to get to AI2 8 to get to AI3 16 to get to AI4 20 to get to AI5 24 to get to AI 6
 struct AIData
 {
     u8 AI1     : 4;
