@@ -21,7 +21,7 @@ enum Renderer
 	RENDERER_DIRECTX
 };
 
-extern struct gamestate
+struct gamestate
 {
 	u8 CurrentState;
 	u32 ResX;
@@ -33,6 +33,7 @@ extern struct gamestate
 	struct MainDataStruct *MainData;
 };
 
+extern struct gamestatedata gamestate;
 
 //GLOBAL DEFINES HERE
 

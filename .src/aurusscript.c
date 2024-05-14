@@ -115,6 +115,8 @@ void AddItemToConvoy(u16 ItemID)
 void SpawnUnit(u16 CharID, u8 Faction, u32 AI, u16 Inventory[0x5], u16 Skills[0x5], u8 MapX, u8 MapY, bool TakeDataFromSave)
 {
 
+    struct CharacterData Character[UINT16_MAX];
+
     //sanity checks so we never access unalocated memory thus causing segfault
     //TODO: ADD fprintf to stderr
     if(&Character == NULL)

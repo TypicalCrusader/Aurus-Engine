@@ -87,7 +87,7 @@ s8 IncreaseStat(s8 stat, s8 statgrowth); //this can either be used with BUnit or
 BattleUnit* (GenerateBattleStructPlayer ());
 BattleUnit* (GenerateBattleStructEnemy (u16 DevIndex));
 u8 Initiate_PreBattleSkills( BattleUnit );
-void BattleLoop(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex);
+void BattleLoop(u16 EnemyUnitDevIndex);
 void AttackFunc();
 //void Initiate_Battle(BattleUnit Actor, SelectedUnit Recipient);
 void CalcAttack( BattleUnit );

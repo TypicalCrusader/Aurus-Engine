@@ -76,17 +76,17 @@ typedef struct
     MapChange *Mapchange; // offset list for map changes
 }MapData;
 
-typedef struct CurrentMap
+struct CurrentMap
 {
     u8 CurrentTurn; //256 max turns, here for redundancy, and the fact that some chapters are goin to have multiple maps
     u8 ChapterID; //Not Neccesarly needed but can be useful for script to distinguish which chapter events to run also additional redundancy
     MapData *Map;
     bool UseFOW;
-    struct
+    struct unitdata
     {
         u8 UnitID;
     }*EnemyUnit, *PlayerUnits, *AllyUnits;
-    struct 
+    struct tile
     {
         u8 X;
         u8 Y;

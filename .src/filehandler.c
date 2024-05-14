@@ -57,7 +57,7 @@ int Parse_map_XML_values(xmlDocPtr doc, xmlNodePtr cur, char childname[]) {
 		}
 		//cur = cur->next;
 	}
-	xmlFreeDoc(key);
+	xmlFreeDoc(doc);
 	return -1;
 }
 
@@ -70,7 +70,7 @@ char Get_Properties_Value(xmlDocPtr doc, xmlNodePtr cur, char propertyname[])
 		cur = cur->xmlChildrenNode;
 		while (cur != NULL) {
 			if ((!xmlStrcmp(cur->name, (const xmlChar)"property"))) {
-				if (attribute->name == *propertyname)
+				if (attribute->name == &propertyname)
 				{
 					key = xmlGetProp(cur, attribute->name);
 					xmlFree(attribute);
@@ -166,19 +166,19 @@ int* Load_Map_data_from_path( char *chapterID, char *chaptermapid)
 
 		Map -> Map = calloc(1,sizeof(*Map -> Map));
 		//Map -> Map = Malloc(sizeof(*Map -> Map));
-		Map -> Map -> MapX = calloc(1, 1);
-		Map -> Map -> MapY = calloc(1, 1);
-		Map -> Map ->UsedTileSet = calloc(1, 1);
+		Map -> Map -> MapX = (u8) calloc(1, 1);
+		Map -> Map -> MapY = (u8) calloc(1, 1);
+		Map -> Map ->UsedTileSet = (u8) calloc(1, 1);
 
 
 		//printf(Map -> Map->MapX);
 
 		//save data to map structs >:)
-		Map -> Map-> MapX = GetU8fromChar(MapX);
+		Map -> Map-> MapX = (u8) GetU8fromChar(MapX);
 
-		Map -> Map-> MapY = GetU8fromChar(MapY);
-		Map -> Map-> UsedTileSet = GetU8fromChar(TileConfig);
-		Map -> Map-> UsedPallete = GetU8fromChar(TilePalette);
+		Map -> Map-> MapY = (u8) GetU8fromChar(MapY);
+		Map -> Map-> UsedTileSet = (u8) GetU8fromChar(TileConfig);
+		Map -> Map-> UsedPallete = (u8) GetU8fromChar(TilePalette);
 	
 		printf("%i\n", Map -> Map->MapX);
 		printf("%i\n", Map -> Map->MapY);

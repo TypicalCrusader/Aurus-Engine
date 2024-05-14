@@ -65,14 +65,21 @@ u8 GetStatSkill(u8 Stat){
         return;
     }
     #if UINTPTR_MAX != UINT32_MAX
-        u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (39+Stat);
+        u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (54+Stat);
     #elif UINTPTR_MAX == UINT32_MAX
-        u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (23+Stat);
+        u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (34+Stat); 
+
     #else
         //something is severly fucked
         //TODO ADD ERROR HERE
         return -1;
     #endif
+
+    if(*StatVal == NULL)
+    {
+        //TODO ADD ERROR HERE
+        return -1;
+    }
     return StatVal;
 };
 u16 GetCharID(){

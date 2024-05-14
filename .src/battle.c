@@ -397,9 +397,10 @@ void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
 //    return;
 //};
 
-void BattleLoop(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex){
+void BattleLoop(u16 EnemyUnitDevIndex){
     
     BattleState Battle;
+    struct SelectedUnitData Actor;
     struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
 
     if(&Actor == NULL || &CurrentCharacter[EnemyUnitDevIndex] == NULL)

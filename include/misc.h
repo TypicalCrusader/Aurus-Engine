@@ -39,25 +39,25 @@ static inline u8 DiceRollOneTwenty() {
 
 static inline u8 GetU8fromChar (char Convertee)
 {
-    u8 ReturnU8 = Convertee - '0';
+    u8 ReturnU8 = (u8) Convertee - '0';
     return ReturnU8;
 };
 
 static inline s8 GetS8fromChar (char Convertee)
 {
-    s8 ReturnS8 = Convertee - '0';
+    s8 ReturnS8 = (s8) Convertee - '0';
     return ReturnS8;
 };
 
 static inline u16 GetU16fromChar (char Convertee)
 {
-    u16 Returnu16 = Convertee - '0';
+    u16 Returnu16 = (u16) Convertee - '0';
     return Returnu16;
 };
 
 static inline s16 GetS16fromChar (char Convertee)
 {
-    s16 Returns16 = Convertee - '0';
+    s16 Returns16 = (s16) Convertee - '0';
     return Returns16;
 };
 
