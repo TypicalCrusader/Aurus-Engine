@@ -112,7 +112,7 @@ void AddItemToConvoy(u16 ItemID)
     return;
 };
 
-void SpawnUnit(u16 CharID, u8 Faction, u32 AI, u16 Inventory[0x5], u16 Skills[0x5], u8 MapX, u8 MapY, bool TakeDataFromSave)
+void SpawnUnit(u16 CharID, u16 ClassID, u8 Faction, u32 AI, u16 Inventory[0x5], u16 Skills[0x5], u8 MapX, u8 MapY, bool TakeDataFromSave)
 {
 
     struct CharacterData Character[UINT16_MAX];
@@ -142,9 +142,33 @@ void SpawnUnit(u16 CharID, u8 Faction, u32 AI, u16 Inventory[0x5], u16 Skills[0x
     {
         return;
     }
+
+    struct ClassStruct Class;
+
+    if(&Class == NULL ){
+        return;
+    }
+
     if(MapY > MAX_MAP_SIZE || MapY > MAX_MAP_SIZE)
     {
         return;
+    }
+
+    u8 i;
+
+    for(i=0,&CurrentCharacter[i]!=NULL,i++)
+    {
+        //just a loop until first null character
+    }
+
+    if(&CurrentCharacter[i+1]==NULL)
+    {
+        CurrentCharacter[i+1].DevelopmentIndex = i+1;
+        CurrentCharacter[i+1].UnitID = Character[CharID].UnitID;   
+        CurrentCharacter[i+1].CharData = &Character[CharID];
+        CurrentCharacter[i+1].ClassData = &Class[ClassID];
+        
+
     }
 
     return;

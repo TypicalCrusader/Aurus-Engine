@@ -116,7 +116,7 @@ inline void KillCharacter(u16 CharID);
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void SpawnUnit(u16 CharID, u8 Faction, u32 AI , u16 Inventory[0x5], u16 Skills[0x5], u8 MapX, u8 MapY, bool TakeDataFromSave);
+void SpawnUnit(u16 CharID, u16 ClassID, u8 Faction, u32 AI , u16 Inventory[0x5], u16 Skills[0x5], u8 MapX, u8 MapY, bool TakeDataFromSave);
 /*
     `MoveUnit` - moves character on map
     \param `CharID` Character ID

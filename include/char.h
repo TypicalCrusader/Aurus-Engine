@@ -55,6 +55,7 @@ struct ClassStruct
     bool ClassUsesStone;
 };
 
+extern struct ClassStruct Class[UINT16_MAX];
 
 struct CharacterData
 {
