@@ -143,11 +143,19 @@ void SpawnUnit(u16 CharID, u16 ClassID, u8 Faction, u32 AI, u16 Inventory[0x5], 
         return;
     }
 
-    struct ClassStruct Class;
+    struct ClassStruct Class[UINT16_MAX];
 
     if(&Class == NULL ){
         return;
     }
+
+    struct RaceStruct Race[RACESAMOUNT];
+
+    if(&Race == NULL)
+    {
+        return;
+    }
+
 
     if(MapY > MAX_MAP_SIZE || MapY > MAX_MAP_SIZE)
     {
@@ -156,19 +164,35 @@ void SpawnUnit(u16 CharID, u16 ClassID, u8 Faction, u32 AI, u16 Inventory[0x5], 
 
     u8 i;
 
-    for(i=0,&CurrentCharacter[i]!=NULL,i++)
+    for(i=0;&CurrentCharacter[i]!=NULL;i++)
     {
         //just a loop until first null character
     }
 
-    if(&CurrentCharacter[i+1]==NULL)
+    if(i>=MAX_DEPLOYED_ALL_UNITS && &CurrentCharacter[i]!=NULL)
     {
-        CurrentCharacter[i+1].DevelopmentIndex = i+1;
-        CurrentCharacter[i+1].UnitID = Character[CharID].UnitID;   
-        CurrentCharacter[i+1].CharData = &Character[CharID];
-        CurrentCharacter[i+1].ClassData = &Class[ClassID];
-        
+        //todo insert warning that trying to add chars over limit thus ignoring
+        return;
+    }
 
+    if(&CurrentCharacter[i]==NULL)
+    {
+        CurrentCharacter[i].DevelopmentIndex = i;
+        CurrentCharacter[i].UnitID = Character[CharID].UnitID;   
+        CurrentCharacter[i].CharData = &Character[CharID];
+        CurrentCharacter[i].ClassData = &Class[ClassID];
+        CurrentCharacter[i].Race = &Race[Character[CharID].RaceID];
+        CurrentCharacter[i].MiscData.gender = Character[CharID].CharGender;
+        CurrentCharacter[i].MiscData.MapX = MapX;
+        CurrentCharacter[i].MiscData.MapY = MapY;  
+        CurrentCharacter[i].MiscData.Faction = Faction;  
+        CurrentCharacter[i].MiscData.AI.AI1 = (u8) AI; 
+        CurrentCharacter[i].MiscData.AI.AI2 = (u8) AI << 4;
+        CurrentCharacter[i].MiscData.AI.AI3 = (u8) AI << 8;
+        CurrentCharacter[i].MiscData.AI.AI4 = (u8) AI << 16;
+        CurrentCharacter[i].MiscData.AI.AI5 = (u8) AI << 20;
+        CurrentCharacter[i].MiscData.AI.AI6 = (u8) AI << 24;
+        CurrentCharacter[i].MiscData.AI.Padding = (u8) 0xF;  
     }
 
     return;

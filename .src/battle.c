@@ -419,6 +419,11 @@ void BattleLoop(u16 EnemyUnitDevIndex){
         MoveBattleState(BActor, BRecipient);
     }
 
+    if(BRecipient.CurrentHp == 0 || BActor.CurrentHp ==0)
+    {
+        
+    }
+
     //post battle skills go here
     return;
 };

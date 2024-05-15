@@ -103,15 +103,6 @@ struct CharacterData
 
 extern struct CharacterData Character[UINT16_MAX];
 
-struct MiscCharDataStruct
-{
-    u8 gender;
-    u8 MapX;
-    u8 MapY;
-    u8 Faction;
-    struct AIData *AI;
-};
-
 struct CurrCharData
 {
     u8 DevelopmentIndex;
@@ -119,7 +110,14 @@ struct CurrCharData
     struct CharacterData *CharData;
     struct ClassStruct *ClassData;
     struct RaceStruct *Race;
-    struct MiscCharDataStruct *MiscCharData;
+    struct MiscCharDataStruct
+    {
+        u8 gender;
+        u8 MapX;
+        u8 MapY;
+        u8 Faction;
+        struct AIData AI;
+    }MiscData;
     struct InventoryData *Inventory;
     u16 CurrentSkills[5];
     s8 MaxHP;
