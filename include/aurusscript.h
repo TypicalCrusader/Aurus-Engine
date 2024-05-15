@@ -102,6 +102,14 @@ inline void RoutCharacter(u16 CharID);
 */
 inline void KillCharacter(u16 CharID);
 /*
+   `AddXLevelsToCharacter` - Adds x levels to character
+    \param `Levels` - How many levels to add
+    \param `CharDepIndex` Character deployment index
+    \returns None
+    \since This Function is available since version 0.1 of Aurus Engine
+*/
+u16 AddXLevelsToCharacter(u8 Levels, u16 CharDepIndex);
+/*
     `SpawnUnit` - Spawns Character of `CharID` with `Faction` `Skills` and `Inventory` on the map,
     \param `CharID` Character ID
     \param `Faction` Faction to spawn Character In, Can use `CharacterFaction` Enum to pass on the value
