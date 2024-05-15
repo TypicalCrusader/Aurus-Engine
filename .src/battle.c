@@ -421,9 +421,21 @@ void BattleLoop(u16 EnemyUnitDevIndex){
 
     if(BRecipient.CurrentHp == 0 || BActor.CurrentHp ==0)
     {
-        
+        if(BRecipient.CurrentHp == 0)
+        {
+            free(&CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex]);
+        }
+        if(BActor.CurrentHp == 0)
+        {
+            free(&CurrentCharacter[BActor.Unitinfo->DevelopmentIndex]);
+        }        
     }
 
     //post battle skills go here
+
+
+    //just to be safe
+    free(&BActor);
+    free(&BRecipient);
     return;
 };
