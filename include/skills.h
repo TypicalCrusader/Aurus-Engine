@@ -10,6 +10,7 @@ struct SkillStruct
     char SkillDesc;
     char SkillEffect;
     u8 SkillActivation;
+    void* FunctionPointer;
 };
 
 extern struct SkillStruct Skills;

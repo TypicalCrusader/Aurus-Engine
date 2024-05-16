@@ -206,7 +206,7 @@ void SpawnUnit(u16 CharID, u16 ClassID, u8 level, u8 Faction, u32 AI, u16 Invent
 
     for (i = 0; &CurrentCharacter[i] != NULL; i++)
     {
-        // just a loop until first null character
+        // just a loop until first free character
     }
 
     if (i >= MAX_DEPLOYED_ALL_UNITS && &CurrentCharacter[i] != NULL)

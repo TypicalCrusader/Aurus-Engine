@@ -230,10 +230,7 @@ void CalcAttack( BattleUnit Unit)
 void ApplyPreBattleSkills(u8 skill,  BattleUnit Unit)
 {
 
-    /*
-         List of pre battle skills for player and their effect go here
     
-    */
 
     return;
 }
