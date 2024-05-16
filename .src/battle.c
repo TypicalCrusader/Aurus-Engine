@@ -227,10 +227,29 @@ void CalcAttack( BattleUnit Unit)
     return;
 }
 
-void ApplyPreBattleSkills(u8 skill,  BattleUnit Unit)
+void ApplyPreBattleSkills(u8 Skill,  BattleUnit Unit)
 {
 
-    
+    struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
+
+    //sanity checks
+
+    if(&Skills == NULL)
+    {
+        return;
+    }
+
+    if(&Skills[Skill] == NULL)
+    {
+        return;
+    }
+
+    if(Skills[Skill].FunctionPointer == NULL)
+    {
+        return;
+    }
+
+    Skills[Skill].FunctionPointer(0);
 
     return;
 }
@@ -408,6 +427,9 @@ void BattleLoop(u16 EnemyUnitDevIndex){
     BattleUnit BActor = *GenerateBattleStructPlayer(); //on player turn this is the player characters, on enemy its enemy characters
     BattleUnit BRecipient = *GenerateBattleStructEnemy(EnemyUnitDevIndex);
     MoveBattleState(BActor, BRecipient);  
+
+    //todo change this :)
+
     ApplyPreBattleSkills(Initiate_PreBattleSkills(BActor), BActor);
     ApplyPreBattleSkills(Initiate_PreBattleSkills(BRecipient), BRecipient);
 
@@ -420,19 +442,17 @@ void BattleLoop(u16 EnemyUnitDevIndex){
     {
         if(BRecipient.CurrentHp == 0)
         {
-            free(&CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex]);
+            //0 out the memory
+            memset(&CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex], 0, sizeof(CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex]));
         }
         if(BActor.CurrentHp == 0)
         {
-            free(&CurrentCharacter[BActor.Unitinfo->DevelopmentIndex]);
+            memset(&CurrentCharacter[BActor.Unitinfo->DevelopmentIndex], 0, sizeof(CurrentCharacter[BActor.Unitinfo->DevelopmentIndex]));
         }        
     }
 
     //post battle skills go here
 
 
-    //just to be safe
-    free(&BActor);
-    free(&BRecipient);
     return;
 };

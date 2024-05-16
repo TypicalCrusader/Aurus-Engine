@@ -10,10 +10,10 @@ struct SkillStruct
     char SkillDesc;
     char SkillEffect;
     u8 SkillActivation;
-    void* FunctionPointer;
+    int(*FunctionPointer)(void*);
 };
 
-extern struct SkillStruct Skills;
+extern struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
 
 enum SkillActivation
 {

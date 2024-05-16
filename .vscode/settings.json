@@ -18,4 +18,5 @@
         "types.h": "c",
         "aurusscript.h": "c"
     },
+    "C_Cpp.errorSquiggles": "disabled",
 }
