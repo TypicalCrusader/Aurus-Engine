@@ -87,13 +87,12 @@ u8 AddLevel (BattleUnit unit);
 s8 IncreaseStat(s8 stat, s8 statgrowth); //this can either be used with BUnit or CurrUnit
 BattleUnit* (GenerateBattleStructPlayer ());
 BattleUnit* (GenerateBattleStructEnemy (u16 DevIndex));
-u8 Initiate_PreBattleSkills( BattleUnit );
 void BattleLoop(u16 EnemyUnitDevIndex);
 void AttackFunc();
 //void Initiate_Battle(BattleUnit Actor, SelectedUnit Recipient);
 void CalcAttack( BattleUnit );
 void MoveBattleState( BattleUnit , BattleUnit );
-void ApplyPreBattleSkills(u8 skill,  BattleUnit Unit);
+void ApplyPreBattleSkills( BattleUnit Unit);
 void SMTLikeRes( BattleUnit ,  BattleUnit );
 void CalcHit( BattleUnit , BattleUnit );
 

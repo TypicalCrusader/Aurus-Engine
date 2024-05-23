@@ -201,25 +201,6 @@ void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
     return;
 };
 
-u8 Initiate_PreBattleSkills( BattleUnit Unit) {
-    u32 i;
-
-    struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
-    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
-
-    for(i=0;i <= (sizeof(Unit.Unitinfo->CharData->CharSkills) / sizeof(Unit.Unitinfo->CharData->CharSkills[0]));i++)
-    {
-        if (Skills[Unit.Unitinfo->CharData->CharSkills[i]].SkillActivation == SKILL_ACTIVATION_PRE_BATTLE)
-        {
-            u8 skill = Skills[Unit.Unitinfo->CharData->CharSkills[i]].SkillID;
-            return skill;
-        }
-    }
-
-    u8 skill = 0;
-    return skill;
-};
-
 void CalcAttack( BattleUnit Unit)
 {
     Unit.UnitDamage += Unit.Unitinfo->Inventory[0].Attack;
@@ -227,7 +208,7 @@ void CalcAttack( BattleUnit Unit)
     return;
 }
 
-void ApplyPreBattleSkills(u8 Skill,  BattleUnit Unit)
+void ApplyPreBattleSkills(BattleUnit Unit)
 {
 
     struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
@@ -239,20 +220,10 @@ void ApplyPreBattleSkills(u8 Skill,  BattleUnit Unit)
         return;
     }
 
-    if(&Skills[Skill] == NULL)
-    {
-        return;
-    }
-
-    if(Skills[Skill].FunctionPointer == NULL)
-    {
-        return;
-    }
-
     u8 i;
     for(i=0;i<=5;i+=)
     {
-        if(Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_PRE_BATTLE )
+        if(Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_PRE_BATTLE )
         {
             Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
         }
@@ -331,7 +302,7 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
     u8 i;
     for(i=0;i<=5;i+=)
     {
-        if(Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_BATTLE)
+        if(Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_BATTLE)
         {
             Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
         }
@@ -443,8 +414,8 @@ void BattleLoop(u16 EnemyUnitDevIndex){
 
     //todo change this :)
 
-    ApplyPreBattleSkills(Initiate_PreBattleSkills(BActor), BActor);
-    ApplyPreBattleSkills(Initiate_PreBattleSkills(BRecipient), BRecipient);
+    Initiate_PreBattleSkills(BActor);
+    Initiate_PreBattleSkills(BRecipient);
 
     while (Battle.BattleStatus != BATTLE_STATUS_END){
         AttackFunc(BActor, BRecipient);
@@ -469,17 +440,17 @@ void BattleLoop(u16 EnemyUnitDevIndex){
     u8 i;
     for(i=0;i<=5;i+=)
     {
-        if(Skills[BActor.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
+        if(Skills[BActor.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[BActor.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
         {
             Skills[BActor.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
-        }
+        }        
     }
     for(i=0;i<=5;i+=)
     {
-        if(Skills[BRecipient.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
+        if(Skills[BRecipient.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[BRecipient.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
         {
             Skills[BRecipient.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
-        }
+        }        
     }
 
 
