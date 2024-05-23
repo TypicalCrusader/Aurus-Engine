@@ -249,7 +249,14 @@ void ApplyPreBattleSkills(u8 Skill,  BattleUnit Unit)
         return;
     }
 
-    Skills[Skill].FunctionPointer(0);
+    u8 i;
+    for(i=0;i<=5;i+=)
+    {
+        if(Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_PRE_BATTLE )
+        {
+            Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
+        }
+    }    
 
     return;
 }
@@ -321,9 +328,15 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
         Unit.UnitDamage = -100;
     }        
 
-    /*
-        Skills replacing attacks will go here
-    */
+    u8 i;
+    for(i=0;i<=5;i+=)
+    {
+        if(Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
+        {
+            Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
+        }
+    }
+
 
     if(&Unit == NULL)
     {
@@ -443,15 +456,31 @@ void BattleLoop(u16 EnemyUnitDevIndex){
         if(BRecipient.CurrentHp == 0)
         {
             //0 out the memory
-            memset(&CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex], 0, sizeof(CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex]));
+            &CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex] = NULL
         }
         if(BActor.CurrentHp == 0)
         {
-            memset(&CurrentCharacter[BActor.Unitinfo->DevelopmentIndex], 0, sizeof(CurrentCharacter[BActor.Unitinfo->DevelopmentIndex]));
+            &CurrentCharacter[BActor.Unitinfo->DevelopmentIndex] = NULL
         }        
     }
 
     //post battle skills go here
+
+    u8 i;
+    for(i=0;i<=5;i+=)
+    {
+        if(Skills[BActor.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
+        {
+            Skills[BActor.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
+        }
+    }
+    for(i=0;i<=5;i+=)
+    {
+        if(Skills[BRecipient.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
+        {
+            Skills[BRecipient.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
+        }
+    }
 
 
     return;
