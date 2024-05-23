@@ -331,7 +331,7 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
     u8 i;
     for(i=0;i<=5;i+=)
     {
-        if(Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
+        if(Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_BATTLE)
         {
             Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
         }
