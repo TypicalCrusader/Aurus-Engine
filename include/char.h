@@ -118,7 +118,7 @@ struct CurrCharData
         u8 Faction;
         struct AIData AI;
     }MiscData;
-    struct InventoryData *Inventory;
+    struct InventoryData *Inventory[5];
     u16 CurrentSkills[5];
     s8 MaxHP;
     s8 CurrHp;

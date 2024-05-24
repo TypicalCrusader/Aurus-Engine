@@ -170,11 +170,11 @@ void SpawnUnit(u16 CharID, u16 ClassID, u8 level, u8 Faction, u32 AI, u16 Invent
     {
         return;
     }
-    if (&CurrentCharacter[0] == NULL) // somehow its unalocated thus something broke
+    if (&CurrentCharacter[0].UnitID == NULL) // somehow its unalocated thus something broke
     {
         return;
     }
-    if (&CurrentCharacter[MAX_DEPLOYED_ALL_UNITS] == NULL)
+    if (&CurrentCharacter[MAX_DEPLOYED_ALL_UNITS].UnitID == NULL)
     {
         return;
     }
@@ -204,18 +204,18 @@ void SpawnUnit(u16 CharID, u16 ClassID, u8 level, u8 Faction, u32 AI, u16 Invent
 
     u8 i;
 
-    for (i = 0; &CurrentCharacter[i] != NULL; i++)
+    for (i = 0; &CurrentCharacter[i].UnitID != NULL; i++)
     {
         // just a loop until first free character
     }
 
-    if (i >= MAX_DEPLOYED_ALL_UNITS && &CurrentCharacter[i] != NULL)
+    if (i >= MAX_DEPLOYED_ALL_UNITS && &CurrentCharacter[i].UnitID != NULL)
     {
         // todo insert warning that trying to add chars over limit thus ignoring
         return;
     }
 
-    if (TakeDataFromSave == true && &CurrentCharacter[i] == NULL)
+    if (TakeDataFromSave == true && &CurrentCharacter[i].UnitID == NULL)
     {
         // todo take data from save
         return;
@@ -243,6 +243,50 @@ void SpawnUnit(u16 CharID, u16 ClassID, u8 level, u8 Faction, u32 AI, u16 Invent
         CurrentCharacter[i].CurrHp =  CurrentCharacter[i].MaxHP;
 
     }
+
+    return;
+}
+
+void KillCharacter(u16 CharID)
+{
+    if (&CurrentCharacter[CharID] == NULL)
+    {
+        &CurrentCharacter[CharID].DevelopmentIndex = NULL;
+        &CurrentCharacter[CharID].UnitID = NULL;
+        &CurrentCharacter[CharID].CharData = NULL;
+        &CurrentCharacter[CharID].ClassData = NULL;
+        &CurrentCharacter[CharID].Inventory = NULL;
+        &CurrentCharacter[CharID].Race = NULL;
+        &CurrentCharacter[CharID].MiscData = NULL
+        &CurrentCharacter[CharID].CurrHp = NULL;
+        &CurrentCharacter[CharID].CurrentSkills = NULL;
+        &CurrentCharacter[CharID].MaxHP = NULL;
+        &CurrentCharacter[CharID].CurrHp = NULL;
+        &CurrentCharacter[CharID].CurrAtk = NULL;
+        &CurrentCharacter[CharID].CurrMag = NULL;
+        &CurrentCharacter[CharID].CurrDef = NULL;
+        &CurrentCharacter[CharID].CurrMagDef = NULL;
+        &CurrentCharacter[CharID].CurrSpd = NULL;
+        &CurrentCharacter[CharID].CurrLck = NULL;
+        &CurrentCharacter[CharID].CurrDex = NULL;
+        &CurrentCharacter[CharID].CurrSwrd = NULL;
+        &CurrentCharacter[CharID].CurrDgr = NULL;
+        &CurrentCharacter[CharID].CurrSpr = NULL;
+        &CurrentCharacter[CharID].CurrAxe = NULL;
+        &CurrentCharacter[CharID].CurrThrow = NULL;
+        &CurrentCharacter[CharID].CurrBow = NULL;
+        &CurrentCharacter[CharID].CurrLight = NULL;
+        &CurrentCharacter[CharID].CurrDark = NULL;
+        &CurrentCharacter[CharID].CurrWind = NULL;
+        &CurrentCharacter[CharID].CurrFire = NULL;
+        &CurrentCharacter[CharID].CurrWater = NULL;
+        &CurrentCharacter[CharID].CurrIce = NULL;
+        &CurrentCharacter[CharID].CurrThunder = NULL;
+        &CurrentCharacter[CharID].CurrEarth = NULL;
+        &CurrentCharacter[CharID].CurrStaves = NULL;
+        &CurrentCharacter[CharID].CurrStone = NULL;
+        &CurrentCharacter[CharID].CurrLvl = NULL;
+    }   
 
     return;
 }

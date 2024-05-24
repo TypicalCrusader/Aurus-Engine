@@ -19,7 +19,7 @@ s8 IncreaseStat(s8 stat, s8 statgrowth){
 
         if(statgrowth >= 0) {
             //check if growth actually works
-            if (DiceRollOnehundred() <= statgrowth) {
+            if (DiceRollOnehundred() < statgrowth) {
 
                 //check if quallifies for +2
                 if (DiceRollOnehundred() == 100) {
@@ -34,7 +34,7 @@ s8 IncreaseStat(s8 stat, s8 statgrowth){
         }
         else {
             //check if growth actually works
-            if ((DiceRollOnehundred() *-1) >= statgrowth) {
+            if ((DiceRollOnehundred() *-1) > statgrowth) {
 
                 //check if quallifies for -2
                 if (DiceRollOnehundred() == 100) {
@@ -412,7 +412,7 @@ void BattleLoop(u16 EnemyUnitDevIndex){
     BattleUnit BRecipient = *GenerateBattleStructEnemy(EnemyUnitDevIndex);
     MoveBattleState(BActor, BRecipient);  
 
-    //todo change this :)
+    //initialise pre battle (technically not needed as func tbh tbh)
 
     Initiate_PreBattleSkills(BActor);
     Initiate_PreBattleSkills(BRecipient);
@@ -426,7 +426,7 @@ void BattleLoop(u16 EnemyUnitDevIndex){
     {
         if(BRecipient.CurrentHp == 0)
         {
-            //0 out the memory
+            //0 out the memory pointer to that struct
             &CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex] = NULL
         }
         if(BActor.CurrentHp == 0)

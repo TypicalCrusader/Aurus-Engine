@@ -100,7 +100,7 @@ inline void RoutCharacter(u16 CharID);
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-inline void KillCharacter(u16 CharID);
+void KillCharacter(u16 CharID);
 /*
    `AddXLevelsToCharacter` - Adds x levels to character
     \param `Levels` - How many levels to add
