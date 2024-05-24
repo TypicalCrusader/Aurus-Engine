@@ -317,3 +317,49 @@ void KillCharacter(u16 CharID)
 
     return;
 }
+
+void ChangeClass(u8 DeploymentIndex, u16 ClassID)
+{
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+
+    if(&CurrentCharacter == NULL)
+    {
+        return;
+    }
+
+    if(&CurrentCharacter[DeploymentIndex].UnitID == NULL )
+    {
+        return;
+    }
+
+    struct ClassStruct Class[UINT16_MAX];
+
+    if(&Class == NULL)
+    {
+        return;
+    }
+
+    if(&Class[ClassID].ClassID == NULL)
+    {
+        return;
+    }
+
+    CurrentCharacter[DeploymentIndex].ClassData = &Class[ClassID];
+}
+void ChangeSide(u8 Side, u8 DeploymentIndex){
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+
+    if(&CurrentCharacter == NULL)
+    {
+        return;
+    }
+
+    if(&CurrentCharacter[DeploymentIndex].UnitID == NULL )
+    {
+        return;
+    }
+
+    CurrentCharacter[DeploymentIndex].MiscData.Faction = Side;
+
+    return;
+}

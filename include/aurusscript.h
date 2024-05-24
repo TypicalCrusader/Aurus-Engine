@@ -13,6 +13,10 @@
 
 #define MAX_RECRUITABLE_PC_UNITS        50
 #define MAX_POSSIBLE_RECRUITABLE_UNITS 100
+#define MAX_DEPLOYED_PC_UNITS           16
+#define MAX_DEPLOYED_ENEMY_UNITS        64
+#define MAX_DEPLOYED_ALLY_UNITS         32
+#define MAX_DEPLOYED_ALL_UNITS          MAX_DEPLOYED_PC_UNITS + MAX_DEPLOYED_ENEMY_UNITS + MAX_DEPLOYED_ALLY_UNITS
 
 extern u16 MemSlot[16];
 extern u16 DeadCharacters[MAX_POSSIBLE_RECRUITABLE_UNITS];
@@ -220,13 +224,23 @@ inline void EndChapter();
     \since This Function is available since version 0.1 of Aurus Engine
 */
 void MapEvent(u8 EventType, u8 MapX, u8 MapY);
-inline void SaveValueToMemslot();
-inline u8 ReturnMemslotValue();
-inline void DisplayChoice();
-inline void ChangeClass();
-inline void ChangeSide(u8 Side, u8 DeploymentIndex){
-    return;
+void SaveValueToMemslot();
+inline u16 ReturnMemslotValue(MemSlotID)
+{
+    if(MemSlotID > 16)
+    {
+        return -1;
+    }
+
+    u16 MemSlot[16];
+    return MemSlot[MemSlotID];
 }
+inline u8 DisplayChoice()
+{
+    return 0;
+}
+void ChangeClass(u8 DeploymentIndex, u16 ClassID);
+void ChangeSide(u8 Side, u8 DeploymentIndex);
 inline u16 SetMemSlot(u8 MemSlotIndex, u16 Value){
     if (MemSlotIndex > 20){
         return -1;
