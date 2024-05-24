@@ -1,9 +1,11 @@
 #pragma once
+
 #include "misc.h"
 #include "inventory.h"
 #include "skills.h"
 #include "char.h"
 #include "map.h"
+#include "aurusscript.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>

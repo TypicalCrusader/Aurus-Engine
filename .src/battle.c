@@ -89,7 +89,7 @@ BattleUnit* (GenerateBattleStructPlayer ()) {
     }
     bunit->Unitinfo = SelectedUnit.Unit;
     //TODO in future check if its valid item
-    bunit->EquippedWeapon = SelectedUnit.Inventory[0].ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
+    bunit->EquippedWeapon = SelectedUnit.Inventory[0].ItemID;
     bunit->MaxHP = SelectedUnit.MaxHP;
     bunit->CurrentHp = SelectedUnit.CurrentHp;
     bunit->CurrentAtk = SelectedUnit.CurrentAtk;
@@ -132,7 +132,7 @@ BattleUnit* (GenerateBattleStructEnemy (u16 DevIndex)) {
     }
     bunit->Unitinfo = &CurrentCharacter[DevIndex];
     //TODO in future check if its valid item
-    bunit->EquippedWeapon = CurrentCharacter[DevIndex].Inventory[0].ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
+    bunit->EquippedWeapon = CurrentCharacter[DevIndex].Inventory[0]->ItemID; //first index of inventory is always a weapon, if its not a weapon then it means its either a hand or item
     bunit->MaxHP = CurrentCharacter[DevIndex].MaxHP;
     bunit->CurrentHp = CurrentCharacter[DevIndex].CurrHp;
     bunit->CurrentAtk = CurrentCharacter[DevIndex].CurrAtk;
@@ -187,23 +187,23 @@ void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
     }
     else {
         Battle.BattleStatus = BATTLE_STATUS_STARTED;
-        Battle.BattleRange = Unit.Unitinfo->Inventory[0].AttackRange;
+        Battle.BattleRange = Unit.Unitinfo->Inventory[0]->AttackRange;
     }
 
-    if ( (Battle.BattleStatus = BATTLE_STATUS_STARTED) & (Unit.Unitinfo->Inventory[0].ItemType != ITEM_TYPE_WEAPON)) //this should never happen, you cant attack without a weapon
+    if ( (Battle.BattleStatus = BATTLE_STATUS_STARTED) & (Unit.Unitinfo->Inventory[0]->ItemType != ITEM_TYPE_WEAPON)) //this should never happen, you cant attack without a weapon
     {
         //TODO fprintf
         return;
     }
 
-    Battle.BattleAttackType = Unit.Unitinfo->Inventory[0].AttackType;
+    Battle.BattleAttackType = Unit.Unitinfo->Inventory[0]->AttackType;
 
     return;
 };
 
 void CalcAttack( BattleUnit Unit)
 {
-    Unit.UnitDamage += Unit.Unitinfo->Inventory[0].Attack;
+    Unit.UnitDamage += Unit.Unitinfo->Inventory[0]->Attack;
 
     return;
 }
@@ -221,9 +221,9 @@ void ApplyPreBattleSkills(BattleUnit Unit)
     }
 
     u8 i;
-    for(i=0;i<=5;i+=)
+    for(i=0;i<=5;i++)
     {
-        if(Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_PRE_BATTLE )
+        if(Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation == SKILL_ACTIVATION_PRE_BATTLE )
         {
             Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
         }
@@ -245,7 +245,7 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
     u32 i;
     for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.SpecialWeaponNullDmg) / sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.SpecialWeaponNullDmg[0]));i++)    
     {
-        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.SpecialWeaponNullDmg[i] == Unit.Unitinfo->Inventory[0].ItemID)
+        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.SpecialWeaponNullDmg[i] == Unit.Unitinfo->Inventory[0]->ItemID)
         {
             //ifs based here on item effect and type, most likely only omega and Tyfrang of Revolution will go here
             return;
@@ -255,7 +255,7 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
     
     for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ResAlignmentDmg) / sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ResAlignmentDmg[0]));i++)    
     {
-        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ResAlignmentDmg[i] == Unit.Unitinfo->Inventory[0].AffinityRes)
+        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ResAlignmentDmg[i] == Unit.Unitinfo->Inventory[0]->AffinityRes)
         {
             Unit.UnitDamage *= 0.25;
             return;
@@ -265,7 +265,7 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
 
     for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.NulllignmentDmg) / sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.NulllignmentDmg[0]));i++)    
     {
-        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.NulllignmentDmg[i] == Unit.Unitinfo->Inventory[0].AffinityNul)
+        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.NulllignmentDmg[i] == Unit.Unitinfo->Inventory[0]->AffinityNul)
         {
             Unit.UnitDamage *= 0;
             return;
@@ -275,7 +275,7 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
 
     for(i=0;i <= (sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ReverseAlignmentDmg) / sizeof(Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ReverseAlignmentDmg[0]));i++)    
     {
-        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ReverseAlignmentDmg[i] == Unit.Unitinfo->Inventory[0].AffinityAbs)
+        if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ReverseAlignmentDmg[i] == Unit.Unitinfo->Inventory[0]->AffinityAbs)
         {
             Unit.UnitDamage *= -1;
             return;
@@ -288,7 +288,13 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
 
 void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
 {
-    
+    struct SkillStruct Skills[MAX_SKILLS_AMOUNT]; 
+
+    if(&Skills == NULL)
+    {
+        return;
+    }
+
     //over / underflow checker
     if (Unit.UnitDamage >= 100)
     {
@@ -300,9 +306,9 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
     }        
 
     u8 i;
-    for(i=0;i<=5;i+=)
+    for(i=0;i<=5;i++)
     {
-        if(Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_BATTLE)
+        if(Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[Unit.Unitinfo->CurrentSkills[i]].SkillActivation == SKILL_ACTIVATION_BATTLE)
         {
             Skills[Unit.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
         }
@@ -318,11 +324,11 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
 
 
     //hit
-    if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 )) <= (Unit.Unitinfo->Inventory[0].Accuracy + Unit.CurrentDex - Unit.Unitinfo->Inventory[0].Weight))
+    if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 )) <= (Unit.Unitinfo->Inventory[0]->Accuracy + Unit.CurrentDex - Unit.Unitinfo->Inventory[0]->Weight))
     {
 
         //check for crit
-        if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 ) ) <= Unit.Unitinfo->Inventory[0].CritRate)
+        if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 ) ) <= Unit.Unitinfo->Inventory[0]->CritRate)
         {
             Unit.UnitDamage *= 2;
             if (Unit.UnitDamage >= 100)
@@ -335,7 +341,7 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
             }
         }
 
-        if(Unit.Unitinfo->Inventory[0].UseMAG != true)
+        if(Unit.Unitinfo->Inventory[0]->UseMAG != true)
         {
             AttackTarget.CurrentHp -= (Unit.UnitDamage - AttackTarget.CurrentDef);
             return;
@@ -399,9 +405,15 @@ void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
 
 void BattleLoop(u16 EnemyUnitDevIndex){
     
+    struct SkillStruct Skills[MAX_SKILLS_AMOUNT];
     BattleState Battle;
     struct SelectedUnitData Actor;
     struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+
+    if(&Skills == NULL)
+    {
+        return;
+    }
 
     if(&Actor == NULL || &CurrentCharacter[EnemyUnitDevIndex] == NULL)
     {
@@ -414,8 +426,8 @@ void BattleLoop(u16 EnemyUnitDevIndex){
 
     //initialise pre battle (technically not needed as func tbh tbh)
 
-    Initiate_PreBattleSkills(BActor);
-    Initiate_PreBattleSkills(BRecipient);
+    ApplyPreBattleSkills(BActor);
+    ApplyPreBattleSkills(BRecipient);
 
     while (Battle.BattleStatus != BATTLE_STATUS_END){
         AttackFunc(BActor, BRecipient);
@@ -426,28 +438,36 @@ void BattleLoop(u16 EnemyUnitDevIndex){
     {
         if(BRecipient.CurrentHp == 0)
         {
-            //0 out the memory pointer to that struct
-            &CurrentCharacter[BRecipient.Unitinfo->DevelopmentIndex] = NULL
+            KillCharacter(BRecipient.Unitinfo -> DevelopmentIndex);
         }
         if(BActor.CurrentHp == 0)
         {
-            &CurrentCharacter[BActor.Unitinfo->DevelopmentIndex] = NULL
+            u8 z;
+            u16 DeadCharacter[MAX_POSSIBLE_RECRUITABLE_UNITS];
+            for(z=0;z<=MAX_POSSIBLE_RECRUITABLE_UNITS;z++)
+            {
+                if(DeadCharacter[z]==0)
+                {
+                    DeadCharacter[z] = BActor.Unitinfo->UnitID;
+                }
+            }            
+            KillCharacter(BActor.Unitinfo -> DevelopmentIndex);
         }        
     }
 
     //post battle skills go here
 
     u8 i;
-    for(i=0;i<=5;i+=)
+    for(i=0;i<=5;i++)
     {
-        if(Skills[BActor.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[BActor.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
+        if(Skills[BActor.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[BActor.Unitinfo->CurrentSkills[i]].SkillActivation == SKILL_ACTIVATION_POST_BATTLE)
         {
             Skills[BActor.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
         }        
     }
-    for(i=0;i<=5;i+=)
+    for(i=0;i<=5;i++)
     {
-        if(Skills[BRecipient.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[BRecipient.Unitinfo->CurrentSkills[i]].SkillActivation = SKILL_ACTIVATION_POST_BATTLE)
+        if(Skills[BRecipient.Unitinfo->CurrentSkills[i]].FunctionPointer != NULL && Skills[BRecipient.Unitinfo->CurrentSkills[i]].SkillActivation == SKILL_ACTIVATION_POST_BATTLE)
         {
             Skills[BRecipient.Unitinfo->CurrentSkills[i]].FunctionPointer(0);
         }        

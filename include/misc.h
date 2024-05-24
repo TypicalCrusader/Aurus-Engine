@@ -97,8 +97,6 @@ static inline f64 GetF64fromChar (char Convertee)
     return ReturnF64;
 };
 
-extern u16 MemSlot[16];
-
 typedef struct ConvoyData
 {
     u16 ItemID;

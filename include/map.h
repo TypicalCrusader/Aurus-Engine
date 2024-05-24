@@ -8,11 +8,12 @@
 #define MAX_MAP_SIZE                125
 #define MAX_MAP_CHANGES             64
 
-#define MAX_DEPLOYED_PC_UNITS       16
-#define MAX_DEPLOYED_ENEMY_UNITS    64
-#define MAX_DEPLOYED_ALLY_UNITS     32
-#define MAX_DEPLOYED_ALL_UNITS      MAX_DEPLOYED_PC_UNITS + MAX_DEPLOYED_ENEMY_UNITS + MAX_DEPLOYED_ALLY_UNITS
-
+#define MAX_RECRUITABLE_PC_UNITS        50
+#define MAX_POSSIBLE_RECRUITABLE_UNITS 100
+#define MAX_DEPLOYED_PC_UNITS           16
+#define MAX_DEPLOYED_ENEMY_UNITS        64
+#define MAX_DEPLOYED_ALLY_UNITS         32
+#define MAX_DEPLOYED_ALL_UNITS          MAX_DEPLOYED_PC_UNITS + MAX_DEPLOYED_ENEMY_UNITS + MAX_DEPLOYED_ALLY_UNITS
 
 struct SelectedUnitData
 {
@@ -166,5 +167,4 @@ inline void ApplyMapEffect(u8 MapEffect)
 };
 int ChangeMapMidChapter();
 void ActivateMapSkill();
-void MoveUnit(struct SelectedUnitData Unit, u8 MapX, u8 MapY);
 void AttackUnit(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex);

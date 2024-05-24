@@ -22,7 +22,7 @@ void ChangeGender(u8 Gender) //fuckin dragons are putting magic into the water t
         return;
     }
 
-    CurrentCharacter->MiscCharData->gender = Gender;
+    CurrentCharacter->MiscData.gender = Gender;
 
     return;
 }
@@ -48,21 +48,21 @@ u8 GetStatSkill(u8 Stat){
 
     if(&CurrentCharacter == NULL) //sanity check so we dont access unalocated memory
     {
-        return;
+        return 0;
     }
     if(Stat > 23) 
     {
-        return;
+        return 0;
     }
     if(&CurrentCharacter + (39+Stat) == NULL)
     {
-        return;
+        return 0;
     }
 
     struct SelectedUnitData SelectedUnit;
 
     if(&SelectedUnit == NULL){
-        return;
+        return 0;
     }
     #if UINTPTR_MAX != UINT32_MAX
         u8 *StatVal = &CurrentCharacter[SelectedUnit.DeploymentIndex] + (54+Stat);
@@ -75,12 +75,12 @@ u8 GetStatSkill(u8 Stat){
         return -1;
     #endif
 
-    if(*StatVal == NULL)
+    if(&StatVal == NULL)
     {
         //TODO ADD ERROR HERE
         return -1;
     }
-    return StatVal;
+    return *StatVal;
 };
 u16 GetCharID(){
 

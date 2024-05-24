@@ -108,6 +108,9 @@ add_executable(AurusEngine
   ${CMAKE_CURRENT_SOURCE_DIR}/.src/misc.c  
   ${CMAKE_CURRENT_SOURCE_DIR}/.src/filehandler.c
   ${CMAKE_CURRENT_SOURCE_DIR}/.src/battle.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/.src/aurusscript.c
+  ${CMAKE_CURRENT_SOURCE_DIR}/.src/char.c  
+  ${CMAKE_CURRENT_SOURCE_DIR}/.src/skills.c  
 )
 target_link_libraries(
   ${PROJECT_NAME} 

@@ -1,7 +1,9 @@
 #include "../include/aurusscript.h"
 
-inline void SetPermaFlagTo(u8 Flag, u8 SetUnset)
+void SetPermaFlagTo(u8 Flag, u8 SetUnset)
 {
+    u8 PermaFlags[UINT8_MAX];
+
     if ((SetUnset != 0) && (SetUnset != 1))
     {
         assert((SetUnset != 0) && (SetUnset != 1));
@@ -13,6 +15,8 @@ inline void SetPermaFlagTo(u8 Flag, u8 SetUnset)
 
 void SetTempFlagto(u8 Flag, u8 SetUnset)
 {
+    u8 TempFlags[UINT8_MAX];
+
     if ((SetUnset != 0) && (SetUnset != 1))
     {
         assert((SetUnset != 0) && (SetUnset != 1));
@@ -24,6 +28,8 @@ void SetTempFlagto(u8 Flag, u8 SetUnset)
 
 void AddGoldToTeam(u16 GoldAmount)
 {
+    struct MainDataStruct MainData; 
+
     if (&MainData == NULL)
     {
         return;
@@ -40,6 +46,13 @@ void AddGoldToTeam(u16 GoldAmount)
 void AddItemToCharacter(u16 ItemID)
 {
     u16 i;
+
+    struct MainDataStruct MainData; 
+
+    if(&MainData == NULL)
+    {
+        return;
+    }
 
     struct SelectedUnitData SelectedUnit;
 
@@ -64,9 +77,9 @@ void AddItemToCharacter(u16 ItemID)
 
     for (i = 0; i < 5; i++)
     {
-        if (CurrentCharacter[CharID].Inventory[i].ItemID == 0)
+        if (CurrentCharacter[CharID].Inventory[i] -> ItemID == 0)
         {
-            CurrentCharacter[CharID].Inventory[i].ItemID = ItemID;
+            CurrentCharacter[CharID].Inventory[i] -> ItemID = ItemID;
             return;
         }
     }
@@ -74,10 +87,10 @@ void AddItemToCharacter(u16 ItemID)
     {
         if (MainData.Convoy[i]->ItemID == 0)
         {
-            u32 item = CurrentCharacter[CharID].Inventory[4].ItemID; // move last item in this to convoy in this case
+            u32 item = CurrentCharacter[CharID].Inventory[4] -> ItemID; // move last item in this to convoy in this case
             MainData.Convoy[i]->ItemID = item;
             item = ItemID;
-            CurrentCharacter[CharID].Inventory[4].ItemID = ItemID;
+            CurrentCharacter[CharID].Inventory[4] -> ItemID = ItemID;
             return;
         }
         if (i == CONVOY_MAX_SIZE)
@@ -91,6 +104,8 @@ void AddItemToCharacter(u16 ItemID)
 
 void AddItemToConvoy(u16 ItemID)
 {
+    struct MainDataStruct MainData; 
+
     if (&MainData == NULL)
     {
         return;
@@ -249,43 +264,55 @@ void SpawnUnit(u16 CharID, u16 ClassID, u8 level, u8 Faction, u32 AI, u16 Invent
 
 void KillCharacter(u16 CharID)
 {
+    struct CurrCharData CurrentCharacter[MAX_DEPLOYED_ALL_UNITS];
+
+    if(&CurrentCharacter == NULL)
+    {
+        return;
+    }
+
+    if(CharID > MAX_DEPLOYED_ALL_UNITS)
+    {
+        return;
+    }
+
     if (&CurrentCharacter[CharID] == NULL)
     {
-        &CurrentCharacter[CharID].DevelopmentIndex = NULL;
-        &CurrentCharacter[CharID].UnitID = NULL;
-        &CurrentCharacter[CharID].CharData = NULL;
-        &CurrentCharacter[CharID].ClassData = NULL;
-        &CurrentCharacter[CharID].Inventory = NULL;
-        &CurrentCharacter[CharID].Race = NULL;
-        &CurrentCharacter[CharID].MiscData = NULL
-        &CurrentCharacter[CharID].CurrHp = NULL;
-        &CurrentCharacter[CharID].CurrentSkills = NULL;
-        &CurrentCharacter[CharID].MaxHP = NULL;
-        &CurrentCharacter[CharID].CurrHp = NULL;
-        &CurrentCharacter[CharID].CurrAtk = NULL;
-        &CurrentCharacter[CharID].CurrMag = NULL;
-        &CurrentCharacter[CharID].CurrDef = NULL;
-        &CurrentCharacter[CharID].CurrMagDef = NULL;
-        &CurrentCharacter[CharID].CurrSpd = NULL;
-        &CurrentCharacter[CharID].CurrLck = NULL;
-        &CurrentCharacter[CharID].CurrDex = NULL;
-        &CurrentCharacter[CharID].CurrSwrd = NULL;
-        &CurrentCharacter[CharID].CurrDgr = NULL;
-        &CurrentCharacter[CharID].CurrSpr = NULL;
-        &CurrentCharacter[CharID].CurrAxe = NULL;
-        &CurrentCharacter[CharID].CurrThrow = NULL;
-        &CurrentCharacter[CharID].CurrBow = NULL;
-        &CurrentCharacter[CharID].CurrLight = NULL;
-        &CurrentCharacter[CharID].CurrDark = NULL;
-        &CurrentCharacter[CharID].CurrWind = NULL;
-        &CurrentCharacter[CharID].CurrFire = NULL;
-        &CurrentCharacter[CharID].CurrWater = NULL;
-        &CurrentCharacter[CharID].CurrIce = NULL;
-        &CurrentCharacter[CharID].CurrThunder = NULL;
-        &CurrentCharacter[CharID].CurrEarth = NULL;
-        &CurrentCharacter[CharID].CurrStaves = NULL;
-        &CurrentCharacter[CharID].CurrStone = NULL;
-        &CurrentCharacter[CharID].CurrLvl = NULL;
+        free(&CurrentCharacter[CharID].DevelopmentIndex);
+        free(&CurrentCharacter[CharID].UnitID);
+        free(&CurrentCharacter[CharID].CharData);
+        free(&CurrentCharacter[CharID].ClassData);
+        free(&CurrentCharacter[CharID].Inventory);
+        free(&CurrentCharacter[CharID].Race);
+        free(&CurrentCharacter[CharID].MiscData);
+        free(&CurrentCharacter[CharID].CurrHp);
+        free(&CurrentCharacter[CharID].CurrentSkills);
+        free(&CurrentCharacter[CharID].MaxHP);
+        free(&CurrentCharacter[CharID].CurrHp);
+        free(&CurrentCharacter[CharID].CurrAtk);
+        free(&CurrentCharacter[CharID].CurrMag);
+        free(&CurrentCharacter[CharID].CurrDef);
+        free(&CurrentCharacter[CharID].CurrMagDef);
+        free(&CurrentCharacter[CharID].CurrSpd);
+        free(&CurrentCharacter[CharID].CurrLck);
+        free(&CurrentCharacter[CharID].CurrDex);
+        free(&CurrentCharacter[CharID].CurrSwrd);
+        free(&CurrentCharacter[CharID].CurrDgr);
+        free(&CurrentCharacter[CharID].CurrSpr);
+        free(&CurrentCharacter[CharID].CurrAxe);
+        free(&CurrentCharacter[CharID].CurrThrow);
+        free(&CurrentCharacter[CharID].CurrBow);
+        free(&CurrentCharacter[CharID].CurrLight);
+        free(&CurrentCharacter[CharID].CurrDark);
+        free(&CurrentCharacter[CharID].CurrWind);
+        free(&CurrentCharacter[CharID].CurrFire);
+        free(&CurrentCharacter[CharID].CurrWater);
+        free(&CurrentCharacter[CharID].CurrIce);
+        free(&CurrentCharacter[CharID].CurrThunder);
+        free(&CurrentCharacter[CharID].CurrEarth);
+        free(&CurrentCharacter[CharID].CurrStaves);
+        free(&CurrentCharacter[CharID].CurrStone);
+        free(&CurrentCharacter[CharID].CurrLvl);
     }   
 
     return;

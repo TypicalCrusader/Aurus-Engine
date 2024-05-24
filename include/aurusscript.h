@@ -6,11 +6,19 @@
 #include "inventory.h"
 #include "map.h"
 #include "ai.h"
+#include "battle.h"
+#include "skills.h"
 #include <stdlib.h>
 #include <assert.h>
 
-u8 PermaFlags[UINT8_MAX];
-u8 TempFlags[UINT8_MAX];
+#define MAX_RECRUITABLE_PC_UNITS        50
+#define MAX_POSSIBLE_RECRUITABLE_UNITS 100
+
+extern u16 MemSlot[16];
+extern u16 DeadCharacters[MAX_POSSIBLE_RECRUITABLE_UNITS];
+extern u8 PermaFlags[UINT8_MAX];
+extern u8 TempFlags[UINT8_MAX];
+
 /*
     `void SetPermaFlagTo` - Sets Permament flag to either `0` or `1`
     \param `Flag` FlagID
@@ -18,7 +26,7 @@ u8 TempFlags[UINT8_MAX];
     \returns Returns Flag Value which is `0` if unset and `1` if set
     \since This Function is available since version 0.1 of Aurus Engine
 */
-inline void SetPermaFlagTo(u8 Flag, u8 SetUnset );
+void SetPermaFlagTo(u8 Flag, u8 SetUnset );
 /*
     `CheckPermaFlag` - Checks Permament flag value and returns it
     \param `Flag` FlagID
@@ -78,7 +86,7 @@ void AddItemToConvoy(u16 ItemID);
     \returns None
     \since This Function is available since version 0.1 of Aurus Engine
 */
-inline void ChangeBattleMusic(u16 TrackID, u32 Ticks);
+void ChangeBattleMusic(u16 TrackID, u32 Ticks);
 /*
     `ChangeMapMusic` - Changes Map music the the `TrackID` provided to function after amount of `Ticks` set passed
     \param `TrackID` TrackID
