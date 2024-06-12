@@ -1,5 +1,8 @@
 #include "../include/battle.h"
 
+//TODO: CREATE SIMULATE BATTLE FUNC
+
+
 struct RaceStruct Race[RACESAMOUNT];
 
 s8 IncreaseStat(s8 stat, s8 statgrowth){
