@@ -19,9 +19,24 @@ struct InventoryData
     u8 AffinityRes;
     u8 AffinityNul;
     u8 AffinityAbs;
+    u8 WeaponType;
+    u8 WeaponSubType;
 };
 
 extern struct InventoryData CharInventory[5];
+
+struct weaponTypeStruct
+{
+    u8 WeaponTypeEff;
+};
+struct WeaponSubTypeStruct
+{
+    u8 WeaponSubTypeEff;
+    u8 WeaponEffAgainstType;
+};
+
+extern struct weaponTypeStruct weaponType[8];
+extern struct WeaponSubTypeStruct WeaponSubType[34];
 
 enum ItemType
 {
@@ -32,6 +47,7 @@ enum ItemType
 
 enum WeaponType
 {
+    WEAPON_TYPE_NONE,
     WEAPON_TYPE_BLADE,
     WEAPON_TYPE_AXE,
     WEAPON_TYPE_POLEARMS,
@@ -39,10 +55,11 @@ enum WeaponType
     WEAPON_TYPE_MAGIC_ELEMENTAL,
     WEAPON_TYPE_MAGIC_DAWN_DUSK,
     WEAPON_TYPE_MAGIC_DRAGON_SYGIL,
-}
+};
 
 enum WeaponSubType
 {
+    WEAPON_SUB_TYPE_NONE,
     WEAPON_SUB_TYPE_DAGGER,
     WEAPON_SUB_TYPE_ZWEIHANDER,
     WEAPON_SUB_TYPE_ESTOC,
@@ -76,4 +93,4 @@ enum WeaponSubType
     WEAPON_SUB_TYPE_SYGIL_ELEMENTAL_DUSK,
     WEAPON_SUB_TYPE_SYGIL_DECADENT,
     WEAPON_SUB_TYPE_SYGIL_MAN,
-}
+};

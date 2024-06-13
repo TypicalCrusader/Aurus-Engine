@@ -10,6 +10,11 @@
 #include <stdio.h>
 #include <string.h>
 
+#define BATTLE_TYPE_EFFECTIVENESS 0.25
+#define BATTLE_SUB_TYPE_EFFECTIVENESS 0.15
+#define BATTLE_TYPE_RESISTANCE -0.25
+#define BATTLE_SUB_TYPE_RESISTANCE -0.15
+
 typedef struct 
 {
     struct CurrCharData *Unitinfo;
@@ -92,10 +97,11 @@ BattleUnit* (GenerateBattleStructEnemy (u16 DevIndex));
 void BattleLoop(u16 EnemyUnitDevIndex);
 void AttackFunc();
 //void Initiate_Battle(BattleUnit Actor, SelectedUnit Recipient);
-void CalcAttack( BattleUnit );
+f32 CalcWeaponEff( BattleUnit Unit, BattleUnit AttackTarget);
+u8 CalcAttack( BattleUnit, BattleUnit );
 void MoveBattleState( BattleUnit , BattleUnit );
 void ApplyPreBattleSkills( BattleUnit Unit);
-void SMTLikeRes( BattleUnit ,  BattleUnit );
+f32 SMTLikeRes( BattleUnit ,  BattleUnit );
 void CalcHit( BattleUnit , BattleUnit );
 
 

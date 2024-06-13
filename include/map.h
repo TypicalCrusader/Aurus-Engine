@@ -7,7 +7,6 @@
 
 #define MAX_MAP_SIZE                125
 #define MAX_MAP_CHANGES             64
-
 #define MAX_RECRUITABLE_PC_UNITS        50
 #define MAX_POSSIBLE_RECRUITABLE_UNITS 100
 #define MAX_DEPLOYED_PC_UNITS           16
@@ -132,7 +131,7 @@ static inline void IncreaseTurnCounter()
 {
     CurrMap.CurrentTurn += 1;
     return;
-};
+}
 int InitialiseMap();
 inline u16 CheckTileType(u8 MapX, u8 MapY){
     if(&CurrMap.Map->Tile[MapX][MapY] != NULL)
@@ -147,7 +146,7 @@ inline bool CheckMapChangeExists(u8 MapChange){
         return true;
     };
     return false;
-};
+}
 inline void ChangeMapChange(u8 MapChange){
     if(&CurrMap.Map->Mapchange[MapChange] != NULL)
     {
@@ -164,7 +163,7 @@ inline void ApplyMapEffect(u8 MapEffect)
         return;
     }
     return;
-};
+}
 int ChangeMapMidChapter();
 void ActivateMapSkill();
 void AttackUnit(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex);

@@ -204,11 +204,110 @@ void MoveBattleState( BattleUnit Unit, BattleUnit AttackTarget)
     return;
 };
 
-void CalcAttack( BattleUnit Unit)
+f32 CalcWeaponEff( BattleUnit Unit, BattleUnit AttackTarget)
 {
-    Unit.UnitDamage += Unit.Unitinfo->Inventory[0]->Attack;
+    struct weaponTypeStruct weaponType[7];
 
-    return;
+    if(&weaponType == NULL)
+    {
+        return 100;
+    }
+
+    struct WeaponSubTypeStruct WeaponSubType[33];
+
+    if(&WeaponSubType == NULL)
+    {
+        return 100;
+    }    
+
+    if(Unit.Unitinfo->Inventory[0]->WeaponType == WEAPON_TYPE_NONE)
+    {
+        return 100;
+    }
+    if(Unit.Unitinfo->Inventory[0]->WeaponSubType == WEAPON_SUB_TYPE_NONE)
+    {
+        return 100;
+    }
+
+    if(Unit.Unitinfo->Inventory[0]->WeaponType != AttackTarget.Unitinfo->Inventory[0]->WeaponType) //if its different then do comparison of types
+    {
+        if(Unit.Unitinfo->Inventory[0]->WeaponType == WEAPON_TYPE_MAGIC_ELEMENTAL && AttackTarget.Unitinfo->Inventory[0]->WeaponType != WEAPON_TYPE_MAGIC_DAWN_DUSK)
+        {
+            return BATTLE_TYPE_EFFECTIVENESS;
+        }                 
+        if(Unit.Unitinfo->Inventory[0]->WeaponType == WEAPON_TYPE_MAGIC_DRAGON_SYGIL)
+        {
+            return BATTLE_TYPE_EFFECTIVENESS;          
+        }     
+        if(weaponType[Unit.Unitinfo->Inventory[0]->WeaponType].WeaponTypeEff == AttackTarget.Unitinfo->Inventory[0]->WeaponType)
+        {
+            return BATTLE_TYPE_EFFECTIVENESS;           
+        }
+        if(WeaponSubType[Unit.Unitinfo->Inventory[0]->WeaponSubType].WeaponEffAgainstType == AttackTarget.Unitinfo->Inventory[0]->WeaponType)
+        {
+            return BATTLE_TYPE_EFFECTIVENESS;           
+        }        
+        if(AttackTarget.Unitinfo->Inventory[0]->WeaponType == WEAPON_TYPE_MAGIC_ELEMENTAL && Unit.Unitinfo->Inventory[0]->WeaponType != WEAPON_TYPE_MAGIC_DAWN_DUSK)
+        {
+            return BATTLE_TYPE_RESISTANCE;
+        }                  
+        if(AttackTarget.Unitinfo->Inventory[0]->WeaponType == WEAPON_TYPE_MAGIC_DRAGON_SYGIL)
+        {
+            return BATTLE_TYPE_RESISTANCE;          
+        }             
+        if(weaponType[AttackTarget.Unitinfo->Inventory[0]->WeaponType].WeaponTypeEff == Unit.Unitinfo->Inventory[0]->WeaponType)
+        {
+            return BATTLE_TYPE_RESISTANCE;           
+        }
+        if(WeaponSubType[AttackTarget.Unitinfo->Inventory[0]->WeaponSubType].WeaponEffAgainstType == Unit.Unitinfo->Inventory[0]->WeaponType)
+        {
+            return BATTLE_TYPE_RESISTANCE;           
+        }          
+    }
+    else { 
+        if(Unit.Unitinfo->Inventory[0]->WeaponSubType == WEAPON_SUB_TYPE_MAGIC_ANIMA || Unit.Unitinfo->Inventory[0]->WeaponSubType == WEAPON_SUB_TYPE_SYGIL_DECADENT )
+        {
+            return BATTLE_SUB_TYPE_EFFECTIVENESS;  
+        }
+        if(WeaponSubType[Unit.Unitinfo->Inventory[0]->WeaponSubType].WeaponSubTypeEff == AttackTarget.Unitinfo->Inventory[0]->WeaponSubType)
+        {
+            return BATTLE_SUB_TYPE_EFFECTIVENESS;           
+        }       
+        if(AttackTarget.Unitinfo->Inventory[0]->WeaponSubType == WEAPON_SUB_TYPE_MAGIC_ANIMA || AttackTarget.Unitinfo->Inventory[0]->WeaponSubType == WEAPON_SUB_TYPE_SYGIL_DECADENT )
+        {
+            return BATTLE_SUB_TYPE_RESISTANCE;  
+        }
+        if(WeaponSubType[AttackTarget.Unitinfo->Inventory[0]->WeaponSubType].WeaponSubTypeEff == Unit.Unitinfo->Inventory[0]->WeaponSubType)
+        {
+            return BATTLE_SUB_TYPE_RESISTANCE;           
+        }        
+    }
+
+    return 100;
+}
+
+u8 CalcAttack( BattleUnit Unit, BattleUnit AttackTarget)
+{
+
+    //base attack
+    u8 Damage = Unit.UnitDamage;
+    Damage += Unit.Unitinfo->Inventory[0]->Attack;
+    f32 AtkAdd;
+    AtkAdd = CalcWeaponEff(Unit, AttackTarget);
+    if(AtkAdd != 100)
+    {
+        u8 DamageAdd;
+        DamageAdd *= AtkAdd;
+        Damage += DamageAdd;
+    }
+    f32 SMTRes;
+    SMTRes = SMTLikeRes(Unit, AttackTarget);
+    if(SMTRes != 100)
+    {
+       Damage *SMTRes;
+    }
+
+    return Damage;
 }
 
 void ApplyPreBattleSkills(BattleUnit Unit)
@@ -235,14 +334,12 @@ void ApplyPreBattleSkills(BattleUnit Unit)
     return;
 }
 
-
-
-void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
+f32 SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
 {
 
     //.. its not necessarly the fastest way to do this mechanic but for sure its one of the easiest
     if (Race[Unit.Unitinfo->CharData->RaceID].RaceSMTShouldNullAtk != true) {
-        return;// it means that race doesnt have the smt res array so dont waste time going through loops here
+        return 100;// it means that race doesnt have the smt res array so dont waste time going through loops here
     }
 
     u32 i;
@@ -251,7 +348,7 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
         if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.SpecialWeaponNullDmg[i] == Unit.Unitinfo->Inventory[0]->ItemID)
         {
             //ifs based here on item effect and type, most likely only omega and Tyfrang of Revolution will go here
-            return;
+            return 0;
         }
     
     }    
@@ -260,8 +357,7 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
     {
         if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ResAlignmentDmg[i] == Unit.Unitinfo->Inventory[0]->AffinityRes)
         {
-            Unit.UnitDamage *= 0.25;
-            return;
+            return 0.25;
         }
     
     }
@@ -270,8 +366,7 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
     {
         if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.NulllignmentDmg[i] == Unit.Unitinfo->Inventory[0]->AffinityNul)
         {
-            Unit.UnitDamage *= 0;
-            return;
+            return 0;
         }
     
     }
@@ -280,13 +375,12 @@ void SMTLikeRes( BattleUnit Unit,  BattleUnit AttackTarget)
     {
         if (Race[AttackTarget.Unitinfo->CharData->RaceID].SMTRes.ReverseAlignmentDmg[i] == Unit.Unitinfo->Inventory[0]->AffinityAbs)
         {
-            Unit.UnitDamage *= -1;
-            return;
+            return -1;
         }
     
     }
 
-    return;
+    return -1;
 }
 
 void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
@@ -298,14 +392,21 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
         return;
     }
 
-    //over / underflow checker
-    if (Unit.UnitDamage >= 100)
+    u8 UnitATK;
+    UnitATK = CalcAttack(Unit, AttackTarget);
+    if(UnitATK == 0) //if 0 then just do 0 atk anim and hit always to skim on few cpu cycles
     {
-        Unit.UnitDamage = 100;
+        return;
     }
-    if (Unit.UnitDamage <= -100)
+
+    //over / underflow checker
+    if (UnitATK >= 100)
     {
-        Unit.UnitDamage = -100;
+        UnitATK = 100;
+    }
+    if (UnitATK <= -100)
+    {
+        UnitATK = -100;
     }        
 
     u8 i;
@@ -325,7 +426,6 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
         return;
     }
 
-
     //hit
     if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 )) <= (Unit.Unitinfo->Inventory[0]->Accuracy + Unit.CurrentDex - Unit.Unitinfo->Inventory[0]->Weight))
     {
@@ -333,24 +433,24 @@ void CalcHit( BattleUnit Unit, BattleUnit AttackTarget)
         //check for crit
         if((DiceRollOnehundred() - (Unit.CurrentLck * 0,1 ) ) <= Unit.Unitinfo->Inventory[0]->CritRate)
         {
-            Unit.UnitDamage *= 2;
-            if (Unit.UnitDamage >= 100)
+            UnitATK *= 2;
+            if (UnitATK >= 100)
             {
-                Unit.UnitDamage = 100;
+                UnitATK = 100;
             }
-            if (Unit.UnitDamage <= -100)
+            if (UnitATK <= -100)
             {
-                Unit.UnitDamage = -100;
+                UnitATK = -100;
             }
         }
 
         if(Unit.Unitinfo->Inventory[0]->UseMAG != true)
         {
-            AttackTarget.CurrentHp -= (Unit.UnitDamage - AttackTarget.CurrentDef);
+            AttackTarget.CurrentHp -= (UnitATK - AttackTarget.CurrentDef);
             return;
         }
 
-        AttackTarget.CurrentHp -= (Unit.UnitDamage - AttackTarget.CurrentMagDef);
+        AttackTarget.CurrentHp -= (UnitATK - AttackTarget.CurrentMagDef);
         //OpenGl here
 
         return;
@@ -372,14 +472,12 @@ void AttackFunc(BattleUnit Actor, BattleUnit Recipient) {
     if((Battle.BattleStatus == BATTLE_STATUS_STARTED) || (Battle.BattleStatus == BATTLE_STATUS_FOLLOWUP) || (Battle.BattleStatus == BATTLE_STATUS_THIRD_ATTACK) )
     {
 
-        CalcAttack(Actor);
-        SMTLikeRes(Actor, Recipient);
+        CalcAttack(Actor, Recipient);
         CalcHit(Actor, Recipient);
     }
     else
     {
-        CalcAttack(Recipient);
-        SMTLikeRes(Recipient, Actor);
+        CalcAttack(Recipient, Actor);
         CalcHit(Recipient, Actor);
     }
     
