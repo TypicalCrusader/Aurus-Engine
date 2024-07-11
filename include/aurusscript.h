@@ -217,13 +217,13 @@ inline void EndChapter();
     - 1 - Fort
     - 2 - Castle
     - 3 - Temple
-    - 4 - Shop (requires usage of `Shop` before calling `MapEvent`)
+    - 4 - Shop (requires usage of `Shop` in called function )
     - 5 - Door
-    - 6 - Generic Map Change
+    - 6 - Generic Map Change 
     \returns None    
     \since This Function is available since version 0.1 of Aurus Engine
 */
-void MapEvent(u8 EventType, u8 MapX, u8 MapY);
+u8 MapEvent(u8 EventType, u8 MapX, u8 MapY, int(*FunctionPointer)(u8));
 void SaveValueToMemslot();
 inline u16 ReturnMemslotValue(MemSlotID)
 {

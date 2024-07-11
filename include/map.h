@@ -55,7 +55,8 @@ extern struct SelectedUnitData SelectedUnit;
 extern struct SelectedUnitData Actor;
 
 typedef struct {
-	u16 tile; //just a type of tile
+	u16 tile; 
+    u8 TileType //just a type of tile
 }MapTile;
 
 typedef struct {
@@ -73,7 +74,7 @@ typedef struct
     MapTile *Tile[MAX_MAP_SIZE][MAX_MAP_SIZE]; //2d array why the fuck i havent realised this is good way to do it before i looked at fucking sdl2 tutorol....
     u8 UsedTileSet;
     u8 UsedPallete;
-    MapChange *Mapchange; // offset list for map changes
+    MapChange *Mapchange[UINT8_MAX]; // offset list for map changes
 }MapData;
 
 struct CurrentMap
@@ -86,11 +87,6 @@ struct CurrentMap
     {
         u8 UnitID;
     }*EnemyUnit, *PlayerUnits, *AllyUnits;
-    struct tile
-    {
-        u8 X;
-        u8 Y;
-    }*SelectedTile;
     u8 MapEffect;
 };
 
@@ -109,18 +105,18 @@ enum TileType
     UNPASSABLE_BOG,
     UNPASSABLE_CITY,
     UNPASSABLE_VILLAGE,
+    BREAKABLE_WALL,
+    BREAKABLE_LOG,
+    BREAKABLE_HILL, //TO CAUSE ROCK TUMBLING
+    ENTERABLE_CITY,
+    ENTERABLE_VILLAGE,
+    ENTERABLE_HOME,    
     PASSABLE_PLAIN,
     PASSABLE_HILLS,
     PASSABLE_RIVER,
     PASSABLE_DESERT,
     PASSABLE_BOG,
     PASSABLE_HOME,
-    BREAKABLE_WALL,
-    BREAKABLE_LOG,
-    BREAKABLE_HILL, //TO CAUSE ROCK TUMBLING
-    ENTERABLE_CITY,
-    ENTERABLE_VILLAGE,
-    ENTERABLE_HOME,
     SPECIAL_TYPE_THRONE,
     SPECIAL_TYPE_GUARD_POST,
     SPECIAL_TYPE_FORT,
@@ -133,7 +129,20 @@ static inline void IncreaseTurnCounter()
     return;
 }
 int InitialiseMap();
+u8 MoveUnit(u8 MapX, u8 MapY);
 inline u16 CheckTileType(u8 MapX, u8 MapY){
+    struct CurrentMap CurrMap;
+
+    if(&CurrMap == NULL)
+    {
+        return -1;
+    }
+
+    if(&CurrMap.Map == NULL)
+    {
+        return -1;
+    }
+
     if(&CurrMap.Map->Tile[MapX][MapY] != NULL)
     {
         return CurrMap.Map->Tile[MapX][MapY]->tile;
@@ -141,6 +150,18 @@ inline u16 CheckTileType(u8 MapX, u8 MapY){
     return -1;
 }
 inline bool CheckMapChangeExists(u8 MapChange){
+    struct CurrentMap CurrMap;
+
+    if(&CurrMap == NULL)
+    {
+        return -1;
+    }
+
+    if(&CurrMap.Map == NULL)
+    {
+        return -1;
+    }
+
     if(&CurrMap.Map->Mapchange[MapChange] != NULL)
     {
         return true;
@@ -148,6 +169,18 @@ inline bool CheckMapChangeExists(u8 MapChange){
     return false;
 }
 inline void ChangeMapChange(u8 MapChange){
+    struct CurrentMap CurrMap;
+
+    if(&CurrMap == NULL)
+    {
+        return -1;
+    }
+
+    if(&CurrMap.Map == NULL)
+    {
+        return -1;
+    }
+
     if(&CurrMap.Map->Mapchange[MapChange] != NULL)
     {
         CurrMap.Map->Mapchange[MapChange].active = true;
@@ -157,6 +190,18 @@ inline void ChangeMapChange(u8 MapChange){
 }
 inline void ApplyMapEffect(u8 MapEffect)
 {
+    struct CurrentMap CurrMap;
+
+    if(&CurrMap == NULL)
+    {
+        return -1;
+    }
+
+    if(&CurrMap.Map == NULL)
+    {
+        return -1;
+    }
+
     if(&CurrMap != NULL)
     {
         CurrMap.MapEffect = MapEffect;
@@ -166,4 +211,4 @@ inline void ApplyMapEffect(u8 MapEffect)
 }
 int ChangeMapMidChapter();
 void ActivateMapSkill();
-void AttackUnit(struct SelectedUnitData Actor, u16 EnemyUnitDevIndex);
+void AttackUnit(u16 EnemyUnitDevIndex);

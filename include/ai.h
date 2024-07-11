@@ -2,7 +2,7 @@
 #include "types.h"
 
 
-enum AITypes{ //4Bytes
+enum AITypesCombined{ //4Bytes
     //1ST BYTE
     AI1_NEVER_MOVE          = (1<<0), //AI1 AND 2 TAKE 4 BITS EACH
     AI1_ALWAYS_MOVE         = (1<<1),
@@ -35,6 +35,52 @@ enum AITypes{ //4Bytes
     AI6_AI_SPECIAL_BOSS     = (1<<25),
     AI6_AI_SPECIAL_ALLY     = (1<<26),
     AI6_AI_SPECIAL_NONE     = (1<<27),
+    //REMAINING 4 BITS RN ARE UNUSED
+};
+
+enum AI1Types{ //4Bytes
+    //1ST BYTE
+    AI_NEVER_MOVE          = (1<<0), //AI1 AND 2 TAKE 4 BITS EACH
+    AI_ALWAYS_MOVE         = (1<<1),
+    AI_MOVE_IN_RANGE       = (1<<2),
+    AI_MOVE_AGRESSIVE      = (1<<3),
+}
+enum AI2Types{
+    AI_NO_AGRESSIVE        = (1<<4),
+    AI_ALWAYS_ATTACK       = (1<<5),
+    AI_ATTACK_NORMAL       = (1<<6),
+    AI_ATTACK_CAUTIOUS     = (1<<7),
+}
+enum AI3Types{
+    //2ND BYTE
+    AI_NEVER_USE_ITEMS     = (1<<0),
+    AI_ALWAYS_USE_ITEMS    = (1<<1),
+    AI_USE_ITEMS_PRAGMATIC = (1<<2),
+    AI_USE_ITEMS_AGRESSIVE = (1<<3),
+    AI_USE_ITEMS_DEFENSIVE = (1<<4),
+    AI_USE_ITEMS_NORMAL    = (1<<5),
+    AI_USE_ITEMS_LOW_HP    = (1<<6),
+    AI_USE_ITEMS_DEBUG     = (1<<7),
+}
+enum AI4Types{
+    //3RD BYTE
+    AI_DEFENSIVE_AI_NONE   = (1<<0),
+    AI_DEFENSIVE_AI_LITE   = (1<<1),
+    AI_DEFENSIVE_AI_FULL   = (1<<2),
+    AI_DEFENSIVE_SPECIAL   = (1<<3),
+}
+enum AI5Types{
+    AI_AGRESSIVE_AI_NONE   = (1<<4),
+    AI_AGRESSIVE_AI_LITE   = (1<<5),
+    AI_AGRESSIVE_AI_FULL   = (1<<6),
+    AI_AGRESSIVE_SPECIAL   = (1<<7),
+}
+enum AI6Types{
+    //4TH BYTE
+    AI_SPECIAL_INNATH   = (1<<0),
+    AI_SPECIAL_BOSS     = (1<<1),
+    AI_SPECIAL_ALLY     = (1<<2),
+    AI_SPECIAL_NONE     = (1<<3),
     //REMAINING 4 BITS RN ARE UNUSED
 };
 

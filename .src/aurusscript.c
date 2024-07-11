@@ -367,3 +367,73 @@ void ChangeSide(u8 Side, u8 DeploymentIndex){
 
     return;
 }
+
+u8 MapEvent(u8 EventType, u8 MapX, u8 MapY, int(*FunctionPointer)(u8))
+{
+    /*
+        NOTE FOR MYSELF
+
+        TRY NOT TO USE HECKING FUNC POINT HERE
+
+        WHAT I CAN DO IS DO GENERIC 4th ARG THAT STATES
+        -ID of Dialogue
+        -ID of MapChange    
+        -AMOUNT OF HEALTH TO HEAL 
+    */
+
+
+    if(EventType > 6)
+    {
+        return -1
+    }
+
+    struct CurrentMap CurrMap;
+
+    if(&CurrMap == NULL)
+    {
+        return -1;
+    }
+
+    if(&CurrMap.Map == NULL)
+    {
+        return -1;
+    }
+
+    if(CurrMap.Map->MapX < MapX)
+    {
+        return -1;
+    }    
+
+    if(CurrMap.Map->MapY < MapY)
+    {
+        return -1;
+    }
+
+    switch (EventType)
+    {
+    case 0:
+
+    case 1:
+
+    case 2:
+
+    case 3:
+
+    case 4:
+
+    case 5:
+
+    case 6:
+
+    default:
+        return -1;
+    }
+
+
+    if(&FunctionPointer == NULL)
+    {
+        return -1;
+    }
+
+
+}
