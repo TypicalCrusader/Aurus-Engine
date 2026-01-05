@@ -1,0 +1,5 @@
+__attribute__((fastcall)) (makes it faster in some functions)
+__attribute__((hot)) more agressive optimization for hotspot funcs 
+__attribute__ ((dllexport)) + __attribute__ ((dllimport)) + _imp__(func or var name)
+__attribute__ ((sseregparm)) passes up to 3 floating points to SSE registers
+int fseek(FILE *pointer, gpBINionEntryOffset[ENTRYID], SEEK_SET);

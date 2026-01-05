@@ -1,0 +1,45 @@
+AURUS_TEXT_FILE
+{
+    "text_english": 
+    [
+        {
+            "text_id" : "CHARACTER_AUGUST_NAME",
+            "text_type" : "MENU_TEXTBOX_SHORT",
+            "text_bg" : "NULL",
+            "text" : "August",
+            "left_character_far_far" : ["NULL","NULL","NULL","NULL"],
+            "left_character_far" : ["NULL","NULL","NULL","NULL"],
+            "left_character" : ["NULL","NULL","NULL","NULL"],
+            "middle_character" : ["NULL","NULL","NULL","NULL"],
+            "right_character" : ["NULL","NULL","NULL","NULL"],
+            "right_character_far" : ["NULL","NULL","NULL","NULL"],
+            "right_character_far_far" : ["NULL","NULL","NULL","NULL"]                 
+        },
+        {
+            "text_id" : "CHARACTER_AUGUST_DESC",
+            "text_type" : "MENU_TEXTBOX_SHORT",
+            "text_bg" : "NULL",
+            "text" : "Crown Prince of Askon\nKnown for his Kindness.",
+            "left_character_far_far" : ["NULL","NULL","NULL","NULL"],
+            "left_character_far" : ["NULL","NULL","NULL","NULL"],
+            "left_character" : ["NULL","NULL","NULL","NULL"],
+            "middle_character" : ["NULL","NULL","NULL","NULL"],
+            "right_character" : ["NULL","NULL","NULL","NULL"],
+            "right_character_far" : ["NULL","NULL","NULL","NULL"],
+            "right_character_far_far" : ["NULL","NULL","NULL","NULL"]                 
+        },
+        {
+            "text_id" : "CHARACTER_BRIGAND_DESC",
+            "text_type" : "MENU_TEXTBOX_SHORT",
+            "text_bg" : "NULL",
+            "text" : "Soldier of lesser fortune.\nKnown for Plundering.",
+            "left_character_far_far" : ["NULL","NULL","NULL","NULL"],
+            "left_character_far" : ["NULL","NULL","NULL","NULL"],
+            "left_character" : ["NULL","NULL","NULL","NULL"],
+            "middle_character" : ["NULL","NULL","NULL","NULL"],
+            "right_character" : ["NULL","NULL","NULL","NULL"],
+            "right_character_far" : ["NULL","NULL","NULL","NULL"],
+            "right_character_far_far" : ["NULL","NULL","NULL","NULL"]                 
+        },
+    ]
+}

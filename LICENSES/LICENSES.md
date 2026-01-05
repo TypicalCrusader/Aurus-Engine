@@ -1,0 +1,2 @@
+﻿1. all files that consist of art, localisation, databases are released under terms of CC BY-NC-SA.
+2. all code files (c,py,asm ect.) provided within the repository along with files needed to build those files into functioning program (eg. buildfiles) and all documentation (including ones on format standards) are released under the GPLv2. This also extends onto other files not included in point 1 excluding parts of code clearly marked to be released under different (but compatible) license.

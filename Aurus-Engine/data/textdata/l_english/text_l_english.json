@@ -1,0 +1,31 @@
+AURUS_TEXT_FILE
+{
+    "text_english": [
+        {
+            "text_id" : "TEXT_EXAMPLE",
+            "text_type" : "DIALOGUE_STANDARD",
+            "text_bg" : "DIALOGUE_BG_CASTLE",
+            "text" : "#textc #0-20, #textbgc #0-20, #display_r_far_far #display_r_far #display_r #display_mid #display_l #display_l_far #display_l_far_far, \n \t testerino, #bold Bold test, #cursive Cursive Test, #small Small Text, #display_gold_symbol, #display_gold_val, #dotdot, #dotdotdot, #wait #0-14 sec, #mid_text_event, #display_glob_val #0-128, #display_local_val #0-256, #DEBUG_display_flag_val #0-1600 0-128 Local 128-1600 Global (array with 25 u64 members, first two u64 are for local, remaining for global)",
+            "left_character_far_far" : "NULL",
+            "left_character_far" : "NULL",
+            "left_character" : "NULL",
+            "middle_character" : "NULL",
+            "right_character" : "NULL", 
+            "right_character_far" : "NULL",  
+            "right_character_far_far" : "NULL"   
+        },
+        {
+            "text_id" : "TEXT_EXAMPLE",
+            "text_type" : "DIALOGUE_STANDARD",
+            "text_bg" : "DIALOGUE_BG_CASTLE",
+            "text" : "#textc #0-20, #textbgc #0-20, #display_r_far_far #display_r_far #display_r #display_mid #display_l #display_l_far #display_l_far_far, \n \t testerino, #bold Bold test, #cursive Cursive Test, #small Small Text, #display_gold_symbol, #display_gold_val, #dotdot, #dotdotdot, #wait #0-14 sec, #mid_text_event, #display_glob_val #0-128, #display_local_val #0-256, #DEBUG_display_flag_val #0-1600 0-128 Local 128-1600 Global (array with 25 u64 members, first two u64 are for local, remaining for global)",
+            "left_character_far_far" : "NULL",
+            "left_character_far" : "NULL",
+            "left_character" : "NULL",
+            "middle_character" : "NULL",
+            "right_character" : "NULL", 
+            "right_character_far" : "NULL",  
+            "right_character_far_far" : "NULL"               
+        }
+    ]              
+}

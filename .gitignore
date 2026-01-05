@@ -1,0 +1,25 @@
+#ignore vscode shit
+.vs/
+CMakeFiles/
+.vscode/
+#ignore build folder
+build/
+#do not push compiled execs and libs
+/AurusEngine.exe
+/AurusEngine
+/libBINion.so
+/libBINion.dll
+/libAAM.so
+/linAAM.dll
+#do not push binions, makefile cashe, object files, build script cache, atx and aams
+.bin
+.aam
+.bch 
+.atx
+.o
+.d 
+#and just to be safe
+#dont push any .dll, .so or exes
+.dll
+.so
+.exe

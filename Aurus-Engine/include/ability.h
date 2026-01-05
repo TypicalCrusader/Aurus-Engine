@@ -1,0 +1,36 @@
+#pragma once
+#include "types.h"
+
+enum eAbilityType {
+    ABILITY_TYPE_PIERCE,
+    ABILITY_TYPE_SLASH,
+    ABILITY_TYPE_SMASH,
+    ABILITY_TYPE_MAGICAL_FIRE,
+    ABILITY_TYPE_MAGICAL_ICE,
+    ABILITY_TYPE_MAGICAL_THUNDER,
+    ABILITY_TYPE_MAGICAL_DAWN,
+    ABILITY_TYPE_MAGICAL_DUSK,
+    ABILITY_TYPE_MAGICAL_DRAGON,
+    ABILITY_TYPE_ARMOR_BREAKER,
+    ABILITY_TYPE_WYRM_BRAKER,
+    ABILITY_TYPE_DEBUFF,
+    ABILITY_TYPE_SHIELD_PHYSICAL,
+    ABILITY_TYPE_SHIELD_MAGICAL,
+    ABILITY_TYPE_SHIELD_SLASH,
+    ABILITY_TYPE_SHIELD_PIERCE,
+    ABILITY_TYPE_SHIELD_SMASH,
+};
+
+struct gpAbilityStruct {
+    u16 uAbilityID;
+    u64 uAbilityNameID;
+    u64 uAbilityDescID;
+
+    u64 uIconID;
+
+    u8  uAbilityType;   //see eAbilityType
+    s8  sHitRate;
+    u32 uAbilityEffectID;
+};
+
+struct gpAbilityStruct gAbilityTable[UINT16_MAX];
