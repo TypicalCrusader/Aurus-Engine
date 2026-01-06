@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
  *
  * SPDX-License-Identifier: LGPL-2.1-only
@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#define CLEANUP(func) __attribute__ ((__cleanup__(func)))
 
 typedef uint8_t      u8;
 typedef uint16_t    u16;

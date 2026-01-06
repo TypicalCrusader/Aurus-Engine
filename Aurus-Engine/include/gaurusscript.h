@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
  *
  * SPDX-License-Identifier: GPL-2.0-only
@@ -13,13 +13,13 @@
 //most important defs
 #define AURUS_SCRIPT_VERSION 0.5
 #define MAX_GLOBAL_COUNTERS 16
-typedef uintptr_t gpEvent;
 static u64 uLocalFlagBitField[2];
 static u64 uGlobalFlagBitField[13];
 static u16 uGlobalCounters[MAX_GLOBAL_COUNTERS];
 static u8  uGamePath;
 static u8  uCurrentTurnNumber;
 static u16 uPartyGold;
+static u16 uCurrentlySelectedCharacter[2]; //0 - side (0-Player,1-Enemy,2-Ally), 1 - character deployment index
 
 //"global" enums
 enum eVictoryEventTypes {
@@ -129,13 +129,13 @@ typedef struct gpMapWeaponsAndDestroyablesListStruct {
 }CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST;
 
 struct gpChapterEventStruct {
-    DATA CHAPTER_VICTORY_CONDITIONS gVictoryConditions;
-    DATA CHAPTER_TURN_EVENT_LIST gTurnEventsList; // <- happens at x turn or range between x and y
-    DATA CHAPTER_EVENT_LIST gMapEventsList;
-    DATA CHAPTER_CONDITIONAL_EVENT_LIST gConditionalEventsList;
-    DATA CHAPTER_TRAP_LIST gTrapList;
-    DATA CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST gMapWeaponsAndDestroyablesList;
-    DATA gpEvent gMainEvent;
+    static CHAPTER_VICTORY_CONDITIONS gVictoryConditions;
+    static CHAPTER_TURN_EVENT_LIST gTurnEventsList; // <- happens at x turn or range between x and y
+    static CHAPTER_EVENT_LIST gMapEventsList;
+    static CHAPTER_CONDITIONAL_EVENT_LIST gConditionalEventsList;
+    static CHAPTER_TRAP_LIST gTrapList;
+    static CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST gMapWeaponsAndDestroyablesList;
+    static gpEvent gMainEvent;
 };
 
 static struct gpChapterEventStruct GlobalEventTable[UINT16_MAX];

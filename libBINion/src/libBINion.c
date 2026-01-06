@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
  *
  * SPDX-License-Identifier: LGPL-2.1-only
@@ -170,6 +170,11 @@ struct gBINionEntryStruct gGetBINionEntryStruct(u32 uEntryID)
     return gEntry;
 }
 
+void free_buffer(char **buffer)
+{
+  free(*buffer);
+}
+
 uintptr_t gGetBINionEntryData(u32 uEntryID)
 {
     FILE* gBinion = gGetBINion(uEntryID);
@@ -181,13 +186,13 @@ uintptr_t gGetBINionEntryData(u32 uEntryID)
     fseek(gBinion,(__SIZEOF_SHORT__ ),SEEK_CUR);  
     fread(uBuffer,__SIZEOF_INT__,1,gBinion); //get EntrySize
 
-    uintptr_t gBuffer2=malloc(uBuffer*sizeof(char));
+    uintptr_t  gBuffer2=malloc(uBuffer*sizeof(char));
     fseek(gBinion,(__SIZEOF_INT__ + __SIZEOF_SHORT__),SEEK_CUR);
     fread(gBuffer2,1,gBuffer2,gBinion);
     fclose(gBinion);
     free(uBuffer);
 
-    return gBuffer2; //sad requirement, need to remember to free() this shit every time i stop using it
+    return gBuffer2;
 };
 
 u16 uGetBINionEntryCRC16(u32 uEntryID) {

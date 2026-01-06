@@ -6,8 +6,6 @@ SPDX-License-Identifier: CC0-1.0
 
 BINion File Format Specification 1.0 by TypicalCrusader
 
-Released under GPLv2 license (as is the whole Aurus Engine Project)
-
 BINion (Bin full of onions) is the custom binary storage file format used by
 Aurus Engine.
 

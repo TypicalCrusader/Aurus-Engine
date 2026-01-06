@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
  *
  * SPDX-License-Identifier: GPL-2.0-only
@@ -73,3 +73,13 @@ void vSetFlag(u16 uFlagNumber, bool uTrueFalse) {
 };
 
 
+void vAddItem(u32 ItemID) {
+    struct gpCurrentCharacter = gGetCurrentCharacter()
+
+}
+void vRemoveItem(u32 ItemID) {
+
+}
+void vAddGold(u16 Gold){
+
+}

@@ -6,8 +6,6 @@ SPDX-License-Identifier: CC0-1.0
 
 AAM (Aurus AniMation) File Format Specification 1.0 by TypicalCrusader
 
-Released under GPLv2 license (as is the whole Aurus Engine Project)
-
 AMM is the custom file format for storing animation data, used by Aurus engine
 
 AAM's are made by python3 script which

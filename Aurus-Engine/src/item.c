@@ -14,7 +14,7 @@ struct gpItemStruct uGetItemFromID(u32 uItemID) {
     struct gBINionEntryStruct gItemTable = gBINionEntryStruct(BINION_ENTRY_ITEM_TABLE);
     struct gpItemStruct gItem;
     u32 uTableSize = gItemTable.uEntrySize;
-    u8 gBuffer = (u8) malloc(sizeof(gItem));
+    u8 gBuffer CLEANUP(free_buffer) = (u8) malloc(sizeof(gItem));
     if(sizeof(gItemTable.uEntryData[(sizeof(gItem) * uItemID)]>sizeof(gBuffer)))
     {
         //TODO!: Add error handling
@@ -22,16 +22,12 @@ struct gpItemStruct uGetItemFromID(u32 uItemID) {
     }
     else
     {
-       gBuffer = memcpy(gBuffer,gItemTable.uEntryData[(sizeof(gItem) * uItemID)],sizeof(gItem));
+        //alocates our exact entry we need into memory
+        gBuffer = memcpy(gBuffer,gItemTable.uEntryData[(sizeof(gItem) * uItemID)],sizeof(gItem));
+        *gItem = *gBuffer
     }
     
-    //gItemTable.uEntryData 
-    /* 
-        sizeof(gItem) * uItemID to get how many bytes to move
-        memcpy(gBuffer,uTableSize[(sizeof(gItem) * uItemID)],sizeof(gItem))
-        then copy memcpy appropriate values to members of struct
-        the free gBuffer and return gItem
-    */
+    return gItem;
 };
 
 u8 USE_FASTCALL uGetItemWpnATKAttributeMod(u32 uItemID) {

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
  *
  * SPDX-License-Identifier: GPL-2.0-only
@@ -14,6 +14,11 @@
 #define MAX_CHARACTER_SKILLS 5
 #define MAX_CHARACTER_ABILITIES 8
 #define MAX_CHARACTER_INVENTORY_SLOTS 0x4 //5 slots including 0 which is active slot
+#define MAX_PLAYER_CHARACTERS 64
+#define MAX_PLAYER_CHARACTERS_DEPLOYED 16
+#define MAX_ENEMY_CHARACTERS_DEPLOYED 32
+#define MAX_ALLY_CHARACTERS_DEPLOYED 8
+
 
 enum eSupportLevel {
     SUPPORT_LEVEL_D,
@@ -128,3 +133,15 @@ struct gpCurrentCharacter {
     u16 uCharacterSkills[MAX_CHARACTER_SKILLS];    
     u16 uCharacterAbilities[MAX_CHARACTER_ABILITIES];
 };
+
+struct gpDeployedCharacterStruct {
+    static struct gpCurrentCharacter gPlayerCharacters[MAX_PLAYER_CHARACTERS]
+    static struct gpCurrentCharacter gDeployedCharacters[MAX_PLAYER_CHARACTERS_DEPLOYED]
+    static struct gpCurrentCharacter gDeployedEnemies[MAX_ENEMY_CHARACTERS_DEPLOYED]
+    static struct gpCurrentCharacter gDeployedAllies[MAX_ALLY_CHARACTERS_DEPLOYED]
+}
+
+static struct gpDeployedCharacterStruct gDeployedCharacters;
+
+
+struct gpCurrentCharacter gGetCurrentCharacterFromGlobStruct();
