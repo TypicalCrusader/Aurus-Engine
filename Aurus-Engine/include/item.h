@@ -1,4 +1,4 @@
-/*
+﻿/*
  * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
  *
  * SPDX-License-Identifier: GPL-2.0-only
@@ -14,15 +14,16 @@
 #define WEAPON_DAMAGE_CRITICAL_DAMAGE  1.5
 
 //enums
-
+//dont change an order before swords
+//add new entries under entry annotated with //(stat) V and before entry annotated with //^
 enum eItemType {
     ITEM_TYPE_ITEM_USABLE,
-    ITEM_TYPE_ITEM_UNUSABLE,
-    ITEM_TYPE_WEAPON_SWORD,
-    ITEM_TYPE_WEAPON_AXE,
-    ITEM_TYPE_WEAPON_POLEARM,
-    ITEM_TYPE_WEAPON_RANGED,
-    ITEM_TYPE_WEAPON_MAGIC_FIRE,
+    ITEM_TYPE_ITEM_UNUSABLE, 
+    ITEM_TYPE_WEAPON_SWORD, //str v
+    ITEM_TYPE_WEAPON_AXE, //^
+    ITEM_TYPE_WEAPON_POLEARM, //agi v
+    ITEM_TYPE_WEAPON_RANGED, //^
+    ITEM_TYPE_WEAPON_MAGIC_FIRE, //mag v
     ITEM_TYPE_WEAPON_MAGIC_THUNDER,
     ITEM_TYPE_WEAPON_MAGIC_ICE,
     ITEM_TYPE_WEAPON_MAGIC_WIND,
@@ -31,7 +32,7 @@ enum eItemType {
     ITEM_TYPE_WEAPON_MAGIC_DAWN,
     ITEM_TYPE_WEAPON_MAGIC_DUSK,
     ITEM_TYPE_WEAPON_MAGIC_DRAGON,
-    ITEM_TYPE_WEAPON_MAGIC_MONSTER,
+    ITEM_TYPE_WEAPON_MAGIC_MONSTER, //^
     ITEM_TYPE_WEAPON_STAVE,
 };
 

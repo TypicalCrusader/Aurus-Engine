@@ -15,8 +15,15 @@ struct gpItemStruct uGetItemFromID(u32 uItemID) {
     struct gpItemStruct gItem;
     u32 uTableSize = gItemTable.uEntrySize;
     u8 gBuffer = (u8) malloc(sizeof(gItem));
-    if(sizeof())
-    u8 gBuffer = memcpy(gBuffer,gItemTable.uEntryData[(sizeof(gItem) * uItemID)],sizeof(gItem));
+    if(sizeof(gItemTable.uEntryData[(sizeof(gItem) * uItemID)]>sizeof(gBuffer)))
+    {
+        //TODO!: Add error handling
+        return;
+    }
+    else
+    {
+       gBuffer = memcpy(gBuffer,gItemTable.uEntryData[(sizeof(gItem) * uItemID)],sizeof(gItem));
+    }
     
     //gItemTable.uEntryData 
     /* 
@@ -39,53 +46,18 @@ u8 USE_FASTCALL uGetItemWpnATKAttributeMod(u32 uItemID) {
         return 0;       //staves do no damage
     }
 
-    switch (Item.uItemType)
+    if(Item.uItemType <= ITEM_TYPE_WEAPON_AXE)
     {
-    case ITEM_TYPE_WEAPON_SWORD:
         uAtkAttribute = ATK_ATTRIBUTE_STR;
-        break;
-    case ITEM_TYPE_WEAPON_AXE:
-        uAtkAttribute = ATK_ATTRIBUTE_STR;
-        break;
-    case ITEM_TYPE_WEAPON_POLEARM:
+    }
+    if(Item.uItemType <= ITEM_TYPE_WEAPON_RANGED && Item.uItemType > ITEM_TYPE_WEAPON_AXE)
+    {
         uAtkAttribute = ATK_ATTRIBUTE_AGI;
-        break;        
-    case ITEM_TYPE_WEAPON_RANGED:
-        uAtkAttribute = ATK_ATTRIBUTE_AGI;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_FIRE:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_THUNDER:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_ICE:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_WIND:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_WATER:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_EARTH:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_DAWN:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;         
-    case ITEM_TYPE_WEAPON_MAGIC_DUSK:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_DRAGON:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_MONSTER:
-        uAtkAttribute = ATK_ATTRIBUTE_MAG;
-        break; 
-    default:
-        break;
-    };
+    }
+    else
+    {
+       uAtkAttribute = ATK_ATTRIBUTE_MAG; 
+    }
 
     if(Item.bWpnUsesReverseAtkMod == WEAPON_USES_MAG_DESPITE_TYPE) {
         uAtkAttribute = ATK_ATTRIBUTE_MAG;
@@ -116,57 +88,26 @@ u8 USE_FASTCALL uGetItemAtkType(u32 uItemID) {
     u8 uAtkAttribute;
     
     if(Item.uItemType < ITEM_TYPE_WEAPON_SWORD ){
-        return 0xFF;    //max 100 stats (ever)
+        return 0xFF;    //this is always treat it as error
     };
     if(Item.uItemType == ITEM_TYPE_WEAPON_STAVE) {
         return 0;       //staves do no damage
     }
 
-    switch (Item.uItemType)
+    if(Item.uItemType <= ITEM_TYPE_WEAPON_RANGED)
     {
-    case ITEM_TYPE_WEAPON_SWORD:
         uAtkAttribute = WEAPON_TYPE_MELEE_AND_RANGED;
-        break;
-    case ITEM_TYPE_WEAPON_AXE:
-        uAtkAttribute = WEAPON_TYPE_MELEE_AND_RANGED;
-        break;
-    case ITEM_TYPE_WEAPON_POLEARM:
-        uAtkAttribute = WEAPON_TYPE_MELEE_AND_RANGED;
-        break;        
-    case ITEM_TYPE_WEAPON_RANGED:
-        uAtkAttribute = WEAPON_TYPE_MELEE_AND_RANGED;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_FIRE:
+    }
+    if(Item.uItemType <= ITEM_TYPE_WEAPON_MAGIC_EARTH && Item.uItemType > ITEM_TYPE_WEAPON_RANGED)
+    {
         uAtkAttribute = WEAPON_TYPE_TOME;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_THUNDER:
+    }
+    if(Item.uItemType <= ITEM_TYPE_WEAPON_MAGIC_DUSK && Item.uItemType > ITEM_TYPE_WEAPON_MAGIC_EARTH)
+    {
         uAtkAttribute = WEAPON_TYPE_TOME;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_ICE:
-        uAtkAttribute = WEAPON_TYPE_TOME;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_WIND:
-        uAtkAttribute = WEAPON_TYPE_TOME;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_WATER:
-        uAtkAttribute = WEAPON_TYPE_TOME;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_EARTH:
-        uAtkAttribute = WEAPON_TYPE_TOME;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_DAWN:
-        uAtkAttribute = WEAPON_TYPE_DUSK_DAWN;
-        break;         
-    case ITEM_TYPE_WEAPON_MAGIC_DUSK:
-        uAtkAttribute = WEAPON_TYPE_DUSK_DAWN;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_DRAGON:
+    }    
+    if(Item.uItemType <= ITEM_TYPE_WEAPON_MAGIC_MONSTER && Item.uItemType > ITEM_TYPE_WEAPON_MAGIC_DUSK)
+    {
         uAtkAttribute = WEAPON_TYPE_DRAGONSTONE;
-        break;
-    case ITEM_TYPE_WEAPON_MAGIC_MONSTER:
-        uAtkAttribute = WEAPON_TYPE_DRAGONSTONE;
-        break; 
-    default:
-        break;
-    };
+    }    
 }
