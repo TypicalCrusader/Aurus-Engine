@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 =NONE
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
 - uses Private area use UTF-8 characters for command codes
 - supports ALL utf-8 characters
 - JSON -> parsed entry -> BINion maker -> binion
