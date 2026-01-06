@@ -1,4 +1,10 @@
 /*
+ * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+ *
+ * SPDX-License-Identifier: LGPL-2.1-only
+ */
+
+/*
 !TODO:
 - add checking of file options
 - add checking of entry options

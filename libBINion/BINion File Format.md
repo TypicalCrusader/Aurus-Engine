@@ -1,4 +1,8 @@
-﻿BINion File Format Specification 1.0 by TypicalCrusader
+﻿<!--
+SPDX-License-Identifier: CC0-1.0
+-->
+
+BINion File Format Specification 1.0 by TypicalCrusader
 
 Released under GPLv2 license (as is the whole Aurus Engine Project)
 

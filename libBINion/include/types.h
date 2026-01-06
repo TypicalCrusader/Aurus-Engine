@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+ *
+ * SPDX-License-Identifier: LGPL-2.1-only
+ */
+
 #pragma once
 
 #include <stdint.h>

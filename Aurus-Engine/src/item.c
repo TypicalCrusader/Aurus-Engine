@@ -1,4 +1,10 @@
-﻿#include "item.h"
+﻿/*
+ * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
+ */
+
+#include "item.h"
 #include "battle.h"
 #include "rng.h"
 #include "libBINion.h"

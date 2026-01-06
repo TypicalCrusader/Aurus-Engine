@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+#
+# SPDX-License-Identifier: GPL-2.0-only
+
 .PHONY: clean all data Aurus BINion AAM BINion-Maker ATX-Parser AAM-Maker clean-data
 
 define EXTRA_COMPILE_FLAGS

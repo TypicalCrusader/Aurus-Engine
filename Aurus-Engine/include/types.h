@@ -1,4 +1,11 @@
-﻿#pragma once
+﻿/*
+ * SPDX-FileCopyrightText: 2010 =Lennart Poettering
+ * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
+ * SPDX-License-Identifier: LGPL-2.1-or-later
+ */
+#pragma once
 
 #include <stdint.h>
 #include <stddef.h>
@@ -19,14 +26,9 @@ typedef int16_t     s16;
 typedef int32_t     s32;
 typedef int64_t     s64;
 typedef float       f32;
-typedef double      f64;  
+typedef double      f64;
 
-/*taken from systemd
-Copyright 2010 Lennart Poettering
-released under terms of GNU Lesser General Public License as published by
-the Free Software Foundation; either version 2.1 of the License, or
-(at your option) any later version
-*/
+//taken from systemd
 #define DEFINE_TRIVIAL_CLEANUP_FUNC(type, func)                 \
         static inline void func##p(type *p) {                   \
                 if (*p)                                         \

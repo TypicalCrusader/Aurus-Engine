@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: CC0-1.0
+-->
+
 AAM (Aurus AniMation) File Format Specification 1.0 by TypicalCrusader
 
 Released under GPLv2 license (as is the whole Aurus Engine Project)

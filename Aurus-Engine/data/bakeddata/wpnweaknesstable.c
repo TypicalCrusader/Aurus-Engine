@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
+ */
+
 #include "item.h"
 
 static struct gpWeaponWeaknessStruct gWeaponWeakness[(ITEM_TYPE_WEAPON_STAVE + 1)] = { 

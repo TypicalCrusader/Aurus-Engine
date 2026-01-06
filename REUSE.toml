@@ -1,0 +1,50 @@
+version = 1
+
+# all code files
+[[annotations]]
+path = [
+    "*.c",
+    "*.py",
+    "*.h",
+    "MAKEFILE",
+    "makefile"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 TypicalCrusader <typicalcrusader@noreply.codeberg.org>"
+SPDX-License-Identifier = "GPL-2.0-only"
+
+# all code files
+[[annotations]]
+path = [
+    "Aurus-Engine/include/types.h"
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 TypicalCrusader <typicalcrusader@noreply.codeberg.org>"
+SPDX-License-Identifier = [
+    "GPL-2.0-only",
+    "LGPL-2.1-or-later"
+]
+
+# All example game assets
+[[annotations]]
+path = [
+    "Aurus-Engine/data/tabledata/*",
+    "Aurus-Engine/data/textdata/*",  
+    "Aurus-Engine/data/musicdata/*",
+    "Aurus-Engine/data/gfxdata/*",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 TypicalCrusader <typicalcrusader@noreply.codeberg.org>"
+SPDX-License-Identifier = "CC BY-NC-SA 4.0"
+
+# Format Describing Files + .gitignore.
+[[annotations]]
+path = [
+    ".gitignore",
+    "libAurusAnim/aam file format spec.md",
+    "libBINion/BINion File Format.md",
+    "ATX-Parser/AurusTextParse.md"
+]
+precedence = "override"
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"

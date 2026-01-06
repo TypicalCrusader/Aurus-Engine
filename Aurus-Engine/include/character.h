@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
+ */
+
 #pragma once
 #include "types.h"
 #include "skill.h"

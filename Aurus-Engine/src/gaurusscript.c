@@ -1,3 +1,9 @@
+/*
+ * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+ *
+ * SPDX-License-Identifier: GPL-2.0-only
+ */
+
 #include "gaurusscript.h"
 
 //0-128 = local

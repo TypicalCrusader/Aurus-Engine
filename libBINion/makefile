@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
+#
+# SPDX-License-Identifier: LGPL-2.1-only
+
 TARGET_EXEC := libBINion
 SRCS := $(shell find $(SRC_DIRS) -name '*.c' -or -name '*.s')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
