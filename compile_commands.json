@@ -1,0 +1,61 @@
+[
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/data/bakeddata",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/data/bakeddata/globalflagdefs.c -o ./Aurus-Engine/data/bakeddata/globalflagdefs.o",
+  "file": "./Aurus-Engine/data/bakeddata/globalflagdefs.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/data/bakeddata",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/data/bakeddata/wpnweaknesstable.c -o ./Aurus-Engine/data/bakeddata/wpnweaknesstable.o",
+  "file": "./Aurus-Engine/data/bakeddata/wpnweaknesstable.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/src",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/src/battle.c -o ./Aurus-Engine/src/battle.o",
+  "file": "./Aurus-Engine/src/battle.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/src",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/src/character.c -o ./Aurus-Engine/src/character.o",
+  "file": "./Aurus-Engine/src/character.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/src/events",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/src/events/test.c -o ./Aurus-Engine/src/events/test.o",
+  "file": "./Aurus-Engine/src/events/test.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/src",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/src/gaurusscript.c -o ./Aurus-Engine/src/gaurusscript.o",
+  "file": "./Aurus-Engine/src/gaurusscript.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/src",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/src/item.c -o ./Aurus-Engine/src/item.o",
+  "file": "./Aurus-Engine/src/item.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/src",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/src/main.c -o ./Aurus-Engine/src/main.o",
+  "file": "./Aurus-Engine/src/main.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./Aurus-Engine/src",
+  "command": "gcc -std=gnu23 -Iinclude -c ./Aurus-Engine/src/rng.c -o ./Aurus-Engine/src/rng.o",
+  "file": "./Aurus-Engine/src/rng.c"
+}
+,
+{
+  "directory": "/d/Programowanie/C/Aurus-Engine/Aurus-Engine/./libBINion/src",
+  "command": "gcc -std=gnu23 -Iinclude -c ./libBINion/src/libBINion.c -o ./libBINion/src/libBINion.o",
+  "file": "./libBINion/src/libBINion.c"
+}
+]

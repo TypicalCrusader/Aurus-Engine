@@ -48,7 +48,7 @@ struct gpChapterData {
         //00 - Base Path
         //01 - Path A
         //02 - Path B   
-    u16 EventTable[0x2]
+    u16 EventTable[0x2];
         /*this holds indexes of the event tables for this chapter
           this allows me to place this whole fucking table in binion
           rather than to bake it inside of exe

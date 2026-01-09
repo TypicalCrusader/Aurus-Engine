@@ -8,7 +8,7 @@
 #include "types.h"
 #include "skill.h"
 #include "class.h"
-
+#include "item.h"
 
 #define MAX_SUPPORT_AMOUNT 10
 #define MAX_CHARACTER_SKILLS 5
@@ -135,13 +135,23 @@ struct gpCurrentCharacter {
 };
 
 struct gpDeployedCharacterStruct {
-    static struct gpCurrentCharacter gPlayerCharacters[MAX_PLAYER_CHARACTERS]
-    static struct gpCurrentCharacter gDeployedCharacters[MAX_PLAYER_CHARACTERS_DEPLOYED]
-    static struct gpCurrentCharacter gDeployedEnemies[MAX_ENEMY_CHARACTERS_DEPLOYED]
-    static struct gpCurrentCharacter gDeployedAllies[MAX_ALLY_CHARACTERS_DEPLOYED]
-}
+    struct gpCurrentCharacter gPlayerCharacters[MAX_PLAYER_CHARACTERS];
+    struct gpCurrentCharacter gDeployedCharacters[MAX_PLAYER_CHARACTERS_DEPLOYED];
+    struct gpCurrentCharacter gDeployedEnemies[MAX_ENEMY_CHARACTERS_DEPLOYED];
+    struct gpCurrentCharacter gDeployedAllies[MAX_ALLY_CHARACTERS_DEPLOYED];
+};
 
 static struct gpDeployedCharacterStruct gDeployedCharacters;
 
+typedef enum eCharacterStruct {
+    CHARACTER_STRUCT_PLAYER_ALL,
+    CHARACTER_STRUCT_PLAYER,
+    CHARACTER_STRUCT_ENEMY,
+    CHARACTER_STRUCT_ALLY
+}GLOBALCHARSTRUCTSEL;
 
-struct gpCurrentCharacter gGetCurrentCharacterFromGlobStruct();
+struct gpCurrentCharacter gGetCurrentCharacterFromGlobalStruct(GLOBALCHARSTRUCTSEL eCharacterStruct, u8 uDeploymentIndex);
+
+void free_currentcharacter(struct gpCurrentCharacter *c);
+DEFINE_TRIVIAL_CLEANUP_FUNC(struct gpCurrentCharacter *, free_currentcharacter);
+

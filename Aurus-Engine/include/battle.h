@@ -9,6 +9,7 @@
 #include "item.h"
 #include "chapter.h"
 #include "types.h"
+#include "rng.h"
 
 #define BATTLE_TURN_ATTACKER true
 
@@ -48,7 +49,7 @@ struct gpBattleState {
     u8 uBattleState;
     u32 uBattleBackground;
     u32 uBattleForeground;
-    u16 uBattleWheather
+    u16 uBattleWheather;
 };
 
 extern struct gpBattleState gBattle;
@@ -56,10 +57,11 @@ extern struct gpBattleState gBattle;
 s8 USE_FASTCALL sGetCharacterEvasionStat(struct gpItemStruct gAttackerWeapon, struct gpBattleCharacter gTargetCharacter);
 struct gpBattleCharacter USE_FASTCALL GetCurrentActiveBattleCharacter();
 
+bool bGetCurrentBattleCharacter();
 void vApplyPreBattleSkills();
 void vApplyPostHitSkills();
 void vApplyMidBattleSkills();
-void USE_FASTCALL HOT_FUNC vBattleLoop();
+void USE_FASTCALL HOT_FUNC vBattleLoop(struct gpCurrentCharacter *gAttacker, struct gpCurrentCharacter *gDefender);
 void USE_SSE_PARAM HOT_FUNC vInitialBattleCalc();
 void USE_FASTCALL vInitialAttackAccuracy();
 void USE_SSE_PARAM vFinalBattleCalc();

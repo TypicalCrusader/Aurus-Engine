@@ -5,10 +5,7 @@
  */
 
 #include "rng.h"
-
-
 bool bIsNumberEven(u32 unumber) {
-    u32 unumber;
     if(unumber == 0){
         return true;
     }

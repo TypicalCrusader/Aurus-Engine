@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#define CLEANUP(func) __attribute__ ((__cleanup__(func)))
+//#define CLEANUP(func) __attribute__ ((__cleanup__(func)))
 
 typedef uint8_t      u8;
 typedef uint16_t    u16;

@@ -9,6 +9,10 @@
 //0-128 = local
 //> 128 = global
 
+u64 uLocalFlagBitField[2];
+u64 uGlobalFlagBitField[13];
+u8 uCurrentlySelectedCharacter[2];
+
 u8 uCheckFlag(u16 uFlagNumber) {
     u64 uIndexNumber;
     u64 uShift;
@@ -74,7 +78,7 @@ void vSetFlag(u16 uFlagNumber, bool uTrueFalse) {
 
 
 void vAddItem(u32 ItemID) {
-    struct gpCurrentCharacter = gGetCurrentCharacter()
+    struct gpCurrentCharacter gCharacter = gGetCurrentCharacterFromGlobalStruct(uCurrentlySelectedCharacter[0],uCurrentlySelectedCharacter[1]); 
 
 }
 void vRemoveItem(u32 ItemID) {

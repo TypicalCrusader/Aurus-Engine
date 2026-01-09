@@ -11,24 +11,28 @@
 
 
 struct gpItemStruct uGetItemFromID(u32 uItemID) {
-    struct gBINionEntryStruct gItemTable = gBINionEntryStruct(BINION_ENTRY_ITEM_TABLE);
-    struct gpItemStruct gItem;
+    //struct gBINionEntryStruct gItemTable = gBINionEntryStruct(BINION_ENTRY_ITEM_TABLE);
+    struct gpItemStruct *gItem;
+    /*
     u32 uTableSize = gItemTable.uEntrySize;
-    u8 gBuffer CLEANUP(free_buffer) = (u8) malloc(sizeof(gItem));
+    u8 CLEANUP(free_number) gBuffer = (u8) malloc(sizeof(gItem));
     if(sizeof(gItemTable.uEntryData[(sizeof(gItem) * uItemID)]>sizeof(gBuffer)))
     {
         //TODO!: Add error handling
-        return;
+        exit(-1)
     }
     else
     {
         //alocates our exact entry we need into memory
-        gBuffer = memcpy(gBuffer,gItemTable.uEntryData[(sizeof(gItem) * uItemID)],sizeof(gItem));
-        *gItem = *gBuffer
+
+        
+        *gBuffer = memcpy(&gBuffer,&gItemTable.uEntryData[(sizeof(gItem) * uItemID)],sizeof(gItem));
+        gItem = memcpy(&gItem,&gBuffer,sizeof(gItem));;
     }
-    
-    return gItem;
+    */
+    return *gItem;
 };
+
 
 u8 USE_FASTCALL uGetItemWpnATKAttributeMod(u32 uItemID) {
     struct gpItemStruct Item = uGetItemFromID(uItemID);

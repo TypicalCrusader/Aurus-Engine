@@ -2,8 +2,8 @@
  * SPDX-FileCopyrightText: 2010 =Lennart Poettering
  * SPDX-FileCopyrightText: 2024-Present =TypicalCrusader <typicalcrusader@noreply.codeberg.org>
  *
- * SPDX-License-Identifier: GPL-2.0-only
  * SPDX-License-Identifier: LGPL-2.1-or-later
+ * SPDX-License-Identifier: GPL-2.0-only
  */
 #pragma once
 
@@ -17,7 +17,6 @@
 #define USE_SSE_PARAM __attribute__ ((sseregparm))
 #define USE_FASTCALL __attribute__((fastcall))
 #define HOT_FUNC __attribute__((hot))
-#define CLEANUP(func) __attribute__ ((__cleanup__(func)))
 
 typedef uint8_t      u8;
 typedef uint16_t    u16;
@@ -31,7 +30,7 @@ typedef float       f32;
 typedef double      f64;
 typedef char32_t    chr;
 
-typedef uintptr_t   gpEvent;
+typedef void (*gpEvent)(void);
 
 //taken from systemd
 #define DEFINE_TRIVIAL_CLEANUP_FUNC(type, func)                 \
@@ -42,8 +41,10 @@ typedef uintptr_t   gpEvent;
         struct __useless_struct_to_allow_trailing_semicolon__
 #define _likely_(x) (__builtin_expect(!!(x),1))
 #define _unlikely_(x) (__builtin_expect(!!(x),0))
+//end of code taken from systemd
 
-inline void free_buffer(char **buffer)
-{
-  free(*buffer);
-}
+static inline void free_number(void *p) {
+        free(*(void**)p);
+};
+
+#define CLEANUP(func) __attribute__((cleanup(func)))

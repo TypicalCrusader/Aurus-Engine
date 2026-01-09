@@ -13,13 +13,13 @@
 //most important defs
 #define AURUS_SCRIPT_VERSION 0.5
 #define MAX_GLOBAL_COUNTERS 16
-static u64 uLocalFlagBitField[2];
-static u64 uGlobalFlagBitField[13];
-static u16 uGlobalCounters[MAX_GLOBAL_COUNTERS];
-static u8  uGamePath;
-static u8  uCurrentTurnNumber;
-static u16 uPartyGold;
-static u16 uCurrentlySelectedCharacter[2]; //0 - side (0-Player,1-Enemy,2-Ally), 1 - character deployment index
+extern u64 uLocalFlagBitField[2];
+extern u64 uGlobalFlagBitField[13];
+extern u16 uGlobalCounters[MAX_GLOBAL_COUNTERS];
+extern u8  uGamePath;
+extern u8  uCurrentTurnNumber;
+extern u16 uPartyGold;
+extern u8 uCurrentlySelectedCharacter[2]; //0 - side (reffer to eCharacterStruct), 1 - character deployment index
 
 //"global" enums
 enum eVictoryEventTypes {
@@ -70,7 +70,7 @@ enum eDestroyableTypes {
     DESTROYABLE_TYPE_CHEST
 };
 
-enum eDestroyableTypes {
+enum eMapWpnTypes {
     MAP_WPN_TYPE_BALLISTA,
     MAP_WPN_TYPE_CATAPULT,
     MAP_WPN_TYPE_MAGIC_ORB
@@ -93,6 +93,12 @@ typedef struct gpChapterTurnEventListStruct {
     u8 uCheckFlag;
     gpEvent uEvent;
 }CHAPTER_TURN_EVENT_LIST;
+
+typedef struct gpShopInventoryDefStruct {
+    u32 uItemID;
+    u16 uPrice;
+    u8  uQuantity;
+}SHOPINVENTORY;
 
 typedef struct gpChapterMapEventListStruct {
     u8 uEventType;
@@ -119,23 +125,23 @@ typedef struct gpChapterConditionalEventListStruct {
 typedef struct gpTrapListStruct {
     u8 uTrapType;
     u8 uX;
-    u8 uY
+    u8 uY;
 }CHAPTER_TRAP_LIST;
 
 typedef struct gpMapWeaponsAndDestroyablesListStruct {
     u8 uTrapType;
     u8 uX;
-    u8 uY
+    u8 uY;
 }CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST;
 
 struct gpChapterEventStruct {
-    static CHAPTER_VICTORY_CONDITIONS gVictoryConditions;
-    static CHAPTER_TURN_EVENT_LIST gTurnEventsList; // <- happens at x turn or range between x and y
-    static CHAPTER_EVENT_LIST gMapEventsList;
-    static CHAPTER_CONDITIONAL_EVENT_LIST gConditionalEventsList;
-    static CHAPTER_TRAP_LIST gTrapList;
-    static CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST gMapWeaponsAndDestroyablesList;
-    static gpEvent gMainEvent;
+    const CHAPTER_VICTORY_CONDITIONS *gVictoryConditions;
+    const CHAPTER_TURN_EVENT_LIST *gTurnEventsList; // <- happens at x turn or range between x and y
+    const CHAPTER_EVENT_LIST *gMapEventsList;
+    const CHAPTER_CONDITIONAL_EVENT_LIST *gConditionalEventsList;
+    const CHAPTER_TRAP_LIST *gTrapList;
+    const CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST *gMapWeaponsAndDestroyablesList;
+    gpEvent gMainEvent;
 };
 
 static struct gpChapterEventStruct GlobalEventTable[UINT16_MAX];
@@ -149,13 +155,12 @@ typedef struct gpUnitDefStruct {
     u8  uAlignment;
     u64 uAI;
     u8  uX;
-    u8  uY
-
+    u8  uY;
 }UNITDEF;
 
 typedef struct gpUnitMoveStruct {
     u8 uX;
-    u8 uY
+    u8 uY;
 }MOVEMENTDEF;
 
 typedef struct gpPlaceEventStruct {
@@ -168,12 +173,6 @@ typedef struct gpPlaceEventStruct {
     u32 uCharacterID;
     gpEvent uEvent;
 }PLACEVENT;
-
-typedef struct gpShopInventoryDefStruct {
-    u32 uItemID;
-    u16 uPrice;
-    u8  uQuantity;
-}SHOPINVENTORY;
 
 //flags
 u8 uCheckFlag(u16 uFlagNumber);

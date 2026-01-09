@@ -6,7 +6,7 @@
 
 #include "item.h"
 
-static struct gpWeaponWeaknessStruct gWeaponWeakness[(ITEM_TYPE_WEAPON_STAVE + 1)] = { 
+static const struct gpWeaponWeaknessStruct gWeaponWeakness[(ITEM_TYPE_WEAPON_STAVE + 1)] = { 
     [ITEM_TYPE_ITEM_USABLE] = {
         .fBaseNeutralDamage = WEAPON_DAMAGE_NO_DAMAGE,
         .uStrongAgainst = ITEM_TYPE_ITEM_USABLE,

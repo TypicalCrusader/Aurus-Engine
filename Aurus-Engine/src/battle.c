@@ -6,6 +6,9 @@
 
 #include "battle.h"
 
+struct gpBattleCharacter gAttackerCharacter;
+struct gpBattleCharacter gDefenderCharacter;
+struct gpBattleState gBattle;
 
 void vCreateBattleStructs(struct gpCurrentCharacter *gAttacker, struct gpCurrentCharacter *gDefender) {
     struct gpBattleCharacter gAttackerCharacter = {
@@ -26,9 +29,9 @@ void vCreateBattleStructs(struct gpCurrentCharacter *gAttacker, struct gpCurrent
     };
     struct gpBattleState gBattle = {
         .uBattleState = BATTLE_STATE_INITIALISED,
-        .uBattleBackground = uGetBattleBackgroundFromTileGFX(gCurrentBattleTile), //!TODO: Replace with func getting it from map tile -> based on tiles of both sides
-        .uBattleForeground = uGetBattleForegroundFromTileGFX(gCurrentBattleTile), //!TODO: -||- -> based on tiles of both sides
-        .uBattleWheather = gCurrentChapter.uChapterWheather[uGetCurrentPath()],           //!TODO: -||- -> based on chapter data
+        .uBattleBackground = 0, //uGetBattleBackgroundFromTileGFX(gCurrentBattleTile), //!TODO: Replace with func getting it from map tile -> based on tiles of both sides
+        .uBattleForeground = 0, //uGetBattleForegroundFromTileGFX(gCurrentBattleTile), //!TODO: -||- -> based on tiles of both sides
+        .uBattleWheather = 0 //gCurrentChapter.uChapterWheather[uGetCurrentPath()],           //!TODO: -||- -> based on chapter data
     };
 };
 
@@ -208,15 +211,15 @@ void vCalcHit(u8 uDidAttackHit) {
     switch (uDidAttackHit)
     {
     case ATTACK_HIT_MISS:
-        vPlayAnimation(); 
-        vDisplayGFX();
+        //vPlayAnimation(); 
+        //vDisplayGFX();
 
         break;
     case ATTACK_HIT_NORMAL:
-        vPlayAnimation(); // <- will have anim name plopped here when first BINION + AAM build will be done
-        vDisplayGFX();
+        //vPlayAnimation(); // <- will have anim name plopped here when first BINION + AAM build will be done
+        //vDisplayGFX();
 
-        if(bGetCurrentBattleCharacter == true) {
+        if(bGetCurrentBattleCharacter() == true) {
             gDefenderCharacter.uCurrentHP -= gAttackerCharacter.sAttackDamage;
         }  
         else {
@@ -224,10 +227,10 @@ void vCalcHit(u8 uDidAttackHit) {
         }              
         break;
     case ATTACK_HIT_CRITICAL:
-        vPlayAnimation(); 
-        vDisplayGFX();
+        //vPlayAnimation(); 
+        //vDisplayGFX();
 
-        if(bGetCurrentBattleCharacter == true) {
+        if(bGetCurrentBattleCharacter() == true) {
             gDefenderCharacter.uCurrentHP -= (WEAPON_DAMAGE_CRITICAL_DAMAGE * gAttackerCharacter.sAttackDamage);
         }                
         else {
@@ -249,22 +252,22 @@ void vMoveBattleState() {
 }
 
 //!TODO: Add ability handling if you attacked using one
-void USE_FASTCALL __attribute__((hot)) vBattleLoop(struct gpCurrentCharacter *gAttacker, struct gpCurrentCharacter *gDefender) {
+void USE_FASTCALL HOT_FUNC vBattleLoop(struct gpCurrentCharacter *gAttacker, struct gpCurrentCharacter *gDefender) {
     vCreateBattleStructs(gAttacker, gDefender);
 
     while(gBattle.uBattleState != BATTLE_STATE_ENDING)
     {
         vInitialBattleCalc();
         vInitialAttackAccuracy();
-        vApplyPreBattleSkills();
+        //vApplyPreBattleSkills();
         vFinalBattleCalc();    
         vDoHit(); // -> calls vApplyMidBattleSkills and vCalcHit
-        vApplyPostHitSkills();
-        vChangeWeaponDurability();
+        //vApplyPostHitSkills();
+        //vChangeWeaponDurability();
         vMoveBattleState();    
     }
 
-    vApplyPostBattleSkills();
+    //vApplyPostBattleSkills();
 
     return;
 };

@@ -11,6 +11,9 @@ build/
 #do not push compiled execs and libs
 /AurusEngine.exe
 /AurusEngine
+/Aurus-Engine.exe
+/Aurus-Engine
+/Aurus-Engine.d
 /libBINion.so
 /libBINion.dll
 /libAAM.so
@@ -22,6 +25,7 @@ build/
 .atx
 .o
 .d 
+.pyc
 #and just to be safe
 #dont push any .dll, .so or exes
 .dll

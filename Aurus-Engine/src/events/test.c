@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-only
  */
 
-#include "gaurusscript.h"
+#include "event.h"
 
 //test event
 
@@ -24,11 +24,11 @@ CHAPTER_CONDITIONAL_EVENT_LIST Ch1ConditionalEventsList [] = {
     cTriggerEventIfXDead(1,1,NULL)
 };
 
-CHAPTER_TRAP_LIST Ch1MapWeaponsAndDestroyablesList [] = {
+CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST Ch1MapWeaponsAndDestroyablesList [] = {
     cDoor(1,2)
 };
 
-CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST Ch1Trap [] = {
+CHAPTER_TRAP_LIST Ch1Trap [] = {
     cTrapWolfTrap(1,0)
 };
 
@@ -36,25 +36,25 @@ UNITDEF TestChptUnit [] = {
     cUnitDef(1,1,1,false,0,0,0,0,0,0,0,1,0)
 };
 
+void amongus() {
+    return;
+}
+
 void Ch1MainEvent() {
-    vSpawnUnit(*TestChptUnit);
+    //vSpawnUnit(*TestChptUnit);
     vSetFlag(1,true);
     if(uCheckFlag(1)==1)
     {
         cTriggerEvent(amongus);
     }
-    vSilentPromote(1,1);
-    vFlashScreen(1,10);
-    vChapterVictory();
-    vGOTOChapterChangePath(1);
-    return;
-};
-
-void amongus() {
+    //vSilentPromote(1,1);
+    //vFlashScreen(1,10);
+    //vChapterVictory();
+    //vGOTOChapterChangePath(1);
     return;
 }
 
-struct gpChapterEventStruct Ch1Events = {
+const struct gpChapterEventStruct Ch1Events = {
     .gVictoryConditions = Ch1VictoryConditions,
     .gTurnEventsList = Ch1TurnEventList,
     .gMapEventsList = Ch1MapEventsList,

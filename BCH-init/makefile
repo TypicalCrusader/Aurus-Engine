@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only
 
-all:
+BCH-init:
 	echo "[PY]	BUILDING INITIAL BCH"
 	python "BCH-init.py"

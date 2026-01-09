@@ -102,7 +102,7 @@ struct gpWeaponWeaknessStruct {
     u8  uWeakAgainst;
 };
 
-static struct gpWeaponWeaknessStruct gWeaponWeakness[(ITEM_TYPE_WEAPON_STAVE + 1)];
+static const struct gpWeaponWeaknessStruct gWeaponWeakness[(ITEM_TYPE_WEAPON_STAVE + 1)];
 
 //functions
 

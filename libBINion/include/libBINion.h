@@ -44,7 +44,6 @@ enum eEntryTypes {
     FILE_TYPE_MP3,
     FILE_TYPE_WAV,
     FILE_TYPE_ATX,
-    FILE_TYPE_MP3,
     FILE_TYPE_AAM
 };
 
@@ -127,7 +126,7 @@ inline bool bIsBINionFormatDifferent(u32 uEntryID) {
     }
 };
 
-inline bool bIsBINionFormatDifferent(u32 uEntryID) {
+inline bool bIsBINionHeaderFormatDifferent(u32 uEntryID) {
     if(uGetBinionHeaderStandardVersionFromFile(uEntryID) != uGetBinionStandardVersion()){
         return false;
     }
@@ -146,15 +145,6 @@ inline bool bIsBINionFormatVersionGreaterThanDefined(u32 uEntryID) {
     }
 };
 
-inline bool bIsBINionHeaderFormatDifferent(u32 uEntryID) {
-    if(uGetBinionHeaderStandardVersionFromFile(uEntryID) > uGetBinionStandardVersion()){
-        return false;
-    }
-    else {
-        return true;
-    }
-};
-
 //returns offset
 u64 gGetBINionEntry(u16 uEntryID, FILE* Binion);
 u32 uGetBINionFileCRC32(u32 uEntryID);
@@ -163,8 +153,12 @@ uintptr_t gGetBINionEntryData(u32 uEntryID);
 u16 uGetBINionEntryCRC16(u32 uEntryID);
 u32 uGetBINionEntrySize(u32 uEntryID);
 u16 crc16(u8 *uDataPointer, u16 ulength);
+
 inline bool bIsEntryCRC16Correct(u32 uEntryID){
-    if(uGetBINionEntryCRC16(uEntryID) != crc16(gGetBINionEntryData(uEntryID),uGetBINionEntrySize(uEntryID)))
+    uintptr_t BinionEntryDataPointer = gGetBINionEntryData(uEntryID);
+    u32 uEntrySize = uGetBINionEntrySize(uEntryID);
+    u8 BinionEntryData = (u8) memcpy(&BinionEntryDataPointer,&BinionEntryData,uEntrySize);
+    if(uGetBINionEntryCRC16(uEntryID) != crc16(&BinionEntryData,uGetBINionEntrySize(uEntryID)))
     {
         return false;
     }
@@ -183,15 +177,15 @@ inline bool bIsBinionCRC32Correct(u32 uEntryID) {
     fseek(gBinion,0L,SEEK_END);
     u32 uFilesize = ftell(gBinion);
     fseek(gBinion,0L,SEEK_SET);
-    u8 uFileData = (u8) malloc(uFilesize);
+    u8* uFileData = (u8*) malloc(uFilesize);
     fread(uFileData,1,uFilesize,gBinion);
     fclose(gBinion);
 
     if(crc32(ucrc32,uFileData,uFilesize) != uGetBINionFileCRC32(uEntryID)){
-        free(uFileData);
+        free(&uFileData);
         return true;
     }
-    free(uFileData);
+    free(&uFileData);
     return false;
 };
 u16 uGetBINionEntryDataType(u32 uEntryID);

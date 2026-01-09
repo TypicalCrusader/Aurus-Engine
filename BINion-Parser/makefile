@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: GPL-2.0-only
 
-all:
+BINion-Maker:
 	echo "[PY]	PARSING BINIONS"
-	python "BINion-Parser.py"
+#python "./BINion-Parser/BINion-Parser.py"

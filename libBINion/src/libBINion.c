@@ -49,13 +49,13 @@ u16 uGetBinionEntryID(u32 uEntryID)
 
 FILE* gGetBINion(u32 uEntryID) {
     u16 uBinionFileNum = uGetBinionFileNumber(uEntryID);
-    char uFilePath = (char*) malloc((sizeof(uBinionDataFilePath-1) + sizeof(uBinionFileNameSansNum-1))+(sizeof(uBinionFileNum)+sizeof(uBinionFileExtension-1))+1);
-    memset(uFilePath,0,(sizeof(uBinionDataFilePath-1) + sizeof(uBinionFileNameSansNum-1))+(sizeof(uBinionFileNum)+sizeof(uBinionFileExtension-1))+1);
-    memcpy(uFilePath, uBinionDataFilePath, strlen(uBinionDataFilePath));
-    memcpy(uFilePath, uBinionFileNameSansNum, strlen(uBinionFileNameSansNum));
-    memcpy(uFilePath, uBinionFileNum, strlen(uBinionFileNum));
-    memcpy(uFilePath, uBinionFileExtension, strlen(uBinionFileExtension));
-    memcpy(uFilePath, "\0", 1);
+    char *uFilePath = malloc((sizeof(uBinionDataFilePath-1) + sizeof(uBinionFileNameSansNum-1))+(sizeof(uBinionFileNum)+sizeof(uBinionFileExtension-1))+1);
+    memset(&uFilePath,0,(sizeof(uBinionDataFilePath-1) + sizeof(uBinionFileNameSansNum-1))+(sizeof(uBinionFileNum)+sizeof(uBinionFileExtension-1))+1);
+    memcpy(&uFilePath, &uBinionDataFilePath, strlen(uBinionDataFilePath));
+    memcpy(&uFilePath, &uBinionFileNameSansNum, strlen(uBinionFileNameSansNum));
+    memcpy(&uFilePath, &uBinionFileNum, 2);
+    memcpy(&uFilePath, &uBinionFileExtension, strlen(uBinionFileExtension));
+    memcpy(&uFilePath, "\0", 1);
     FILE* gBinion;
     gBinion = fopen(uFilePath,"rb+");   
     free(uFilePath);
@@ -64,9 +64,9 @@ FILE* gGetBINion(u32 uEntryID) {
 
 bool bIsBINion(u32 uEntryID) {
     FILE* gBinion = gGetBINion(uEntryID);
-    u8 gBuffer = (u8) malloc(5);
+    u8 gBuffer[5];
     u8 uMagicNumber[5] = "BINO";
-    u8 uMagicNumber[4] = 0xff;
+    uMagicNumber[4] = 0xff;
     fread(gBuffer,1,5,gBinion);
     fclose(gBinion);
     if(gBuffer != uMagicNumber) {
@@ -76,46 +76,46 @@ bool bIsBINion(u32 uEntryID) {
     else {
         free(gBuffer);
         return true;
-    };
+    }
 };
 
 u32 uGetBINionStandardVersionFromFile(u32 uEntryID) {
     FILE* gBinion = gGetBINion(uEntryID);
-    u32 uBuffer = (u32*) malloc(__SIZEOF_INT__);
+    u32 uBuffer;
     u32 uBinionVersion;
 
     fseek(gBinion,HEADER_FORMAT_VER,SEEK_SET);
-    fread(uBuffer,__SIZEOF_INT__,1,gBinion);
+    fread(&uBuffer,__SIZEOF_INT__,1,gBinion);
     fclose(gBinion);
     uBinionVersion = uBuffer;
-    free(uBuffer);
+    free(&uBuffer);
 
     return uBinionVersion;
 };
 
 u32 uGetBinionHeaderStandardVersionFromFile(u32 uEntryID) {
     FILE* gBinion = gGetBINion(uEntryID);
-    u32 uBuffer = (u32*) malloc(__SIZEOF_INT__);
+    u32 uBuffer;
     u32 uBinionHeaderVersion;
 
     fseek(gBinion,HEADER_HEADER_VER,SEEK_SET);
-    fread(uBuffer,(__SIZEOF_INT__),1,gBinion);
+    fread(&uBuffer,(__SIZEOF_INT__),1,gBinion);
     fclose(gBinion);
     uBinionHeaderVersion = uBuffer;
-    free(uBuffer);
+    free(&uBuffer);
 
     return uBinionHeaderVersion;  
 }
 
 u64 gGetBINionEntry(u16 uEntryID, FILE* Binion)
 {
-    u64 uBuffer = (u16*) malloc(__SIZEOF_SHORT__);
-    u16 uBuffer2 = (u16*) malloc(__SIZEOF_SHORT__);
+    u64 uBuffer;
+    u16 uBuffer2;
     u64 uEntryOffset;
     FILE* gBinion = Binion;
 
     fseek(gBinion,-(1+(__SIZEOF_SHORT__+__SIZEOF_INT__)),SEEK_END); //go to end binion an go 7 bytes back to get to entry amount
-    fread(uBuffer,__SIZEOF_SHORT__,1,gBinion); //Read Entry amount to buffer
+    fread(&uBuffer,__SIZEOF_SHORT__,1,gBinion); //Read Entry amount to buffer
 
     //get sizes of entry table and all entries up to ours
     uBuffer2 = (__SIZEOF_LONG__ * uBuffer);
@@ -125,15 +125,15 @@ u64 gGetBINionEntry(u16 uEntryID, FILE* Binion)
     fseek(gBinion,-((uBuffer2-uBuffer)-1),SEEK_CUR);
 
     //free what we no longer neeed
-    free(uBuffer);
-    free(uBuffer2);
+    free(&uBuffer);
+    free(&uBuffer2);
 
     uBuffer = (uintptr_t) malloc(__SIZEOF_LONG__);
 
-    fread(uBuffer,__SIZEOF_LONG__,1,gBinion);
+    fread(&uBuffer,__SIZEOF_LONG__,1,gBinion);
     fclose(gBinion);
     uEntryOffset = uBuffer;
-    free(uBuffer);
+    free(&uBuffer);
     return uEntryOffset;
 
 };
@@ -146,51 +146,48 @@ struct gBINionEntryStruct gGetBINionEntryStruct(u32 uEntryID)
     u64 uEntryOffset = gGetBINionEntry(uGetBinionEntryID(uEntryID),gBinion);
 
     fseek(gBinion,(uEntryOffset),SEEK_SET); 
-    fread(gEntry.uEntryID,__SIZEOF_SHORT__,1,gBinion); //get entryID
+    fread(&gEntry.uEntryID,__SIZEOF_SHORT__,1,gBinion); //get entryID
     fseek(gBinion,__SIZEOF_SHORT__,SEEK_CUR);
-    fread(gEntry.uEntrySize,__SIZEOF_INT__,1,gBinion); //get EntrySize
+    fread(&gEntry.uEntrySize,__SIZEOF_INT__,1,gBinion); //get EntrySize
     fseek(gBinion,__SIZEOF_INT__,SEEK_CUR);
-    fread(gEntry.uEntryCRC16,__SIZEOF_SHORT__,1,gBinion); //get EntryCRC16
+    fread(&gEntry.uEntryCRC16,__SIZEOF_SHORT__,1,gBinion); //get EntryCRC16
     fseek(gBinion,__SIZEOF_SHORT__,SEEK_CUR);
-    fread(gEntry.gEntryHeader.uEntryDataType,__SIZEOF_SHORT__,1,gBinion);
+    fread(&gEntry.gEntryHeader.uEntryDataType,__SIZEOF_SHORT__,1,gBinion);
     fseek(gBinion,__SIZEOF_SHORT__,SEEK_CUR);
-    fread(gEntry.gEntryHeader.uEntrySpecialFlags,__SIZEOF_INT__,1,gBinion);
+    fread(&gEntry.gEntryHeader.uEntrySpecialFlags,__SIZEOF_INT__,1,gBinion);
     fseek(gBinion,__SIZEOF_INT__,SEEK_CUR);
-    fread(gEntry.gEntryHeader.uReserved[0],__SIZEOF_LONG__,1,gBinion);
+    fread(&gEntry.gEntryHeader.uReserved[0],__SIZEOF_LONG__,1,gBinion);
     fseek(gBinion,__SIZEOF_LONG__,SEEK_CUR);
-    fread(gEntry.gEntryHeader.uReserved[1],__SIZEOF_LONG__,1,gBinion);
+    fread(&gEntry.gEntryHeader.uReserved[1],__SIZEOF_LONG__,1,gBinion);
     fseek(gBinion,__SIZEOF_LONG__,SEEK_CUR);
-    fread(gEntry.gEntryHeader.uPadding,__SIZEOF_SHORT__,1,gBinion);
+    fread(&gEntry.gEntryHeader.uPadding,__SIZEOF_SHORT__,1,gBinion);
     fseek(gBinion,__SIZEOF_SHORT__,SEEK_CUR);
-    fread(gEntry.uEntryData,1,gEntry.uEntrySize,gBinion); //get EntryData
+    fread(&gEntry.uEntryData,1,gEntry.uEntrySize,gBinion); //get EntryData
     fseek(gBinion,gEntry.uEntrySize,SEEK_CUR);
-    fread(gEntry.uEOE,__SIZEOF_INT__,1,gBinion);
+    fread(&gEntry.uEOE,__SIZEOF_INT__,1,gBinion);
     fclose(gBinion);
 
     return gEntry;
 }
 
-void free_buffer(char **buffer)
-{
-  free(*buffer);
-}
+
 
 uintptr_t gGetBINionEntryData(u32 uEntryID)
 {
     FILE* gBinion = gGetBINion(uEntryID);
 
-    u32 uBuffer = (u32*) malloc(__SIZEOF_INT__);
+    u32 uBuffer;
     u64 uEntryOffset = gGetBINionEntry(uGetBinionEntryID(uEntryID),gBinion);
     fseek(gBinion,(uEntryOffset),SEEK_SET); 
 
     fseek(gBinion,(__SIZEOF_SHORT__ ),SEEK_CUR);  
-    fread(uBuffer,__SIZEOF_INT__,1,gBinion); //get EntrySize
+    fread(&uBuffer,__SIZEOF_INT__,1,gBinion); //get EntrySize
 
-    uintptr_t  gBuffer2=malloc(uBuffer*sizeof(char));
+    uintptr_t  gBuffer2;
     fseek(gBinion,(__SIZEOF_INT__ + __SIZEOF_SHORT__),SEEK_CUR);
-    fread(gBuffer2,1,gBuffer2,gBinion);
+    fread(&gBuffer2,1,gBuffer2,gBinion);
     fclose(gBinion);
-    free(uBuffer);
+    free(&uBuffer);
 
     return gBuffer2;
 };
@@ -198,31 +195,31 @@ uintptr_t gGetBINionEntryData(u32 uEntryID)
 u16 uGetBINionEntryCRC16(u32 uEntryID) {
 
     FILE* gBinion = gGetBINion(uEntryID); 
-    u16 uBuffer = (u16*) malloc(__SIZEOF_SHORT__);
+    u16 uBuffer;
     u64 uEntryOffset = gGetBINionEntry(uGetBinionEntryID(uEntryID),gBinion);  
     u16 uTemp;
 
     fseek(gBinion,(uEntryOffset),SEEK_SET);   
     fseek(gBinion,(__SIZEOF_SHORT__+__SIZEOF_INT__),SEEK_CUR); 
-    fread(uBuffer,__SIZEOF_SHORT__,1,gBinion); 
+    fread(&uBuffer,__SIZEOF_SHORT__,1,gBinion); 
     fclose(gBinion);
     uTemp = uBuffer;
-    free(uBuffer);
+    free(&uBuffer);
     return uTemp;
 }
 
 u32 uGetBINionEntrySize(u32 uEntryID)
 {
     FILE* gBinion = gGetBINion(uEntryID); 
-    u32 uBuffer = (u32*) malloc(__SIZEOF_INT__);
+    u32 uBuffer;
     u32 uEntrySize;
     u64 uEntryOffset = gGetBINionEntry(uGetBinionEntryID(uEntryID),gBinion);  
 
     fseek(gBinion,(uEntryOffset),SEEK_SET);   
     fseek(gBinion,(__SIZEOF_SHORT__ ),SEEK_CUR);  
-    fread(uBuffer,__SIZEOF_INT__,1,gBinion); //get EntrySize
+    fread(&uBuffer,__SIZEOF_INT__,1,gBinion); //get EntrySize
     uEntrySize = uBuffer;
-    free(uBuffer);
+    free(&uBuffer);
     fclose(gBinion);
 
     return uEntrySize;
@@ -230,13 +227,13 @@ u32 uGetBINionEntrySize(u32 uEntryID)
 
 u32 uGetBINionFileCRC32(u32 uEntryID) {
     FILE* gBinion = gGetBINion(uEntryID); 
-    u32 uBuffer = (u32*) malloc(__SIZEOF_INT__);
+    u32 uBuffer;
     u32 uBinionCRC32;
     fseek(gBinion,-(1+__SIZEOF_INT__),SEEK_END); 
-    fread(uBuffer,__SIZEOF_INT__,1,gBinion);
+    fread(&uBuffer,__SIZEOF_INT__,1,gBinion);
     fclose(gBinion);
     uBuffer = uBinionCRC32;
-    free(uBuffer);
+    free(&uBuffer);
     return uBinionCRC32;
 };
 
@@ -281,15 +278,15 @@ u16 uGetBINionEntryDataType(u32 uEntryID)
     FILE* gBinion = gGetBINion(uEntryID);
 
     u64 uEntryOffset = gGetBINionEntry(uGetBinionEntryID(uEntryID),gBinion);
-    u16 uBuffer = (u16) malloc(__SIZEOF_SHORT__);
+    u16 uBuffer;
     u16 uBinionDataType;
 
     fseek(gBinion,(uEntryOffset + 8),SEEK_SET); 
-    fread(uBuffer,__SIZEOF_SHORT__,1,gBinion);  
+    fread(&uBuffer,__SIZEOF_SHORT__,1,gBinion);  
     fclose(gBinion);
 
     uBinionDataType = uBuffer;
-    free(uBuffer);
+    free(&uBuffer);
 
     return uBinionDataType;
 };
