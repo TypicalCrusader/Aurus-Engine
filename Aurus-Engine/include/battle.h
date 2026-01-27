@@ -54,13 +54,17 @@ struct gpBattleState {
 
 extern struct gpBattleState gBattle;
 
+extern const gSkillFunc gSkillJumpTable[];
+
 s8 USE_FASTCALL sGetCharacterEvasionStat(struct gpItemStruct gAttackerWeapon, struct gpBattleCharacter gTargetCharacter);
 struct gpBattleCharacter USE_FASTCALL GetCurrentActiveBattleCharacter();
-
 bool bGetCurrentBattleCharacter();
-void vApplyPreBattleSkills();
-void vApplyPostHitSkills();
-void vApplyMidBattleSkills();
+u8 uReturnSkillAmountOnCharacterPerType(struct gpBattleCharacter gBattleCharacter, u8 uSkillActivationType, struct gBINionEntryStruct gSkillTable);
+struct gpSkillStruct gReturnSkillStructsDependantOnPhase(struct gpBattleCharacter gBattleCharacter, u8 uSkillActivationType, u32 uSizeOfStruct, struct gBINionEntryStruct gSkillTable);
+void vApplyPreBattleSkills(u16 uSkillID,u16 uSkillEffectID);
+void vApplyOnHitSkills(u16 uSkillID,u16 uSkillEffectID);
+void vApplyPostHitSkills(u16 uSkillID,u16 uSkillEffectID);
+void vApplyPostBattleSkills(u16 uSkillID,u16 uSkillEffectID);
 void USE_FASTCALL HOT_FUNC vBattleLoop(struct gpCurrentCharacter *gAttacker, struct gpCurrentCharacter *gDefender);
 void USE_SSE_PARAM HOT_FUNC vInitialBattleCalc();
 void USE_FASTCALL vInitialAttackAccuracy();

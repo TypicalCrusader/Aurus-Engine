@@ -30,8 +30,7 @@ ifeq ($(OS),Windows_NT)
 	EXTRA_COMPILE_FLAGS := -mwin32
 	EXTRA_OS_FLAGS_GUI_TERM := -mwindows -mwin32 
 	EXTRA_OS_FLAGS_LIB := -mdll
-	COMPILER_DISABLE_ENABLE_CPU_FEATURES := -m64 -mno-mavx512vbmi2 -mno-mavx512bf16 -mno-mavx512fp16 -mno-mavx512f -mno-mavx512cd -mno-mavx512vl -mno-mavx512bw -mno-mavx512dq -mno-mavx512ifma -mno-mavx512vbmi
-	endif
+	COMPILER_DISABLE_ENABLE_CPU_FEATURES := -m64 -mno-mavx512vbmi2 -mno-mavx512bf16 -mno-mavx512fp16 -mno-mavx512f -mno-mavx512cd -mno-mavx512vl -mno-mavx512bw -mno-mavx512dq -mno-mavx512ifma -mno-mavx512vbm
 else
 	CPU_Arch := $(shell uname -m)
 	ifeq ($(CPU_Arch),native)
@@ -43,7 +42,7 @@ else
 			COMPILER_DISABLE_ENABLE_CPU_FEATURES :=  -m64 \
     			-mno-avx512f -mno-avx512cd -mno-avx512bw -mno-avx512dq -mno-avx512ifma -mno-avx512vbmi -mno-avx512vl \
     			-mno-avx512vbmi2 -mno-avx512bf16 -mno-avx512fp16
-		endif
+		else
 			$(error Cant detect CPU architectre and its base architecture)
 		endif
 	endif		
@@ -89,10 +88,10 @@ MK_DIR    := $(dir $(MK_PATH))
 BUILD_DIR := $(MK_DIR)build
 
 SRC_DIRS := \
-    $(MK_DIR)libBINion/src \
-    $(MK_DIR)libAurusAnim/src \
-    $(MK_DIR)Aurus-Engine/src \
-    $(MK_DIR)Aurus-Engine/data/bakeddata
+	libBINion/src \
+    libAurusAnim/src \
+    Aurus-Engine/src \
+    Aurus-Engine/data/bakeddata
 
 C_STD := gnu23
 
@@ -110,7 +109,7 @@ INC_DIRS := \
     $(MK_DIR)libBINion/include \
     $(MK_DIR)libAurusAnim/include \
     $(MK_DIR)Aurus-Engine/include
-
+$(info $(INC_DIRS))
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 CFLAGS := \

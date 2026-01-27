@@ -30,6 +30,11 @@ potentially in future if ever needed (it wont be)
 
 #define BINION_MAX_ENTRY_PER_FILE UINT16_MAX
 
+#define DATA_BINION_FILENAME    "data"
+#define SFX_BINION_FILENAME     "sfx"
+#define GFX_BINION_FILENAME     "gfx"
+#define TEXT_BINION_FILENAME    "atx"
+
 static char uBinionDataFilePath[] = "./data/";
 static char uBinionFileNameSansNum[] = "data_";
 static char uBinionFileExtension[] = ".bin";
@@ -81,7 +86,7 @@ struct gBINionEntryStruct{
 };
 
 struct gpBINionStruct {
-    struct gBINionHeader {
+    struct gpBINionHeader {
         u8 uBINionMagicNumbers[5];
         u32 uBINionFormatVer;
         u32 uBINionHeaderVer;
@@ -90,13 +95,13 @@ struct gpBINionStruct {
         u64 uBINionFileSize;
         u64 uReserved[4];
         u32 uEOE;
-    };
+    }gBinionHeader;
     struct gBINionEntryStruct gBINionEntry[INT16_MAX];
     u32 uPadding; //0xFFFFFEFE
-    struct gBINionTableofContents {
+    struct gpBINionTableofContents {
         uintptr_t gBINionEntryOffset[INT16_MAX];
         u16 uBINionEntryAmount;
-    };    
+    }gBINionTableofContents;    
     u32 uBINionCRC32;
     u8 uEOF;
 };
@@ -182,11 +187,15 @@ inline bool bIsBinionCRC32Correct(u32 uEntryID) {
     fclose(gBinion);
 
     if(crc32(ucrc32,uFileData,uFilesize) != uGetBINionFileCRC32(uEntryID)){
-        free(&uFileData);
+        free(uFileData);
         return true;
     }
-    free(&uFileData);
+    free(uFileData);
     return false;
 };
 u16 uGetBINionEntryDataType(u32 uEntryID);
 u16 uGetBinionEntryID(u32 uEntryID);
+
+static inline void free_binion_entry_struct(struct gBINionEntryStruct *gBinionEntry) {
+        free(gBinionEntry);
+};

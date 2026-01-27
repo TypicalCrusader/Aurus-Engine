@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: 2026 =NONE
 SPDX-License-Identifier: CC0-1.0
 -->
 
-BINion File Format Specification 1.0 by TypicalCrusader
+BINion File Format Specification 1.1 by TypicalCrusader
 
 BINion (Bin full of onions) is the custom binary storage file format used by
 Aurus Engine.
@@ -171,3 +171,37 @@ as a name states it holds data, it itself is structured in following way:
 
 tldr
 create header -> create entry -> python saves id and entry name to enum -> entry offset is saved to a list in which offsets entry is equal to entry ID 
+
+
+
+HARDCODED ENTRIES/Files
+- databases binion entry hierarchy will always have same ID
+
+IN BINION NAMED (data.bino)
+- character - 00
+- class - 01
+- skill - 02
+- support - 03
+- skill - 04
+- ability - 05
+- item - 06
+
+IN BINION NAMED (sfx.bino)
+priority based
+- music 0
+- sfx 1
+- dialogue 2
+- other 3   |
+            V
+
+IN BINION named (gfx.bino)
+priority based
+- AAM - 0
+- portraits - 1
+- gui - 2
+- gfx - 3
+- other - 4 |
+            v
+
+IN BINION NAMED (atx.bino)
+- text entries in form of compiled .ATX entries

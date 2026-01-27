@@ -6,6 +6,12 @@
 
 #pragma once
 #include "types.h"
+#include "bakedbinionentries.h"
+#include "battle.h"
+#include "rng.h"
+#include "libBINion.h"
+
+#define CHARACTER_HAS_NO_SKILLS 0xFFFF
 
 enum eSkillActivationType {
     SKILL_TYPE_PASSIVE,             //always active
@@ -16,6 +22,7 @@ enum eSkillActivationType {
     SKILL_TYPE_ACTIVE_MAP,          //activates on map
     SKILL_TYPE_ACTIVE_CHOICE,       //activates on map when player choses to - rally skills
 };
+
 
 //binion
 struct gpSkillStruct {
@@ -28,6 +35,13 @@ struct gpSkillStruct {
 
     u8 uSkillActivationType;                        //see eSkillActivationType for reference
     u8 uSkillElement;
-    u32 uSkillEffectID;                             //skill effect ID, used as function argument (for active ones)
+    u16 uSkillEffectID;                             //skill effect ID, used as function argument in jumptable
     s8 sActivationRate;                             //initial %chance to activate (is affected by luck). Ignored by SKILL_TYPE_ACTIVE_CHOICE
+};
+
+
+struct gpSkillStruct gReturnSkillStructFromBinion(u16 uSkillEntry);
+
+static inline void free_skill_struct(struct gpSkillStruct *gSkill) {
+    free(gSkill);
 };

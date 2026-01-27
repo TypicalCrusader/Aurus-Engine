@@ -48,10 +48,10 @@ u8 uRollD20(){
     {
         if(bIsNumberEven(uRollD6()) == true)
         {
-            uRandNum1 / 2;
+            uRandNum1 /= 2;
         }
         else {
-            uRandNum1 == 20;
+            uRandNum1 = 20;
         };
     };
     return (u8) uRandNum1;
@@ -73,6 +73,28 @@ u8 uRollD6()
     };
     return (u8) uRandNum1;
 };
+
+u8 uRandom_u8_exclusive(u8 min, u8 max) {
+    srand(time(NULL));
+
+    if(min >= max) 
+    {
+        return min;
+    }
+    
+    return min + rand() % (max - min);
+}
+
+u8 uRandom_u8_inclusive(u8 min, u8 max) {
+    srand(time(NULL));
+
+    if(min >= max) 
+    {
+        return min;
+    }
+    
+    return min + rand() % (max - min + 1);;
+}
 
 u8 uRollD4()
 {

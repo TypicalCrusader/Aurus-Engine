@@ -15,3 +15,5 @@ u8 USE_FASTCALL uRollD100();
 u8 USE_FASTCALL uRollD20();
 u8 USE_FASTCALL uRollD6();
 u8 USE_FASTCALL uRollD4();
+u8 USE_FASTCALL uRandom_u8_exclusive(u8 min, u8 max);
+u8 USE_FASTCALL uRandom_u8_inclusive(u8 min, u8 max);

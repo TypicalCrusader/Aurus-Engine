@@ -12,6 +12,10 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <uchar.h>
+#include <unicode/ucnv.h>
+#include <unicode/utypes.h>
+#include <SDL3/SDL.h>
+
 
 #define DATA __attribute__((section(".data")))
 #define USE_SSE_PARAM __attribute__ ((sseregparm))
@@ -28,7 +32,7 @@ typedef int32_t     s32;
 typedef int64_t     s64;
 typedef float       f32;
 typedef double      f64;
-typedef char32_t    chr;
+typedef char32_t    uni_chr;
 
 typedef void (*gpEvent)(void);
 
@@ -47,4 +51,16 @@ static inline void free_number(void *p) {
         free(*(void**)p);
 };
 
+
 #define CLEANUP(func) __attribute__((cleanup(func)))
+//because microsoft is antichrist, fuck you
+#if defined(_WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+    #include <malloc.h>
+    #define my_aligned_alloc(size, align)   _aligned_malloc((size), (align))
+    #define my_aligned_free(ptr)            _aligned_free((ptr))
+#else
+    #define my_aligned_alloc(size, align)   aligned_alloc((align), (size))
+    #define my_aligned_free(ptr)            free((ptr))
+#endif
+
+typedef void (*gSkillFunc)(u16 uSkillID);

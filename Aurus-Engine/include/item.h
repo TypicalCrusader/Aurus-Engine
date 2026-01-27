@@ -3,8 +3,11 @@
  *
  * SPDX-License-Identifier: GPL-2.0-only
  */
-
+#pragma once
 #include "types.h"
+#include "battle.h"
+#include "rng.h"
+#include "libBINion.h"
 
 //defines
 #define WEAPON_DAMAGE_NO_DAMAGE        0
@@ -109,3 +112,7 @@ static const struct gpWeaponWeaknessStruct gWeaponWeakness[(ITEM_TYPE_WEAPON_STA
 struct gpItemStruct USE_FASTCALL uGetItemFromID(u32 uItemID);
 u8 USE_FASTCALL uGetItemWpnATKAttributeMod(u32 uItemID);
 u8 USE_FASTCALL uGetItemAtkType(u32 uItemID);
+
+static inline void free_item_struct(struct gpItemStruct *gItem) {
+    free(gItem);
+};

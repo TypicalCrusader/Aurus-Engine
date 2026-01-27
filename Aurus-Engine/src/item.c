@@ -5,31 +5,18 @@
  */
 
 #include "item.h"
-#include "battle.h"
-#include "rng.h"
-#include "libBINion.h"
+
 
 
 struct gpItemStruct uGetItemFromID(u32 uItemID) {
-    //struct gBINionEntryStruct gItemTable = gBINionEntryStruct(BINION_ENTRY_ITEM_TABLE);
-    struct gpItemStruct *gItem;
-    /*
+    struct gBINionEntryStruct gItemTable = gGetBINionEntryStruct(DATA_BINION_ITEM);
+    struct gpItemStruct CLEANUP(free_item_struct) *gItem = malloc(sizeof(*gItem));
+    
     u32 uTableSize = gItemTable.uEntrySize;
-    u8 CLEANUP(free_number) gBuffer = (u8) malloc(sizeof(gItem));
-    if(sizeof(gItemTable.uEntryData[(sizeof(gItem) * uItemID)]>sizeof(gBuffer)))
-    {
-        //TODO!: Add error handling
-        exit(-1)
-    }
-    else
-    {
-        //alocates our exact entry we need into memory
-
+    u8 CLEANUP(free_number) *gBuffer = malloc(sizeof(*gItem));
         
-        *gBuffer = memcpy(&gBuffer,&gItemTable.uEntryData[(sizeof(gItem) * uItemID)],sizeof(gItem));
-        gItem = memcpy(&gItem,&gBuffer,sizeof(gItem));;
-    }
-    */
+    memcpy(gBuffer,&gItemTable.uEntryData[(sizeof(*gItem) * uItemID)],sizeof(*gItem));
+    memcpy(gItem,&gBuffer,sizeof(*gItem));
     return *gItem;
 };
 
