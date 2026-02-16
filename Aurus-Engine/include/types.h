@@ -18,6 +18,7 @@
 
 
 #define DATA __attribute__((section(".data")))
+#define READ_ONLYDATA __attribute__((section(".rodata")))
 #define USE_SSE_PARAM __attribute__ ((sseregparm))
 #define USE_FASTCALL __attribute__((fastcall))
 #define HOT_FUNC __attribute__((hot))
@@ -64,3 +65,4 @@ static inline void free_number(void *p) {
 #endif
 
 typedef void (*gSkillFunc)(u16 uSkillID);
+typedef void (*gEventFunc)(u16 uEventID);

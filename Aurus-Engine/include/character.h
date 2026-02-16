@@ -67,20 +67,20 @@ struct gpCharacterStruct {
     u32 uCharacterPortraitID; //4
     u16 uMapSprite;           //5
     u16 uCharacterSkills[4]; //mainly for enemies, characters use other growth table 6
-    u8  uRace;  //7
-    bool  bUseCombinedGrowths; //Use Character + Class growth instead of just Character growths
-    u8  uStartHP;
-    s8  sStartStr;
-    s8  sStartMag;
-    s8  sStartAgi;
-    s8  sStartSpd;
-    s8  sStartPDef;
-    s8  sStartMDef;
-    s8  sStartMana;
-    s8  sStartChr;
-    s8  sStartLck;
-    s8  sStartEnd;
-    s8  sStartMov;
+    u8  uRace               :7;  //7
+    u8  bUseCombinedGrowths :1; //Use Character + Class growth instead of just Character growths
+    u8  uStartHP   : 5;
+    s8  sStartMov  : 3;
+    s8  sStartStr  : 4;
+    s8  sStartMag  : 4;
+    s8  sStartAgi  : 4;
+    s8  sStartSpd  : 4;
+    s8  sStartPDef : 4;
+    s8  sStartMDef : 4;
+    s8  sStartMana : 4;
+    s8  sStartChr  : 4;
+    s8  sStartLck  : 4;
+    s8  sStartEnd  : 4;
     //growths
     s8  sHPGrowth;      //health of unit duh
     s8  sStrGrowth;     //axes, swords dmg
@@ -96,19 +96,19 @@ struct gpCharacterStruct {
     s8  sMovGrowth;     //how many squares can you move 
 
     //weapons
-    u8  uStartingSwordLv;
-    u8  uStartingPolearmsLv;
-    u8  uStartingAxeLv;
-    u8  uStartingRangedLv;
-    u8  uStartingMagicFireLv;
-    u8  uStartingMagicIceLv;    
-    u8  uStartingMagicThunderLv;    
-    u8  uStartingMagicWindLv;
-    u8  uStartingMagicDawnLv;
-    u8  uStartingMagicDuskLv;
-    u8  uStartingMagicDragonLv;   
-    u8  uStartingMagicMonsterLv; 
-    u8  uStartingStaveLv;   
+    u8  uStartingSwordLv        : 3;
+    u8  uStartingPolearmsLv     : 3;
+    u8  uStartingMagicDragonLv  : 2;
+    u8  uStartingAxeLv          : 3;
+    u8  uStartingRangedLv       : 3;
+    u8  uStartingMagicMonsterLv : 2;
+    u8  uStartingMagicFireLv    : 3;
+    u8  uStartingMagicIceLv     : 3;    
+    u8  uStartingStaveLv        : 2;
+    u8  uStartingMagicThunderLv : 3;   
+    u8  uStartingMagicWindLv    : 3;
+    u8  uStartingMagicDawnLv    : 2;
+    u8  uStartingMagicDuskLv    : 2;
 };
 
 struct gpCurrentCharacter {
@@ -134,14 +134,21 @@ struct gpCurrentCharacter {
     u16 uCharacterAbilities[MAX_CHARACTER_ABILITIES];
 };
 
-struct gpDeployedCharacterStruct {
+extern union gpDeployedCharacterUnion {
     struct gpCurrentCharacter gPlayerCharacters[MAX_PLAYER_CHARACTERS];
-    struct gpCurrentCharacter gDeployedCharacters[MAX_PLAYER_CHARACTERS_DEPLOYED];
-    struct gpCurrentCharacter gDeployedEnemies[MAX_ENEMY_CHARACTERS_DEPLOYED];
-    struct gpCurrentCharacter gDeployedAllies[MAX_ALLY_CHARACTERS_DEPLOYED];
-};
-
-static struct gpDeployedCharacterStruct gDeployedCharacters;
+    union PlayerUnitsDeployed {
+        struct gpCurrentCharacter gDeployedCharacters[MAX_PLAYER_CHARACTERS_DEPLOYED];
+        u8 uDefeatedUnitNum;
+    }unPlayerUnits;
+    union EnemyUnitsDeployed  {
+        struct gpCurrentCharacter gDeployedEnemies[MAX_ENEMY_CHARACTERS_DEPLOYED];
+        u8 uDefeatedUnitNum;
+    }unEnemyUnits;
+    union AllyUnitsDeployed {
+        struct gpCurrentCharacter gDeployedAllies[MAX_ALLY_CHARACTERS_DEPLOYED];
+        u8 uDefeatedUnitNum;
+    }unAllyUnits;
+}unDeployedCharacter;
 
 typedef enum eCharacterStruct {
     CHARACTER_STRUCT_PLAYER_ALL,
@@ -150,7 +157,7 @@ typedef enum eCharacterStruct {
     CHARACTER_STRUCT_ALLY
 }GLOBALCHARSTRUCTSEL;
 
-struct gpCurrentCharacter gGetCurrentCharacterFromGlobalStruct(GLOBALCHARSTRUCTSEL eCharacterStruct, u8 uDeploymentIndex);
+struct gpCurrentCharacter gGetCurrentCharacterFromGlobalUnion(GLOBALCHARSTRUCTSEL eCharacterStruct, u8 uDeploymentIndex);
 
 void free_currentcharacter(struct gpCurrentCharacter *c);
 DEFINE_TRIVIAL_CLEANUP_FUNC(struct gpCurrentCharacter *, free_currentcharacter);

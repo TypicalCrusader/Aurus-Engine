@@ -36,7 +36,6 @@ struct gpSkillStruct {
     u8 uSkillActivationType;                        //see eSkillActivationType for reference
     u8 uSkillElement;
     u16 uSkillEffectID;                             //skill effect ID, used as function argument in jumptable
-    s8 sActivationRate;                             //initial %chance to activate (is affected by luck). Ignored by SKILL_TYPE_ACTIVE_CHOICE
 };
 
 

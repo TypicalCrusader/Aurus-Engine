@@ -10,6 +10,8 @@
 #include "class.h"
 #include "item.h"
 
+#define NO_EVENT 0
+
 //most important defs
 #define AURUS_SCRIPT_VERSION 0.5
 #define MAX_GLOBAL_COUNTERS 16
@@ -142,6 +144,7 @@ struct gpChapterEventStruct {
     const CHAPTER_TRAP_LIST *gTrapList;
     const CHAPTER_MAP_WEAPON_AND_DESTROYABLES_LIST *gMapWeaponsAndDestroyablesList;
     gpEvent gMainEvent;
+    u16 uEventID;
 };
 
 static struct gpChapterEventStruct GlobalEventTable[UINT16_MAX];
@@ -257,7 +260,7 @@ bool bIsCharacterAlive(u32 CharacterID);
 bool bIsCharacterDeployed(u32 CharacterID);
 bool bIsCharacterRecruited(u32 CharacterID);
 bool bIsCharacteratXYCoords(u8 x, u8 y, u32 CharacterID);
-bool bAreXEnemiesDead(u8 Amout);
+bool bAreXEnemiesDead(u8 Amount);
 bool bAreXAlliesDead(u8 Amount);
 bool bAreXPlayersDead(u8 Amount);
 inline bool bHaveXGold(u16 Amount) {

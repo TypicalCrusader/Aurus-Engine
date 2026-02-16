@@ -11,7 +11,7 @@
 
 u64 uLocalFlagBitField[2];
 u64 uGlobalFlagBitField[13];
-u8 uCurrentlySelectedCharacter[2];
+u8 uCurrentlySelectedCharacter[2]; //0 - side, 1 - dep. id
 
 u8 uCheckFlag(u16 uFlagNumber) {
     u64 uIndexNumber;
@@ -78,12 +78,35 @@ void vSetFlag(u16 uFlagNumber, bool uTrueFalse) {
 
 
 void vAddItem(u32 ItemID) {
-    struct gpCurrentCharacter gCharacter = gGetCurrentCharacterFromGlobalStruct(uCurrentlySelectedCharacter[0],uCurrentlySelectedCharacter[1]); 
+    struct gpCurrentCharacter gCharacter = gGetCurrentCharacterFromGlobalUnion(uCurrentlySelectedCharacter[0],uCurrentlySelectedCharacter[1]); 
 
 }
 void vRemoveItem(u32 ItemID) {
 
 }
 void vAddGold(u16 Gold){
+    uPartyGold += Gold;
+    return;
+}
 
+bool bAreXEnemiesDead(u8 Amount) {
+    if(unDeployedCharacter.unEnemyUnits.uDefeatedUnitNum >= Amount)
+    {
+        return true;
+    }
+    return false;
+}
+bool bAreXAlliesDead(u8 Amount) {
+    if(unDeployedCharacter.unAllyUnits.uDefeatedUnitNum >= Amount)
+    {
+        return true;
+    }
+    return false;   
+}
+bool bAreXPlayersDead(u8 Amount) {
+    if(unDeployedCharacter.unPlayerUnits.uDefeatedUnitNum >= Amount)
+    {
+        return true;
+    }
+    return false;    
 }

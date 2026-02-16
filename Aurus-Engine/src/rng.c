@@ -93,7 +93,7 @@ u8 uRandom_u8_inclusive(u8 min, u8 max) {
         return min;
     }
     
-    return min + rand() % (max - min + 1);;
+    return min + rand() % (max - min + 1);
 }
 
 u8 uRollD4()
